@@ -7,10 +7,9 @@ import Content from './views/partials/homeContent.js'
 import Registration from './views/partials/registration.js'
 import Login from './views/partials/login.js'
 
-
-
 import axios from 'axios';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 
 
   class App extends React.Component {
@@ -18,7 +17,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
       super(props);
       this.state={apiResponse:""};
     }
-
 
 
   render() {

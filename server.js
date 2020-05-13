@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const session = require('client-sessions');
+
 const saltRounds = 10;
 const mongoose = require('mongoose');
 var uri = "mongodb+srv://AdminAlketa:PuuPalikka7750@cluster0-6p6dl.mongodb.net/ElectionCandidates?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
@@ -25,6 +27,12 @@ const app = express();
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(cors());
+app.use(session({
+  cookieName: 'session',
+  secret: 'LRPgrd59zlZUDyjsXJDA',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
 
 //module for handling form data
@@ -86,8 +94,10 @@ app.post('/login',(req,res) => {
     if(user) {
       bcrypt.compare(pass, user.password).then(function(result) {
           if(result) {
+            req.session.user = user;
             console.log("Logged in");
-            res.send("Logged in as " +  user.email);
+            console.log(req.session.user);
+            res.send(user);
           }
           else {
             res.send("Invalid Password");
@@ -98,6 +108,19 @@ app.post('/login',(req,res) => {
   });
 });
 
+app.get('/test',(req,res) => {
+    if(req.session.user) {
+      res.send("user logged in");
+    }
+    else{
+      res.send("You're not Logged in");
+    }
+});
+
+app.get('/logout', function(req, res) {
+  req.session.reset();
+  res.redirect('/');
+});
 
 // Handles any requests that don't match the ones above
 //app.get('*', (req,res) =>{

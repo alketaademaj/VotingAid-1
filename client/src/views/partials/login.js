@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
       serverResponse: "",
     };
 
@@ -31,7 +32,8 @@ class Login extends React.Component {
 
     axios.post('http://localhost:5000/login',  user)
       .then(res => {
-        this.setState({serverResponse: res.data});
+        //cookies.set(res.data.email,res.data.status,{secure: true});
+        this.setState({serverResponse: res.data.email});
       });
   }
 
