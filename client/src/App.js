@@ -9,19 +9,22 @@ import Login from './views/partials/login.js'
 
 import axios from 'axios';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import  UserContextProvider  from './userContext';
 
 
   class App extends React.Component {
     constructor(props) {
       super(props);
-      this.state={apiResponse:""};
+      this.state={
+        user: {}
+      };
     }
 
 
   render() {
     return (
       <div className="App">
+      <UserContextProvider>
       <BrowserRouter>
        <div>
          <Navigation />
@@ -33,6 +36,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
           </Switch>
        </div>
       </BrowserRouter>
+      </UserContextProvider>
       </div>
     );
   }

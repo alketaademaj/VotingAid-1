@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Cookies from 'universal-cookie';
+import { UserContext } from '../../userContext';
 
 const cookies = new Cookies();
 
@@ -22,6 +23,9 @@ class Login extends React.Component {
     });
   }
 
+static contextType = UserContext;
+
+
   handleSubmit = event => {
     event.preventDefault();
 
@@ -32,12 +36,15 @@ class Login extends React.Component {
 
     axios.post('http://localhost:5000/login',  user)
       .then(res => {
-        //cookies.set(res.data.email,res.data.status,{secure: true});
         this.setState({serverResponse: res.data.email});
+        this.context.user = res.data.status;
+        this.context.email = res.data.email;
       });
   }
 
+
   render() {
+    console.log(this.context);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
