@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 
 class Content extends React.Component {
   constructor(props) {
@@ -12,11 +13,16 @@ class Content extends React.Component {
   handleChange() {
     this.setState({value: this.refs.campus.value});
   }
-
+  static contextType = UserContext;
   render() {
+    console.log(this.context);
     return (
       <div>
-        <label for="campus">Valitse Koulusi</label>
+      <Link
+        to={{
+          pathname: "/Login"
+        }}> LogIn </Link>
+        <label htmlFor="campus">Valitse Koulusi</label>
           <select ref="campus" onChange={this.handleChange.bind(this)}>
             <option value="Laurea">Laurea</option>
             <option value="Metropolia">Metropolia</option>

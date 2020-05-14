@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Cookies from 'universal-cookie';
-import { UserContext } from '../userContext';
+import { UserContext } from '../context/userContext';
+import { Link } from 'react-router-dom';
 
-const cookies = new Cookies();
+import axios from "axios";
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,8 +22,6 @@ class Login extends React.Component {
     });
   }
 
-static contextType = UserContext;
-
 
   handleSubmit = event => {
     event.preventDefault();
@@ -43,9 +40,13 @@ static contextType = UserContext;
       });
   }
 
+  componentWillMount() {
+    console.log(this.context);
+  }
+
+  static contextType = UserContext;
 
   render() {
-    console.log(this.context);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -53,7 +54,10 @@ static contextType = UserContext;
           <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
           <button type="submit">Login</button>
         </form>
-        <h1>{this.state.serverResponse}</h1>
+        <Link
+          to={{
+            pathname: "/"
+          }}> Back to MainPage </Link>
       </div>
     );
   }
