@@ -34,9 +34,8 @@ class Login extends React.Component {
     axios.post('http://localhost:5000/login',  user)
       .then(res => {
         this.setState({serverResponse: res.data.email});
-        this.context.user = res.data.status;
-        this.context.email = res.data.email;
-        this.context.loggedIn = true;
+        const { changeUser } = this.context;
+        changeUser(res.data.email,res.data.email,true);
       });
   }
 
@@ -47,6 +46,7 @@ class Login extends React.Component {
   static contextType = UserContext;
 
   render() {
+    const { changeUser } = this.context;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>

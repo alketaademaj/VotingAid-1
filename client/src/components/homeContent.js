@@ -18,10 +18,6 @@ class Content extends React.Component {
     console.log(this.context);
     return (
       <div>
-      <Link
-        to={{
-          pathname: "/Login"
-        }}> LogIn </Link>
         <label htmlFor="campus">Valitse Koulusi</label>
           <select ref="campus" onChange={this.handleChange.bind(this)}>
             <option value="Laurea">Laurea</option>

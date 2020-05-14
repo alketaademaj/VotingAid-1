@@ -9,11 +9,15 @@ import Login from './login.js';
 import { UserContext } from '../context/userContext';
 
   class NavContent extends Component {
-
-    handleChange(event) {
-      this.render();
-    }
     static contextType = UserContext;
+    constructor(props) {
+      super(props);
+      this.state = {}
+
+    }
+
+
+
     render() {
       if(this.context.loggedIn) {
         return (
