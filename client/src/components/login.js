@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Cookies from 'universal-cookie';
-import { UserContext } from '../../userContext';
+import { UserContext } from '../userContext';
 
 const cookies = new Cookies();
 
@@ -39,6 +39,7 @@ static contextType = UserContext;
         this.setState({serverResponse: res.data.email});
         this.context.user = res.data.status;
         this.context.email = res.data.email;
+        this.context.loggedIn = true;
       });
   }
 

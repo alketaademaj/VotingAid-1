@@ -6,6 +6,7 @@ class UserContextProvider extends Component {
   state = {
     user: 'Quest',
     email: '',
+    loggedIn: false,
   }
   render() {
     return (
