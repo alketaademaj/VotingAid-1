@@ -35,7 +35,7 @@ class Login extends React.Component {
       .then(res => {
         this.setState({serverResponse: res.data.email});
         const { changeUser } = this.context;
-        changeUser(res.data.email,res.data.email,true);
+        changeUser(res.data.status,res.data.email,true);
       });
   }
 

@@ -78,3 +78,8 @@ small {
 .Modal {
   background-color: yellow;
 }
+
+/*DELETE THESE AT SOMEPOINT**/
+a {
+  color: cyan;
+}

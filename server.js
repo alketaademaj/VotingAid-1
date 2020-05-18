@@ -49,6 +49,14 @@ app.get('/', (req,res) => { //Shows all the candidates
   });
 });
 
+app.post('/Profile', (req,res) => {
+  const email = req.body.data;
+  Candidate.findOne({email: email}, function(err, results) {
+    console.log(results);
+    res.send(results);
+  });
+});
+
 app.get('/questions', (req,res) => { //Returns all the questions from database
   Question.find({}, function(err, results) {
     res.send(results);
