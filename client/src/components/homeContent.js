@@ -22,6 +22,9 @@ class Content extends React.Component {
           <select ref="campus" onChange={this.handleChange.bind(this)}>
             <option value="Laurea">Laurea</option>
             <option value="Metropolia">Metropolia</option>
+            <option value="Haaga-Helia">Haaga-Helia</option>
+            <option value="JAMK">JAMK</option>
+            <option value="O'Diako">O'Diako</option>
           </select>
         <Link
           to={{

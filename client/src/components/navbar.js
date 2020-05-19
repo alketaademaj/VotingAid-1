@@ -44,7 +44,6 @@ import { UserContext } from '../context/userContext';
           <div>
             <NavLink to="/"> Home </NavLink>
             <NavLink to="/logout" onClick={() => changeUser('Quest','',false)}>logout </NavLink>
-            <NavLink to="/Register"> Registration </NavLink>
             <NavLink to="/Profile"> Profile </NavLink>
           </div>
         );
