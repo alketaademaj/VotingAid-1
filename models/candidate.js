@@ -11,7 +11,8 @@ var candidateSchema = new Schema({
   electoralAlliance: {type: String},
   description: {type: String},
   picture: {type: String},
-  image: {type: String}
+  image: {type: String},
+  filledForm: {},
   },
   {versionKey: false},
   {collection: 'candidate'}

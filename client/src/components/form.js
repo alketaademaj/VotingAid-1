@@ -7,6 +7,7 @@ class Form extends React.Component {
     super(props);
     this.state = {
       questions: [],
+      answers: []
     };
   }
 
@@ -22,27 +23,47 @@ class Form extends React.Component {
     });
   }
 
+  handleClick(e) {
+    alert(e.currentTarget.value);
+    this.setState({answers[e.currentTarget.name]: e.currentTarget.value})
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    let answers = {};
+    for (var i = 0; i < this.state.questions.length; i++) {
+    //  answers[i]
+      console.log();
+    }
+    axios.post('http://localhost:5000/send',answers)
+      .then(res => {
+          console.log(res);
+      });
+  }
+
   render() {
     console.log(this.props.location.state);
     var counter = -1;
     return (
-      <form action ="/Send" method="POST">
+      <form onSubmit={this.handleSubmit} method="POST">
       {this.state.questions.map(index => {
         counter++;
         if(index.area == this.props.location.state.value || index.area == 'Undefined') {
           return (
-            <div className="radio">
+            <div className = {'question'+ counter}>
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-                <input type="radio" value="option1" name = {counter} />
-                <input type="radio" value="option2" name = {counter} />
-                <input type="radio" value="option3" name = {counter} />
-                <input type="radio" value="option4" name = {counter} />
-                <input type="radio" value="option5" name = {counter} />
+                <input type="radio" value="option1" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="option2" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="option3" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="option4" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="option5" name = {counter} onChange={this.handleClick.bind(this)} />
             </div>
           );
         }
-      })}
+      }
+    )}
         <input type="submit" value="Fill ur form"></input>
       </form>
     );
