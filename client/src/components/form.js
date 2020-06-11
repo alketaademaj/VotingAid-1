@@ -26,7 +26,7 @@ class Form extends React.Component {
     console.log(this.props.location.state);
     var counter = -1;
     return (
-      <form action ="/validate">
+      <form action ="/Send" method="POST">
       {this.state.questions.map(index => {
         counter++;
         if(index.area == this.props.location.state.value || index.area == 'Undefined') {
@@ -43,6 +43,7 @@ class Form extends React.Component {
           );
         }
       })}
+        <input type="submit" value="Fill ur form"></input>
       </form>
     );
   }
