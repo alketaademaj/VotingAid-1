@@ -24,8 +24,10 @@ class Form extends React.Component {
   }
 
   handleClick(e) {
-    alert(e.currentTarget.value);
-    this.setState({answers[e.currentTarget.name]: e.currentTarget.value})
+    this.state.answers[e.currentTarget.name] = parseInt(e.currentTarget.value);
+    console.log(this.state.answers);
+    let sum =  this.state.answers.reduce((result,number) => result+number);
+    console.log(sum);
   }
 
   handleSubmit = event => {
@@ -54,11 +56,11 @@ class Form extends React.Component {
             <div className = {'question'+ counter}>
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-                <input type="radio" value="option1" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="option2" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="option3" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="option4" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="option5" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="-2" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="-1" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="0" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="1" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="2" name = {counter} onChange={this.handleClick.bind(this)} />
             </div>
           );
         }
