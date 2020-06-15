@@ -38,7 +38,7 @@ class Form extends React.Component {
     //  answers[i]
       console.log();
     }
-    axios.post('http://localhost:5000/send',answers)
+    axios.post('http://localhost:5000/send',this.state.answers)
       .then(res => {
           console.log(res);
       });

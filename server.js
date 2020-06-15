@@ -131,7 +131,15 @@ app.get('/logout', function(req, res) {
 });
 
 app.post('/send', function(req, res) {
-  console.log(req.body);
+  console.log(req.body[0]);
+
+  for (var i = 0; i < req.body.length; i++) {
+    var nestedVar = 'filledForm.question'+i;
+    console.log(nestedVar);
+    Candidate.findOneAndUpdate({email: '1500@laurea.fi'}, {$set: {[nestedVar]: req.body[i]}}, { useFindAndModify: false }, function(err, doc) {
+      console.log(doc);
+    });
+  }
 });
 
 // Handles any requests that don't match the ones above
