@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { UserContext } from '../context/userContext';
+import OptionButton from './optionButton.js';
 
 class Form extends React.Component {
-
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +14,7 @@ class Form extends React.Component {
   }
 
    componentDidMount() {
+     console.log(this.props);
     axios.get('http://localhost:5000/questions')
       .then(res => {
         let q = [];
@@ -21,6 +24,13 @@ class Form extends React.Component {
           this.setState({ questions: joined })
         }
     });
+      if (this.context.loggedIn) {
+        axios.post('http://localhost:5000/fillForm',{data: this.context.email})
+          .then(res => {
+
+        });
+      }
+
   }
 
   handleClick(e) {
@@ -53,14 +63,14 @@ class Form extends React.Component {
         counter++;
         if(index.area == this.props.location.state.value || index.area == 'Undefined') {
           return (
-            <div className = {'question'+ counter}>
+            <div className = {'questionSet'} >
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-                <input type="radio" value="-2" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="-1" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="0" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="1" name = {counter} onChange={this.handleClick.bind(this)} />
-                <input type="radio" value="2" name = {counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="-2" name = {'question'+ counter} onChange={this.handleClick.bind(this)} checked = 'true' />
+                <input type="radio" value="-1" name = {'question'+ counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="0" name = {'question'+ counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="1" name = {'question'+ counter} onChange={this.handleClick.bind(this)} />
+                <input type="radio" value="2" name = {'question'+ counter} onChange={this.handleClick.bind(this)} />
             </div>
           );
         }

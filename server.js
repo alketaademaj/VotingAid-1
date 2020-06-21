@@ -62,6 +62,16 @@ app.get('/questions', (req,res) => { //Returns all the questions from database
     res.send(results);
   });
 });
+//------------------------------------------------
+app.post('/fillForm', (req,res) => {
+  var email = req.body.data;
+  Candidate.findOne({email: email}, function(err, results) {
+    console.log(results.filledForm);
+    res.send(results);
+  });
+});
+//----------------------------------------
+
 
 app.post('/registration', (req,res) => {
 
