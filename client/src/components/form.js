@@ -14,7 +14,7 @@ class Form extends React.Component {
     };
   }
 
-   async componentDidMount() {
+   componentDidMount() {
      console.log(this.props);
     axios.get('http://localhost:5000/questions')
       .then(res => {
@@ -23,34 +23,37 @@ class Form extends React.Component {
           q.push(res.data[i]);
           var joined = this.state.questions.concat(q[i]);
           this.setState({ questions: joined })
+          this.preFillForm()
         }
     });
-      if (this.context.loggedIn) {
-        axios.post('http://localhost:5000/fillForm',{data: this.context.email})
-          .then(res => {
-            if(Object.keys(res.data.filledForm).length > 1) {
-              this.setState({disabled: true});
-            }
-              for (var i = 0; i < Object.keys(res.data.filledForm).length; i++) {
-                    if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].value) {
-                      this.refs['q' + i].childNodes[2].checked = true;
-                    }
-                    else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[3].value) {
-                      this.refs['q' + i].childNodes[3].checked = true;
-                    }
-                    else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[4].value) {
-                      this.refs['q' + i].childNodes[4].checked = true;
-                    }
-                    else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[5].value) {
-                      this.refs['q' + i].childNodes[5].checked = true;
-                    }
-                    else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[6].value) {
-                      this.refs['q' + i].childNodes[6].checked = true;
-                    }
-              }
-        });
-      }
+  }
 
+  preFillForm() {
+    if (this.context.loggedIn) {
+      axios.post('http://localhost:5000/fillForm',{data: this.context.email})
+        .then(res => {
+          if(Object.keys(res.data.filledForm).length > 1) {
+            this.setState({disabled: true});
+          }
+            for (var i = 0; i < Object.keys(res.data.filledForm).length; i++) {
+                  if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].value) {
+                    this.refs['q' + i].childNodes[2].checked = true;
+                  }
+                  else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[3].value) {
+                    this.refs['q' + i].childNodes[3].checked = true;
+                  }
+                  else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[4].value) {
+                    this.refs['q' + i].childNodes[4].checked = true;
+                  }
+                  else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[5].value) {
+                    this.refs['q' + i].childNodes[5].checked = true;
+                  }
+                  else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[6].value) {
+                    this.refs['q' + i].childNodes[6].checked = true;
+                  }
+            }
+      });
+    }
   }
 
   handleClick(e) {
@@ -74,7 +77,6 @@ class Form extends React.Component {
   }
 
   render() {
-    console.log(this.props.location.state);
     var counter = -1;
     return (
       <form onSubmit={this.handleSubmit} method="POST">
