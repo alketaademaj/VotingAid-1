@@ -39,7 +39,7 @@ import { UserContext } from '../context/userContext';
     static contextType = UserContext;
     render() {
       const { changeUser } = this.context;
-      if (this.context.loggedIn && this.context.user === "Admin") { //BETTER FIX FOR THESE LINES PLEASE
+      if (this.context.loggedIn && this.context.user == "Admin") { //BETTER FIX FOR THESE LINES PLEASE
         return (
           <div>
             <NavLink to="/"> Home </NavLink>

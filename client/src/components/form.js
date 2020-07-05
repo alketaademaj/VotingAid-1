@@ -10,6 +10,7 @@ class Form extends React.Component {
     this.state = {
       questions: [],
       answers: [],
+      answersDesc: [],
       disabled: false,
     };
   }
@@ -27,6 +28,7 @@ class Form extends React.Component {
         }
     });
   }
+
 
   preFillForm() {
     if (this.context.loggedIn) {
@@ -51,16 +53,28 @@ class Form extends React.Component {
                   else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[6].value) {
                     this.refs['q' + i].childNodes[6].checked = true;
                   }
+                  this.refs['desc' + i].value = res.data.filledForm['questiondesc' + i];
             }
       });
     }
   }
 
+  isQuest(counter) {
+    if(this.context.user != 'Quest') {
+      return <input type= "text" name = {counter} ref = {"desc" + counter}  placeholder = "fiif miten fä niinky peruftelifit fun valinnan" style={{marginBottom: "41px", width: "50%"}} onChange={this.handleChange.bind(this)} disabled = {this.state.disabled}></input>
+    }
+  }
+
+  handleChange(e) {
+    this.state.answersDesc[e.currentTarget.name] = e.currentTarget.value;
+    console.log(this.state.answersDesc);
+  }
+
   handleClick(e) {
     this.state.answers[e.currentTarget.name] = parseInt(e.currentTarget.value);
     console.log(this.state.answers);
-    //let sum =  this.state.answers.reduce((result,number) => result+number);
-    //console.log(sum);
+    let sum =  this.state.answers.reduce((result,number) => result+number);
+    console.log(sum);
   }
 
   handleSubmit = event => {
@@ -70,7 +84,7 @@ class Form extends React.Component {
     //  answers[i]
       console.log();
     }
-    axios.post('http://localhost:5000/send',this.state.answers)
+    axios.post('http://localhost:5000/send',{ans: this.state.answers, desc: this.state.answersDesc})
       .then(res => {
           console.log(res);
       });
@@ -87,11 +101,14 @@ class Form extends React.Component {
             <div className = 'questionSet' ref = {'q'+ counter} >
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-                <input type = "radio" ref = "opt0"  value = "-2" name = {'question'+ counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt1" value = "-1" name = {'question'+ counter} onChange={this.handleClick.bind(this)}  disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt2" value = "0" name = {'question'+ counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt3" value = "1" name = {'question'+ counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt4" value = "2" name = {'question'+ counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+                <input type = "radio" ref = "opt0"  value = "-2" name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
+                <input type = "radio" ref = "opt1" value = "-1" name = {counter} onChange={this.handleClick.bind(this)}  disabled = {this.state.disabled}/>
+                <input type = "radio" ref = "opt2" value = "0" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+                <input type = "radio" ref = "opt3" value = "1" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+                <input type = "radio" ref = "opt4" value = "2" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+                <br />
+                {this.isQuest(counter)}
+                <br />
             </div>
           );
         }
