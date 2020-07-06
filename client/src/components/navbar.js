@@ -6,6 +6,7 @@ import Content from './homeContent.js';
 import Registration from './registration.js';
 import Login from './login.js';
 import Profile from './profile.js';
+import Candidates from './candidates.js';
 
 import { UserContext } from '../context/userContext';
 
@@ -22,7 +23,7 @@ import { UserContext } from '../context/userContext';
            <div>
            <h2>Admin Navbar</h2>
               <NavLink to="/"> Home </NavLink>
-              <NavLink to="/Register"> PLACEHOLDER LINK TITLE </NavLink>
+              <NavLink to="/Candidates"> Browse Candidates </NavLink>
               <NavLink to="/Login"> PLACEHOLDER LINK TITLE </NavLink>
            </div>
          );
@@ -68,6 +69,7 @@ import { UserContext } from '../context/userContext';
         <NavLogin />
         <NavContent />
           <Switch>
+            <Route path="/Candidates" component={Candidates}/>
             <Route path="/Form" component={Form}/>
             <Route path="/Profile" component={Profile}/>
             <Route path="/Login" component={Login}/>
