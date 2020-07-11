@@ -49,8 +49,16 @@ app.get('/', (req,res) => { //Shows all the candidates
   });
 });
 
+app.post('/filteredCandidates', (req,res) => { //Shows all the candidates
+  const school = req.body.data;
+  Candidate.find({school: school}, function(err, results) {
+    res.send(results);
+  });
+});
+
 app.post('/Profile', (req,res) => {
   const email = req.body.data;
+  console.log(email);
   Candidate.findOne({email: email}, function(err, results) {
     console.log(results);
     res.send(results);

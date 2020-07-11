@@ -31,7 +31,15 @@ import axios from "axios";
    }
 
    handleChange() {
-
+     axios.post('http://localhost:5000/filteredCandidates',{data: this.refs.school.value})
+       .then(res => {
+         let q = [];
+         for(var i = 0; i < res.data.length;i++) {
+           this.setState({ ['Candidate' + i]: res.data[i]})
+           q.push(res.data[i].name);
+           this.setState({ amount: q});
+         }
+       });
    }
 
     render() {
@@ -61,7 +69,7 @@ import axios from "axios";
                 return (
                     <tr>
                       <td>{counter + 1}</td>
-                      <td>{this.state['Candidate' + counter].name + ' ' + this.state['Candidate' + counter].surname}</td>
+                      <td style = {{cursor: "pointer"}}>{this.state['Candidate' + counter].name + ' ' + this.state['Candidate' + counter].surname}</td>
                       <td>{this.state['Candidate' + counter].school}</td>
                     </tr>
                 );

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 
+//Components
 import Form from './form.js';
 import Content from './homeContent.js';
 import Registration from './registration.js';
 import Login from './login.js';
 import Profile from './profile.js';
 import Candidates from './candidates.js';
+import Questions from './questions.js';
 
 import { UserContext } from '../context/userContext';
 
@@ -22,9 +24,9 @@ import { UserContext } from '../context/userContext';
         return (
            <div>
            <h2>Admin Navbar</h2>
-              <NavLink to="/"> Home </NavLink>
-              <NavLink to="/Candidates"> Browse Candidates </NavLink>
-              <NavLink to="/Login"> PLACEHOLDER LINK TITLE </NavLink>
+              <NavLink to="/"> Home |</NavLink>
+              <NavLink to="/Candidates"> Browse Candidates |</NavLink>
+              <NavLink to="/Questions"> Browse Questions </NavLink>
            </div>
          );
       }
@@ -70,6 +72,7 @@ import { UserContext } from '../context/userContext';
         <NavContent />
           <Switch>
             <Route path="/Candidates" component={Candidates}/>
+            <Route path="/Questions" component={Questions}/>
             <Route path="/Form" component={Form}/>
             <Route path="/Profile" component={Profile}/>
             <Route path="/Login" component={Login}/>
