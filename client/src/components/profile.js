@@ -23,7 +23,15 @@ import axios from "axios";
 
 
     render() {
-      return <h1>{this.state.profile.name}</h1>;
+      return (
+        <div>
+          <h1>{this.state.profile.name}</h1>
+          <h2>{this.state.profile.surname}</h2>
+          <h3>{this.state.profile.school}</h3>
+          <h4>{this.state.profile.description}</h4>
+          <h5>{this.state.profile.campus}</h5>
+        </div>
+      );
     }
   }
 

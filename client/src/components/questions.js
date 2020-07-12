@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { UserContext } from '../context/userContext';
+import { IoIosBrush } from "react-icons/io";
+import { IoIosTrash } from "react-icons/io";
+import { IoIosAddCircleOutline } from "react-icons/io";
+
+
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
 
@@ -10,6 +15,7 @@ import axios from "axios";
       this.state={
         questions: [],
         schools: [],
+        disabled: true,
       };
     }
 
@@ -29,6 +35,20 @@ import axios from "axios";
       });
     }
 
+    handleChange() {
+      this.value = this;
+    }
+
+    enableEdit(e) {
+      let target = e.target.getAttribute('name');
+      this.refs['question' + target].disabled = false;
+      this.refs['school' + target].disabled = false;
+    }
+
+    addQuestion() {
+        console.log("moi");
+    }
+
     render() {
       console.log(this.state.schools);
       var counter = -1;
@@ -37,9 +57,9 @@ import axios from "axios";
         {this.state.questions.map(question => {
           counter++;
             return (
-              <div className = 'questionSet' ref = {'q'+ counter} >
-                  <p style = {{display: "inline"}}>{question.question}</p>
-                  <select ref="school" /*onChange={this.handleChange.bind(this)}*/ value = {question.area}>
+              <div className = {'set' + counter}>
+                  <input ref = {'question' + counter} type = "text" style = {{display: "inline",}} defaultValue = {question.question} onChange={this.handleChange.bind(this)} disabled = {this.state.disabled} />
+                  <select ref = {'school' + counter} /*onChange={this.handleChange.bind(this)}*/ value = {question.area} disabled = {this.state.disabled}>
                     {this.state.schools.map(school => {
                         return (
                           <option value = {school}>{school}</option>
@@ -47,13 +67,17 @@ import axios from "axios";
                     }
                     )}
                   </select>
+                  <IoIosBrush  name = {counter} onClick = {this.enableEdit.bind(this)}/>
+                  <IoIosTrash />
                   <br />
                   <br />
               </div>
             );
         }
       )}
+      <IoIosAddCircleOutline onClick = {this.addQuestion.bind(this)} style = {{cursor: 'pointer', fontSize: '50px'}} />
       </div>
+
       );
     }
 }
