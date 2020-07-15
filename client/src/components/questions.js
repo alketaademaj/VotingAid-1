@@ -46,7 +46,7 @@ import axios from "axios";
     }
 
     addQuestion() {
-        console.log("moi");
+
     }
 
     render() {
