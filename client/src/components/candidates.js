@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { UserContext } from '../context/userContext';
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import Profile from './profile.js';
 
   class Candidates extends Component {
     constructor(props) {
@@ -42,6 +44,7 @@ import axios from "axios";
        });
    }
 
+
     render() {
       var counter = -1;
       return (
@@ -69,7 +72,14 @@ import axios from "axios";
                 return (
                     <tr>
                       <td>{counter + 1}</td>
-                      <td style = {{cursor: "pointer"}}>{this.state['Candidate' + counter].name + ' ' + this.state['Candidate' + counter].surname}</td>
+                      <td style = {{cursor: "pointer"}}>
+                      <Link
+                        to={{
+                          pathname: "/Profile",
+                          data: this.state['Candidate' + counter].email
+                        }}> {this.state['Candidate' + counter].name + ' ' + this.state['Candidate' + counter].surname}
+                      </Link>
+                      </td>
                       <td>{this.state['Candidate' + counter].school}</td>
                     </tr>
                 );

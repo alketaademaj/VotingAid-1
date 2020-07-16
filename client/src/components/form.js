@@ -31,8 +31,13 @@ class Form extends React.Component {
 
 
   preFillForm() {
+    var email = this.context.email;
+    if(this.props.location.data != null) {
+      email = this.props.location.data.email;
+    }
+
     if (this.context.loggedIn) {
-      axios.post('http://localhost:5000/fillForm',{data: this.context.email})
+      axios.post('http://localhost:5000/fillForm',{data: email})
         .then(res => {
           if(Object.keys(res.data.filledForm).length > 1) {
             this.setState({disabled: true});
@@ -91,12 +96,19 @@ class Form extends React.Component {
   }
 
   render() {
+    if(this.props.location.state != null) {
+      var area = this.props.location.state.value;
+    }
+
+    if(this.props.location.data != null) {
+      area = this.props.location.data.school;
+    }
     var counter = -1;
     return (
       <form onSubmit={this.handleSubmit} method="POST">
       {this.state.questions.map(index => {
         counter++;
-        if(index.area == this.props.location.state.value || index.area == 'Undefined') {
+        if(index.area == area || index.area == 'Undefined') {
           return (
             <div className = 'questionSet' ref = {'q'+ counter} >
                 <label>{index.question}</label>
