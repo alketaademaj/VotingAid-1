@@ -42,7 +42,7 @@ class Form extends React.Component {
           if(Object.keys(res.data.filledForm).length > 1) {
             this.setState({disabled: true});
           }
-            for (var i = 0; i < Object.keys(res.data.filledForm).length; i++) {
+            for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
                   if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].value) {
                     this.refs['q' + i].childNodes[2].checked = true;
                   }
@@ -110,6 +110,7 @@ class Form extends React.Component {
         counter++;
         if(index.area == area || index.area == 'Undefined') {
           return (
+            console.log(area),
             <div className = 'questionSet' ref = {'q'+ counter} >
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
@@ -123,6 +124,9 @@ class Form extends React.Component {
                 <br />
             </div>
           );
+        }
+        if (index.area != area || index.area != 'Undefined') {
+          counter--;
         }
       }
     )}
