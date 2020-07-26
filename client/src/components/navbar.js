@@ -9,6 +9,7 @@ import Login from './login.js';
 import Profile from './profile.js';
 import Candidates from './candidates.js';
 import Questions from './questions.js';
+import Suggestions from './suggestedCandidates.js';
 
 import { UserContext } from '../context/userContext';
 
@@ -72,6 +73,7 @@ import { UserContext } from '../context/userContext';
         <NavContent />
           <Switch>
             <Route path="/Candidates" component={Candidates}/>
+            <Route path="/suggestedCandidates" component={Suggestions}/>
             <Route path="/Questions" component={Questions}/>
             <Route path="/Form" component={Form}/>
             <Route path="/Profile" component={Profile}/>

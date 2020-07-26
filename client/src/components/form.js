@@ -83,16 +83,27 @@ class Form extends React.Component {
   }
 
   handleSubmit = event => {
-    event.preventDefault();
-    let answers = {};
-    for (var i = 0; i < this.state.questions.length; i++) {
-    //  answers[i]
-      console.log();
-    }
-    axios.post('http://localhost:5000/send',{ans: this.state.answers, desc: this.state.answersDesc})
-      .then(res => {
-          console.log(res);
-      });
+    if(this.context.user != 'Quest') {
+      event.preventDefault();
+      let answers = {};
+      for (var i = 0; i < this.state.questions.length; i++) {
+      //  answers[i]
+        console.log();
+      }
+      axios.post('http://localhost:5000/send',{ans: this.state.answers, desc: this.state.answersDesc})
+        .then(res => {
+            console.log(res);
+        });
+      }
+      else {
+        this.props.history.push({
+          pathname: '/suggestedCandidates',
+          data: {
+            answers: this.state.answers,
+            school: this.props.location.state.value,
+          }
+        })
+      }
   }
 
   render() {

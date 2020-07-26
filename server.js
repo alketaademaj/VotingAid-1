@@ -49,6 +49,14 @@ app.get('/', (req,res) => { //Shows all the candidates
   });
 });
 
+app.post('/forms', (req,res) => { //Shows all the forms
+  var filter = req.body.data;
+  console.log(filter);
+  Candidate.find( {school: { $eq: filter } }, function(err, results) {
+    res.send(results);
+  });
+});
+
 app.post('/filteredCandidates', (req,res) => { //Shows all the candidates
   const school = req.body.data;
   Candidate.find({school: school}, function(err, results) {
