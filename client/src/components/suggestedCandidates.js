@@ -41,7 +41,7 @@ class Suggestions extends Component {
          <h1>Candidates With Matching Values:</h1>
            {this.state.suggestions.map(index => {
               return (
-                 <h2>{index.name}</h2>
+                 <h2>{index.name} | Similarity Score: {this.state.similarity}</h2>
               );
            }
           )}
