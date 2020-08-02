@@ -25,7 +25,7 @@ class Suggestions extends Component {
            }
          }
 
-         if (this.state.similarity >= 2) {
+         if (this.state.similarity >= 1) {
            s.push(res.data[i]);
            this.setState({suggestions: s});
          }
