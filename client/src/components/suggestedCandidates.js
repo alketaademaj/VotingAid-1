@@ -6,7 +6,6 @@ class Suggestions extends Component {
     super(props);
     this.state = {
       suggestions: [],
-      similarity: 0,
     };
   }
 
@@ -16,21 +15,23 @@ class Suggestions extends Component {
      .then(res => {
        let s = [];
        for (var i = 0; i < res.data.length; i++) {
-         this.setState({similarity: 0});
-
+         let counter = 0;
          for (var j = 0; j < Object.keys(res.data[i].filledForm).length / 2; j++) {
            if (userAnswers[j] === res.data[i].filledForm['question' + j]) {
-             this.setState({similarity: this.state.similarity + 1});
+             counter++;
+             this.setState({['similarity'+i]: counter});
              console.log('LÄPI MENI');
            }
+           // if(userAnswers[j] >) IN A  CERTAIN RANGE
+           // if(userAnswers[j]  == -res.data[i].filledForm['question' + j]) ADDITIVE INVERSE
          }
 
-         if (this.state.similarity >= 1) {
+         if (this.state['similarity' + i] >= 1) {
            s.push(res.data[i]);
            this.setState({suggestions: s});
          }
        }
-       console.log(this.state.suggestions.length);
+       console.log(this.state);
    });
  }
 
@@ -39,9 +40,9 @@ class Suggestions extends Component {
        return (
          <div className = "candidateSuggestions">
          <h1>Candidates With Matching Values:</h1>
-           {this.state.suggestions.map(index => {
+           {this.state.suggestions.map((candidate, index) => {
               return (
-                 <h2>{index.name} | Similarity Score: {this.state.similarity}</h2>
+                 <h2>{candidate.name} | Similarity Score: {this.state['similarity' + (index)]}</h2>
               );
            }
           )}
