@@ -23,6 +23,7 @@ class Suggestions extends Component {
              this.setState({['similarity'+i]: counterS});
              console.log('LÄPI MENI');
            }
+
            // if(userAnswers[j] >) IN A  CERTAIN RANGE
 
 
