@@ -24,7 +24,8 @@ class Suggestions extends Component {
              console.log('LÄPI MENI');
            }
            // if(userAnswers[j] >) IN A  CERTAIN RANGE
-           console.log(res.data[i].filledForm['question' + j] + '|||||||||||' + userAnswers[j] );
+
+
            if( (userAnswers[j]  == 2 && res.data[i].filledForm['question' + j] == -2) || (userAnswers[j]  == -2 && res.data[i].filledForm['question' + j] == 2) ) {
              counterD++;
              this.setState({['danger'+i]: counterD});
