@@ -15,15 +15,20 @@ class Suggestions extends Component {
      .then(res => {
        let s = [];
        for (var i = 0; i < res.data.length; i++) {
-         let counter = 0;
+         let counterS = 0;
+         let counterD = 0;
          for (var j = 0; j < Object.keys(res.data[i].filledForm).length / 2; j++) {
            if (userAnswers[j] === res.data[i].filledForm['question' + j]) {
-             counter++;
-             this.setState({['similarity'+i]: counter});
+             counterS++;
+             this.setState({['similarity'+i]: counterS});
              console.log('LÄPI MENI');
            }
            // if(userAnswers[j] >) IN A  CERTAIN RANGE
-           // if(userAnswers[j]  == -res.data[i].filledForm['question' + j]) ADDITIVE INVERSE
+           console.log(res.data[i].filledForm['question' + j] + '|||||||||||' + userAnswers[j] );
+           if( (userAnswers[j]  == 2 && res.data[i].filledForm['question' + j] == -2) || (userAnswers[j]  == -2 && res.data[i].filledForm['question' + j] == 2) ) {
+             counterD++;
+             this.setState({['danger'+i]: counterD});
+           }
          }
 
          if (this.state['similarity' + i] >= 1) {
@@ -42,7 +47,7 @@ class Suggestions extends Component {
          <h1>Candidates With Matching Values:</h1>
            {this.state.suggestions.map((candidate, index) => {
               return (
-                 <h2>{candidate.name} | Similarity Score: {this.state['similarity' + (index)]}</h2>
+                 <h2>{candidate.name} | Similarity Score: {this.state['similarity' + (index)]} | Additive Inverse: {this.state['danger' + (index)]}</h2>
               );
            }
           )}
