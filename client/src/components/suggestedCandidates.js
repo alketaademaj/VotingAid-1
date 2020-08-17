@@ -17,6 +17,7 @@ class Suggestions extends Component {
        for (var i = 0; i < res.data.length; i++) {
          let counterS = 0;
          let counterD = 0;
+         let candidateArray = [];
          for (var j = 0; j < Object.keys(res.data[i].filledForm).length / 2; j++) {
            if (userAnswers[j] === res.data[i].filledForm['question' + j]) {
              counterS++;
@@ -24,6 +25,7 @@ class Suggestions extends Component {
              console.log('LÄPI MENI');
            }
 
+           candidateArray.push(res.data[i].filledForm['question' + j]); //Creating an array from filledForm integers
            // if(userAnswers[j] >) IN A  CERTAIN RANGE
 
 
@@ -32,6 +34,10 @@ class Suggestions extends Component {
              this.setState({['danger'+i]: counterD});
            }
          }
+         let userSum = userAnswers.reduce((result,number) => result+number);
+         let candSum = candidateArray.reduce((result,number) => result+number);
+         console.log(userSum + " Nää on vastaajan tulokset");
+         console.log(candSum + " Nää on kandidaatin tulokset");
 
          if (this.state['similarity' + i] >= 1) {
            s.push(res.data[i]);
@@ -40,6 +46,7 @@ class Suggestions extends Component {
        }
        console.log(this.state);
    });
+   //JOS HALUTAAN PROSENTUAALISTA VERTAILUA if(userSum >= (candSum * 0.75))
  }
 
  render() {
