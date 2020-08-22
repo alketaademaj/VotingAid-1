@@ -10,6 +10,7 @@ import Profile from './profile.js';
 import Candidates from './candidates.js';
 import Questions from './questions.js';
 import Suggestions from './suggestedCandidates.js';
+import AddCandidates from './addCandidates.js';
 
 import { UserContext } from '../context/userContext';
 
@@ -26,6 +27,7 @@ import { UserContext } from '../context/userContext';
            <div>
            <h2>Admin Navbar</h2>
               <NavLink to="/"> Home |</NavLink>
+              <NavLink to="/addCandidates"> Add Candidates |</NavLink>
               <NavLink to="/Candidates"> Browse Candidates |</NavLink>
               <NavLink to="/Questions"> Browse Questions </NavLink>
            </div>
@@ -72,6 +74,7 @@ import { UserContext } from '../context/userContext';
         <NavLogin />
         <NavContent />
           <Switch>
+            <Route path="/addCandidates" component={AddCandidates}/>
             <Route path="/Candidates" component={Candidates}/>
             <Route path="/suggestedCandidates" component={Suggestions}/>
             <Route path="/Questions" component={Questions}/>
