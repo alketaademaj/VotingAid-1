@@ -3,8 +3,14 @@ import React, { Component } from 'react'
 import { CSVReader } from 'react-papaparse'
 
 const buttonRef = React.createRef()
-
-export default class AddCandidates extends Component {
+ class AddCandidates extends Component {
+   constructor(props) {
+     super(props);
+     this.state = {
+       filename: null,
+       candidates: [],
+     }
+   }
   handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
@@ -12,11 +18,21 @@ export default class AddCandidates extends Component {
     }
   }
 
-  handleOnFileLoad = (data) => {
+  handleOnFileLoad = (data,file) => {
+    this.setState({filename: file.name})
     console.log('---------------------------')
     console.log(data)
     console.log('---------------------------')
+    console.log(this.state.filename);
+    if(file.name.includes('.csv')) {
+      this.setState({candidates: data});
+      console.log(this.state.candidates);
+    }
+    else{
+      console.log('THE FILE YOU UPLOADED IS NOT CSV KNOB');
+    }
   }
+
 
   handleOnError = (err, file, inputElem, reason) => {
     console.log(err)
@@ -32,6 +48,8 @@ export default class AddCandidates extends Component {
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.removeFile(e)
+      this.setState({candidates: null})
+      console.log(this.state.candiates);
     }
   }
 
@@ -41,10 +59,11 @@ export default class AddCandidates extends Component {
         ref={buttonRef}
         onFileLoad={this.handleOnFileLoad}
         onError={this.handleOnError}
+        onSubmit={this.handleOnSubmit}
         noClick
         noDrag
-        onRemoveFile={this.handleOnRemoveFile}
         config={{header: true}}
+        onRemoveFile={this.handleOnRemoveFile}
       >
         {({ file }) => (
           <aside
@@ -102,3 +121,4 @@ export default class AddCandidates extends Component {
     )
   }
 }
+export default AddCandidates;
