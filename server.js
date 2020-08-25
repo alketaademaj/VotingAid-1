@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('client-sessions');
+const async = require('async');
 
 const saltRounds = 10;
 const mongoose = require('mongoose');
@@ -158,15 +159,24 @@ app.get('/logout', function(req, res) {
 
 app.post('/send', function(req, res) {
   var length = req.body.ans.length + req.body.desc.length;
-
+  var email = req.body.email;
+  console.log(email);
   for (var i = 0; i < req.body.ans.length; i++) {
     var nestedOpt = 'filledForm.question'+i;
     var nestedDesc = 'filledForm.questiondesc'+i;
-      Candidate.findOneAndUpdate({email: '1500@laurea.fi'}, {$set: {[nestedOpt]: req.body.ans[i], [nestedDesc]: req.body.desc[i]}}, { useFindAndModify: false }, function(err, doc) {
+      Candidate.findOneAndUpdate({email: email}, {$set: {[nestedOpt]: req.body.ans[i], [nestedDesc]: req.body.desc[i]}}, { useFindAndModify: false }, function(err, doc) {
         console.log(doc);
       });
     }
 });
+
+app.post('/addCandidates', (req,res) => {
+  for (var i = 0; i < req.body.candidate.length-1; i++) {
+    var data = req.body.candidate[i].data;
+    addOneCandidate(data);
+  }
+});
+
 
 // Handles any requests that don't match the ones above
 //app.get('*', (req,res) =>{
@@ -177,3 +187,36 @@ const port = process.env.PORT || 5000;
 app.listen(port);
 
 console.log('App is listening on port ' + port);
+
+//Functions --------------------------------------------------------------------
+
+async function addOneCandidate(data) {
+  var candidate = new Candidate({
+    name: data.name,
+    surname: data.surname,
+    email: data.email,
+    school: data.school,
+    campus: data.campus,
+    electoralDistrict: data.electoralDistrict,
+    electoralAlliance: data.electoralAlliance,
+    description: data.description,
+    picture: data.picture,
+    image: data.image,
+    filledForm: {
+      question0: '',
+      questiondesc0: '',
+    },
+  });
+  console.log(candidate);
+  Candidate.countDocuments({email: data.email},function(err, count) {
+    if (count == 0) {
+        candidate.save(function(err, user) {
+      if (err) return console.log(err);
+          console.log("Succesfully added candidate to database!");
+      });
+    }
+    else {
+      console.log("Email with this address already exists as a candidate!");
+    }
+  });
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from "axios"
 
 import { CSVReader } from 'react-papaparse'
 
@@ -25,6 +26,7 @@ const buttonRef = React.createRef()
     console.log('---------------------------')
     console.log(this.state.filename);
     if(file.name.includes('.csv')) {
+      this.setState({candidates: null}); //Reset the state
       this.setState({candidates: data});
       console.log(this.state.candidates);
     }
@@ -53,8 +55,21 @@ const buttonRef = React.createRef()
     }
   }
 
+  handeSubmit() {
+    if(this.state.filename.includes('.csv')) {
+      axios.post('http://localhost:5000/addCandidates',{candidate: this.state.candidates})
+        .then(res => {
+          console.log('YEET');
+      });
+    }
+    else {
+      alert('Cant upload a file that is not a CSV one');
+    }
+  }
+
   render() {
     return (
+      <div>
       <CSVReader
         ref={buttonRef}
         onFileLoad={this.handleOnFileLoad}
@@ -118,6 +133,8 @@ const buttonRef = React.createRef()
           </aside>
         )}
       </CSVReader>
+      <button onClick={this.handeSubmit.bind(this)}>Submit</button>
+      </div>
     )
   }
 }

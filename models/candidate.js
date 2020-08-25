@@ -15,7 +15,8 @@ var candidateSchema = new Schema({
   filledForm: {},
   },
   {versionKey: false},
-  {collection: 'candidate'}
+  {collection: 'candidate'},
+  {minimize: false }
   );
 
 module.exports = mongoose.model('candidate',candidateSchema);

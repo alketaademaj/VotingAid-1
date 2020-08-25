@@ -40,7 +40,7 @@ class Form extends React.Component {
       axios.post('http://localhost:5000/fillForm',{data: email})
         .then(res => {
           if(Object.keys(res.data.filledForm).length > 1) {
-            this.setState({disabled: true});
+            //this.setState({disabled: true}); ENABLE THIS WHILE NOT TESTING
           }
             for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
                   if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].value) {
@@ -90,7 +90,7 @@ class Form extends React.Component {
       //  answers[i]
         console.log();
       }
-      axios.post('http://localhost:5000/send',{ans: this.state.answers, desc: this.state.answersDesc})
+      axios.post('http://localhost:5000/send',{ans: this.state.answers, desc: this.state.answersDesc,email: this.context.email})
         .then(res => {
             console.log(res);
         });
