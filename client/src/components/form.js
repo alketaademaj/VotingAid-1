@@ -125,11 +125,13 @@ class Form extends React.Component {
             <div className = 'questionSet' ref = {'q'+ counter} >
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-                <input type = "radio" ref = "opt0"  value = "-2" name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt1" value = "-1" name = {counter} onChange={this.handleClick.bind(this)}  disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt2" value = "0" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt3" value = "1" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
-                <input type = "radio" ref = "opt4" value = "2" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+
+                <input class="btn btn-primary" type = "radio" ref = "opt0"  value = "-2" name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
+                <input class="btn btn-primary" type = "radio" ref = "opt1" value = "-1" name = {counter} onChange={this.handleClick.bind(this)}  disabled = {this.state.disabled}/>
+                <input class="btn btn-primary" type = "radio" ref = "opt2" value = "0" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+                <input class="btn btn-primary" type = "radio" ref = "opt3" value = "1" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+                <input class="btn btn-primary" type = "radio" ref = "opt4" value = "2" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
+
                 <br />
                 {this.isQuest(counter)}
                 <br />

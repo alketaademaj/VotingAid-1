@@ -15,13 +15,13 @@ class Suggestions extends Component {
      .then(res => {
        let s = [];
        for (var i = 0; i < res.data.length; i++) {
-         let counterS = 0;
-         let counterD = 0;
+         this.setState({['similarity'+i]: 0});
+         this.setState({['danger'+i]: 0});
          let candidateArray = [];
+
          for (var j = 0; j < Object.keys(res.data[i].filledForm).length / 2; j++) {
            if (userAnswers[j] === res.data[i].filledForm['question' + j]) {
-             counterS++;
-             this.setState({['similarity'+i]: counterS});
+             this.setState({['similarity'+i]: this.state['similarity'+ i] += 1});
              console.log('LÄPI MENI');
            }
 
@@ -30,16 +30,18 @@ class Suggestions extends Component {
 
 
            if( (userAnswers[j]  == 2 && res.data[i].filledForm['question' + j] == -2) || (userAnswers[j]  == -2 && res.data[i].filledForm['question' + j] == 2) ) {
-             counterD++;
-             this.setState({['danger'+i]: counterD});
+             this.setState({['danger'+i]: this.state['danger'+ i] += 1});
            }
          }
          let userSum = userAnswers.reduce((result,number) => result+number);
          let candSum = candidateArray.reduce((result,number) => result+number);
          console.log(userSum + " Nää on vastaajan tulokset");
          console.log(candSum + " Nää on kandidaatin tulokset");
+          console.log(userAnswers.length + " VASTATUN FORMIN PITUUS");
+          console.log(Object.keys(res.data[i].filledForm).length / 2 + " VASTATUN KANDIDAATIN PITUUS");
+          console.log(this.state['danger' + i] + " DANGER");
 
-         if (this.state['similarity' + i] >= 1) {
+         if (this.state['similarity' + i] >= (0.75 * userAnswers.length) || this.state['danger' + i] <= 0.25 * userAnswers.length || userSum >= (candSum * 0.75) ) {
            s.push(res.data[i]);
            this.setState({suggestions: s});
          }
