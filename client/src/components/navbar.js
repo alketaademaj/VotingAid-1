@@ -22,7 +22,7 @@ import { UserContext } from '../context/userContext';
     }
 
     render() {
-      if(this.context.loggedIn && this.context.user === "Admin") { //BETTER FIX FOR THESE LINES PLEASE
+      if(this.context.loggedIn && this.context.user != "Quest") { //BETTER FIX FOR THESE LINES PLEASE, THIS IS NOT WORKING AS INTENDED, CANDIDATES CAN SEE ADMIN BAR NOW
         return (
            <div>
            <h2>Admin Navbar</h2>
@@ -45,7 +45,7 @@ import { UserContext } from '../context/userContext';
     static contextType = UserContext;
     render() {
       const { changeUser } = this.context;
-      if (this.context.loggedIn && this.context.user == "Admin") { //BETTER FIX FOR THESE LINES PLEASE
+      if (this.context.loggedIn§) { //BETTER FIX FOR THESE LINES PLEASE
         return (
           <div>
             <NavLink to="/"> Home </NavLink>

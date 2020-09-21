@@ -15,14 +15,14 @@ class Suggestions extends Component {
      .then(res => {
        let s = [];
        for (var i = 0; i < res.data.length; i++) {
-         this.setState({['similarity'+i]: 0});
-         this.setState({['danger'+i]: 0});
+         this.setState({['similarity'+i]: 1});
+         this.setState({['danger'+i]: 1});
          let candidateArray = [];
 
          for (var j = 0; j < Object.keys(res.data[i].filledForm).length / 2; j++) {
            if (userAnswers[j] === res.data[i].filledForm['question' + j]) {
              this.setState({['similarity'+i]: this.state['similarity'+ i] += 1});
-             console.log('LÄPI MENI');
+
            }
 
            candidateArray.push(res.data[i].filledForm['question' + j]); //Creating an array from filledForm integers
@@ -35,13 +35,17 @@ class Suggestions extends Component {
          }
          let userSum = userAnswers.reduce((result,number) => result+number);
          let candSum = candidateArray.reduce((result,number) => result+number);
+         console.log("//------------------------------------------------//");
+         console.log('KANDIDAATTI ' + res.data[i].name + ' ' + res.data[i].surname);
          console.log(userSum + " Nää on vastaajan tulokset");
          console.log(candSum + " Nää on kandidaatin tulokset");
+         console.log("Samoja Vastauksia " + this.state['similarity'+ i]);
+         console.log("Päinvastasia vastauksia " + this.state['danger' + i] + " DANGER");
+         console.log("//------------------------------------------------//");
           console.log(userAnswers.length + " VASTATUN FORMIN PITUUS");
           console.log(Object.keys(res.data[i].filledForm).length / 2 + " VASTATUN KANDIDAATIN PITUUS");
-          console.log(this.state['danger' + i] + " DANGER");
 
-         if (this.state['similarity' + i] >= (0.75 * userAnswers.length) || this.state['danger' + i] <= 0.25 * userAnswers.length || userSum >= (candSum * 0.75) ) {
+         if ( (userSum >= (candSum * 0.50) || this.state['danger' + i] <= 0.25 * userAnswers.length) && this.state['similarity' + i] >= (0.30 * userAnswers.length) ) {
            s.push(res.data[i]);
            this.setState({suggestions: s});
          }
