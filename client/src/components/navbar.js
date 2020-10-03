@@ -11,6 +11,7 @@ import Candidates from './candidates.js';
 import Questions from './questions.js';
 import Suggestions from './suggestedCandidates.js';
 import AddCandidates from './addCandidates.js';
+import AddQuestion from './addQuestion.js';
 
 import { UserContext } from '../context/userContext';
 
@@ -29,6 +30,7 @@ import { UserContext } from '../context/userContext';
               <NavLink to="/"> Home |</NavLink>
               <NavLink to="/addCandidates"> Add Candidates |</NavLink>
               <NavLink to="/Candidates"> Browse Candidates |</NavLink>
+              <NavLink to="/addQuestion"> Add Question |</NavLink>
               <NavLink to="/Questions"> Browse Questions </NavLink>
            </div>
          );
@@ -45,7 +47,7 @@ import { UserContext } from '../context/userContext';
     static contextType = UserContext;
     render() {
       const { changeUser } = this.context;
-      if (this.context.loggedIn§) { //BETTER FIX FOR THESE LINES PLEASE
+      if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
         return (
           <div>
             <NavLink to="/"> Home </NavLink>
@@ -74,6 +76,7 @@ import { UserContext } from '../context/userContext';
         <NavLogin />
         <NavContent />
           <Switch>
+            <Route path="/addQuestion" component={AddQuestion}/>
             <Route path="/addCandidates" component={AddCandidates}/>
             <Route path="/Candidates" component={Candidates}/>
             <Route path="/suggestedCandidates" component={Suggestions}/>

@@ -17,6 +17,7 @@ require("./models/user");
 
 
 
+
 var Candidate  = mongoose.model('candidate');
 var Question  = mongoose.model('question');
 var User = mongoose.model('user');
@@ -177,6 +178,27 @@ app.post('/addCandidates', (req,res) => {
   }
 });
 
+
+app.post('/addQuestion', (req,res) => {
+  console.log(req.body.question);
+
+  var question = new Question ({
+    question: req.body.question,
+    area: req.body.area,
+  });
+
+  Question.countDocuments({question: req.body.question},function(err, count) {
+    if (count == 0) {
+        question.save(function(err, user) {
+      if (err) return console.log(err);
+          console.log("Succesfully added question to database!");
+      });
+    }
+    else {
+      console.log("question already exists!");
+    }
+  });
+});
 
 // Handles any requests that don't match the ones above
 //app.get('*', (req,res) =>{
