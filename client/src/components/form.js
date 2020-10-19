@@ -66,7 +66,7 @@ class Form extends React.Component {
 
   isQuest(counter) {
     if(this.context.user != 'Quest') {
-      return <input type= "text" name = {counter} ref = {"desc" + counter}  placeholder = "fiif miten fä niinky peruftelifit fun valinnan" style={{marginBottom: "41px", width: "50%"}} onChange={this.handleChange.bind(this)} disabled = {this.state.disabled}></input>
+      return <input type= "text" name = {counter} ref = {"desc" + counter}  placeholder = "Explain your choice" style={{marginBottom: "41px", width: "50%"}} onChange={this.handleChange.bind(this)} disabled = {this.state.disabled}></input>
     }
   }
 
