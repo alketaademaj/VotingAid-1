@@ -265,17 +265,19 @@ async function addOneCandidate(data) {
 
 
 
+//  TESTIALUE HEEBOJEN ESITÄYTÖLLE ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-
-app.post('/esitäyttötesti', function(req, res) {
+app.get('/esitäyttötesti', function(req, res) {
   var taulukko = [-2,-1,0,1,2];
-  for (var i = 0; i < AMKIN KYSYMYSPATTERISTON PITUUS; i++) {
+  for (var i = 0; i < /*AMKIN KYSYMYSPATTERISTON PITUUS*/; i++) {
     var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
     var nestedOpt = 'filledForm.question'+i;
-      Candidate.findOneAndUpdate({email: HENKILÖLLE TÄYTETTÄVÄN LOMAKKEEN EMAIL}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
+      Candidate.findOneAndUpdate({email: /*HENKILÖLLE TÄYTETTÄVÄN LOMAKKEEN EMAIL*/}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
         console.log(doc);
       });
     }
 });
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
