@@ -277,13 +277,13 @@ var taulukko = [-2,-1,0,1,2];
    ]
   }, function (err, cookie) {
       for (var i = 0; i < cookie.length; i++) {
-    var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
-    var nestedOpt = 'filledForm.question'+i;
-      Candidate.findOneAndUpdate({email: '186@laurea.fi'}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
-      });
-    }
+        var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
+        var nestedOpt = 'filledForm.question'+i;
+        Candidate.findOneAndUpdate({email: '186@laurea.fi'}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
+        });
+      }
+    });
   });
-});
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
