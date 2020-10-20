@@ -266,18 +266,24 @@ async function addOneCandidate(data) {
 
 
 //  TESTIALUE HEEBOJEN ESITÄYTÖLLE ---------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-app.get('/esitäyttötesti', function(req, res) {
-  var taulukko = [-2,-1,0,1,2];
-  for (var i = 0; i < /*AMKIN KYSYMYSPATTERISTON PITUUS*/; i++) {
+app.get('/presend', function(req, res) {
+var taulukko = [-2,-1,0,1,2];
+ Candidate.findOne({email: '186@laurea.fi'}, function (err, secondCandidate) {
+  var data = secondCandidate.school;
+  Question.find({
+   $or: [
+    {'area': data},
+    {'area': "Undefined"}
+   ]
+  }, function (err, cookie) {
+      for (var i = 0; i < cookie.length; i++) {
     var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
     var nestedOpt = 'filledForm.question'+i;
-      Candidate.findOneAndUpdate({email: /*HENKILÖLLE TÄYTETTÄVÄN LOMAKKEEN EMAIL*/}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
-        console.log(doc);
+      Candidate.findOneAndUpdate({email: '186@laurea.fi'}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
       });
     }
+  });
+});
 });
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
