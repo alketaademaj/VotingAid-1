@@ -17,7 +17,7 @@ class Content extends React.Component {
   render() {
     console.log(this.context);
     return (
-      <div>
+      <div className="homeScreen">
         <label htmlFor="campus">Valitse Koulusi</label>
           <select ref="campus" onChange={this.handleChange.bind(this)}>
             <option value="Laurea">Laurea</option>
