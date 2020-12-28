@@ -16,8 +16,8 @@ class Form extends React.Component {
   }
 
    componentDidMount() {
-     console.log(this.props);
-    axios.get('http://localhost:5000/questions')
+     console.log(this.props.location.state.value);
+    axios.post('http://localhost:5000/questions',{data: this.props.location.state.value})
       .then(res => {
         let q = [];
         for(var i = 0; i < res.data.length;i++) {

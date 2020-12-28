@@ -75,8 +75,9 @@ app.post('/Profile', (req,res) => {
   });
 });
 
-app.get('/questions', (req,res) => { //Returns all the questions from database
-  Question.find({}, function(err, results) {
+app.post('/questions', (req,res) => { //Returns all the questions from database
+  const area = req.body.data;
+  Question.find({area: {$in: [area, 'Undefined']}}, function(err, results) {
     res.send(results);
   });
 });
