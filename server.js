@@ -68,7 +68,6 @@ app.post('/filteredCandidates', (req,res) => { //Shows all the candidates
 
 app.post('/Profile', (req,res) => {
   const email = req.body.data;
-  console.log(email + email);
   Candidate.findOne({email: email}, function(err, results) {
     console.log(results);
     res.send(results);

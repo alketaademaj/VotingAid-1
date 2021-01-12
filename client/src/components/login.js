@@ -36,11 +36,13 @@ class Login extends React.Component {
         this.setState({serverResponse: res.data.email});
         const { changeUser } = this.context;
         changeUser(res.data.status,res.data.email,true);
+        console.log(localStorage);
       });
   }
 
   componentWillMount() {
     console.log(this.context);
+          localStorage.setItem('rememberMe', this.context);
   }
 
   static contextType = UserContext;
