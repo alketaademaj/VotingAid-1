@@ -53,9 +53,52 @@ app.get('/', (req,res) => { //Shows all the candidates
 
 app.post('/forms', (req,res) => { //Shows all the forms
   var filter = req.body.data;
-  console.log(filter);
+  console.log('||' + filter + '||');
   Candidate.find( {school: { $eq: filter } }, function(err, results) {
     res.send(results);
+  });
+});
+
+app.post('/suggested', (req,res) => { //Shows all the suggested candidates
+  var userAnswer = req.body.data.answers;
+  var filter = req.body.data.school
+  Candidate.find( {school: { $eq: filter } }, function(err, results) {
+    var filteredResult = [];
+    console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
+    console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
+    //res.send(results);
+
+    var finalResults = [];
+
+    for (var i = 0; i < results.length; i++) {
+      var similarity = 1;
+      var danger = 1;
+      var candidateArray = [];
+
+      for (var j = 0; j < Object.keys(results[i].filledForm).length / 2; j++) {
+
+        if (userAnswer[j] === results[i].filledForm['question' + j]) { //Check for similarity
+          similarity += 1;
+        }
+
+        candidateArray.push(results[i].filledForm['question' + j]); //Creating an array from filledForm integers
+
+        if( (userAnswer[j]  == 2 && results[i].filledForm['question' + j] == -2) || (userAnswer[j]  == -2 && results[i].filledForm['question' + j] == 2) ) {
+          danger += 1; //Check for opposite answer
+        }
+
+        let userSum = userAnswer.reduce((result,number) => result+number);
+        let candSum = candidateArray.reduce((result,number) => result+number);
+
+        if ( (userSum >= (candSum * 0.50) || danger <= 0.25 * userAnswer.length) && similarity >= (0.30 * userAnswer.length) ) {
+          finalResults.push(results[i]);
+        }
+
+      }
+    }
+    let unique = [...new Set(finalResults)];
+    console.log(unique);
+    res.send(unique);
   });
 });
 
@@ -68,7 +111,6 @@ app.post('/filteredCandidates', (req,res) => { //Shows all the candidates
 
 app.post('/Profile', (req,res) => {
   const email = req.body.data;
-  console.log(email + email);
   Candidate.findOne({email: email}, function(err, results) {
     console.log(results);
     res.send(results);
