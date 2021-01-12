@@ -70,6 +70,11 @@ class Form extends React.Component {
     }
   }
 
+  choice(counter,value) {
+    return <input class="btn btn-primary" type = "radio" ref = {"opt" + counter} value = {value} name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
+
+  }
+
   handleChange(e) {
     this.state.answersDesc[e.currentTarget.name] = e.currentTarget.value;
     console.log(this.state.answersDesc);
@@ -119,28 +124,29 @@ class Form extends React.Component {
       <form onSubmit={this.handleSubmit} method="POST">
       {this.state.questions.map(index => {
         counter++;
-        if(index.area == area || index.area == 'Undefined') {
+        //if(index.area == area || index.area == 'Undefined') {
           return (
             console.log(area),
             <div className = 'questionSet' ref = {'q'+ counter} >
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
 
-                <input class="btn btn-primary" type = "radio" ref = "opt0"  value = "-2" name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
-                <input class="btn btn-primary" type = "radio" ref = "opt1" value = "-1" name = {counter} onChange={this.handleClick.bind(this)}  disabled = {this.state.disabled}/>
-                <input class="btn btn-primary" type = "radio" ref = "opt2" value = "0" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
-                <input class="btn btn-primary" type = "radio" ref = "opt3" value = "1" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
-                <input class="btn btn-primary" type = "radio" ref = "opt4" value = "2" name = {counter} onChange={this.handleClick.bind(this)}   disabled = {this.state.disabled}/>
 
+
+                {this.choice(counter, -2)}
+                {this.choice(counter, -1)}
+                {this.choice(counter, 0)}
+                {this.choice(counter, 1)}
+                {this.choice(counter, 2)}
                 <br />
                 {this.isQuest(counter)}
                 <br />
             </div>
           );
-        }
-        if (index.area != area || index.area != 'Undefined') {
-          counter--;
-        }
+        //}
+        //if (index.area != area || index.area != 'Undefined') {
+          //counter--;
+        //}
       }
     )}
         <input type="submit" value="Fill ur form"></input>
@@ -148,4 +154,5 @@ class Form extends React.Component {
     );
   }
 }
+
 export default Form;
