@@ -20,7 +20,7 @@ import axios from "axios";
     }
 
     componentDidMount() {
-      axios.get('http://localhost:5000/questions')
+      axios.get('http://localhost:5000/allQuestions')
         .then(res => {
           let q = [];
           let s = [];

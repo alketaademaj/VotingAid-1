@@ -102,7 +102,7 @@ app.post('/suggested', (req,res) => { //Shows all the suggested candidates
   });
 });
 
-app.post('/filteredCandidates', (req,res) => { //Shows all the candidates
+app.post('/filteredCandidates', (req,res) => { //Shows filtered andidates
   const school = req.body.data;
   Candidate.find({school: school}, function(err, results) {
     res.send(results);
@@ -117,9 +117,15 @@ app.post('/Profile', (req,res) => {
   });
 });
 
-app.post('/questions', (req,res) => { //Returns all the questions from database
+app.post('/questions', (req,res) => { //Form question and parse call
   const area = req.body.data;
   Question.find({area: {$in: [area, 'Undefined']}}, function(err, results) {
+    res.send(results);
+  });
+});
+
+app.get('/allQuestions', (req,res) => { //Shows all the questions
+  Question.find({}, function(err, results) {
     res.send(results);
   });
 });
