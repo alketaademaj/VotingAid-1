@@ -55,11 +55,11 @@ class Login extends React.Component {
           <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
           <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
           <button type="submit">Login</button>
-        </form>
-        <Link
+          <Link
           to={{
             pathname: "/"
           }}> Back to MainPage </Link>
+        </form>
       </div>
     );
   }

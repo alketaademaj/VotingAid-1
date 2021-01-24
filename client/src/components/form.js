@@ -71,7 +71,7 @@ class Form extends React.Component {
   }
 
   choice(counter,value) {
-    return <input class="btn btn-primary" type = "radio" ref = {"opt" + counter} value = {value} name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
+    return <input type = "radio" ref = {"opt" + counter} value = {value} name = {counter} onChange={this.handleClick.bind(this)} disabled = {this.state.disabled}/>
 
   }
 
@@ -130,26 +130,40 @@ class Form extends React.Component {
             <div className = 'questionSet' ref = {'q'+ counter} >
                 <label>{index.question}</label>
                 <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-
-
-
-                {this.choice(counter, -2)}
-                {this.choice(counter, -1)}
-                {this.choice(counter, 0)}
-                {this.choice(counter, 1)}
-                {this.choice(counter, 2)}
+                <label class="container">
+                {this.choice(counter, -2)} 
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container">
+                {this.choice(counter, -1)} 
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container">
+                {this.choice(counter, 0)} 
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container">
+                {this.choice(counter, 1)} 
+                  <span class="checkmark"></span>
+                </label>
+                <label class="container">
+                {this.choice(counter, 2)} 
+                  <span class="checkmark"></span>
+                </label> 
                 <br />
                 {this.isQuest(counter)}
                 <br />
             </div>
           );
+
+          
         //}
         //if (index.area != area || index.area != 'Undefined') {
           //counter--;
         //}
       }
     )}
-        <input type="submit" value="Fill ur form"></input>
+        <input className="filled-form" type="submit" value="Fill ur form"></input>
       </form>
     );
   }
