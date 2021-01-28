@@ -10,12 +10,9 @@ class Registration extends React.Component {
       area: "",
 
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -25,7 +22,7 @@ class Registration extends React.Component {
     this.setState({area: this.refs.area.value});
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const question = {

@@ -15,16 +15,11 @@ require("./models/candidate");
 require("./models/question");
 require("./models/user");
 
-
-
-
 var Candidate  = mongoose.model('candidate');
 var Question  = mongoose.model('question');
 var User = mongoose.model('user');
 
-
 const app = express();
-
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client')));
@@ -36,14 +31,12 @@ app.use(session({
   activeDuration: 5 * 60 * 1000,
 }));
 
-
 //module for handling form data
 var bp = require('body-parser')
 app.use( bp.json() );       // to support JSON-encoded bodies
 app.use(bp.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
-
 
 app.get('/', (req,res) => { //Shows all the candidates
   Candidate.find({}, function(err, results) {
@@ -64,8 +57,9 @@ app.post('/suggested', (req,res) => { //Shows all the suggested candidates
   var filter = req.body.data.school
   Candidate.find( {school: { $eq: filter } }, function(err, results) {
     var filteredResult = [];
-    console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
-    console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
+    //console.log(results[0]) 
+    //console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
+    //console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
     //res.send(results);
 
     var finalResults = [];
@@ -133,12 +127,11 @@ app.get('/allQuestions', (req,res) => { //Shows all the questions
 app.post('/fillForm', (req,res) => {
   var email = req.body.data;
   Candidate.findOne({email: email}, function(err, results) {
-    console.log(results.filledForm);
+    // console.log(results.filledForm);
     res.send(results);
   });
 });
 //----------------------------------------
-
 
 app.post('/registration', (req,res) => {
 
@@ -165,7 +158,6 @@ app.post('/registration', (req,res) => {
     });
   });
 });
-
 
 app.post('/login',(req,res) => {
 
@@ -226,7 +218,6 @@ app.post('/addCandidates', (req,res) => {
     addOneCandidate(data);
   }
 });
-
 
 app.post('/addQuestion', (req,res) => {
   console.log(req.body.question);

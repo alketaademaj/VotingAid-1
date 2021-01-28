@@ -16,7 +16,7 @@ class Form extends React.Component {
   }
 
    componentDidMount() {
-     console.log(this.props.location.state.value);
+     // console.log(this.props.location.state.value);
     axios.post('http://localhost:5000/questions',{data: this.props.location.state.value})
       .then(res => {
         let q = [];
@@ -39,9 +39,10 @@ class Form extends React.Component {
     if (this.context.loggedIn) {
       axios.post('http://localhost:5000/fillForm',{data: email})
         .then(res => {
-          if(Object.keys(res.data.filledForm).length > 1) {
+          // if(Object.keys(res.data.filledForm).length > 1) {
             //this.setState({disabled: true}); ENABLE THIS WHILE NOT TESTING
-          }
+         // }
+         console.log(res)
             for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
                   if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].value) {
                     this.refs['q' + i].childNodes[2].checked = true;

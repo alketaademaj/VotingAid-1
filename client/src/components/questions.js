@@ -3,8 +3,6 @@ import { UserContext } from '../context/userContext';
 import { IoIosBrush } from "react-icons/io";
 import { IoIosTrash } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
-
-
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
 
@@ -35,8 +33,8 @@ import axios from "axios";
       });
     }
 
-    handleChange() {
-      this.value = this;
+    handleChange(e) {
+      console.log(e.target.select.option)
     }
 
     enableEdit(e) {

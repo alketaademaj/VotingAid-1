@@ -52,7 +52,7 @@ import { UserContext } from '../context/userContext';
       const { changeUser } = this.context;
       if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
         return (
-          <div>
+          <div className ="homeNav">
             <NavLink to="/">
               <BiHome /> Home{" "}
             </NavLink>
