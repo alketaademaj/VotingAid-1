@@ -35,7 +35,6 @@ const buttonRef = React.createRef()
     }
   }
 
-
   handleOnError = (err, file, inputElem, reason) => {
     console.log(err)
   }
@@ -69,7 +68,7 @@ const buttonRef = React.createRef()
 
   render() {
     return (
-      <div>
+      <div className = "addCan">
       <CSVReader
         ref={buttonRef}
         onFileLoad={this.handleOnFileLoad}
@@ -95,7 +94,7 @@ const buttonRef = React.createRef()
                 borderRadius: 0,
                 marginLeft: 0,
                 marginRight: 0,
-                width: '40%',
+                width: '30%',
                 paddingLeft: 0,
                 paddingRight: 0
               }}

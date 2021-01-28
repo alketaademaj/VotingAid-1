@@ -16,8 +16,19 @@ class Content extends React.Component {
   static contextType = UserContext;
   render() {
     console.log(this.context);
+
     return (
       <div className="homeScreen">
+        <p>Here will be information about the voting machine.
+           Sunt labore laboris enim velit tempor esse reprehenderit
+           tempor consectetur mollit cupidatat consequat velit deserunt. 
+           Quis dolor quis in cupidatat reprehenderit dolor. Officia eiusmod 
+           proident dolore nisi exercitation incididunt et sit 
+           proident elit pariatur. Proident fugiat deserunt mollit mollit 
+           voluptate ut. Tempor occaecat aute pariatur ut deserunt. 
+           Mollit irure magna commodo voluptate. Aliquip mollit qui est
+           minim nostrud commodo dolor non est.
+        </p>
         <label htmlFor="campus">Valitse Koulusi</label>
           <select ref="campus" onChange={this.handleChange.bind(this)}>
             <option value="Laurea">Laurea</option>
@@ -26,7 +37,7 @@ class Content extends React.Component {
             <option value="JAMK">JAMK</option>
             <option value="O'Diako">O'Diako</option>
           </select>
-        <Link
+        <Link className="Form-button"
           to={{
             pathname: "/Form",
              state: this.state
