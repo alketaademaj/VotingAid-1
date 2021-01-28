@@ -129,6 +129,17 @@ app.get('/allQuestions', (req,res) => { //Shows all the questions
     res.send(results);
   });
 });
+
+app.post('/submitQhuahoo', function(req, res) { //EDIT ONE EXISTING submitQhuahoo
+  var defaultData = req.body.data.default;
+  var changedData = req.body.data.changed;
+      Question.findOneAndUpdate({question: defaultData}, {$set: {question: changedData}}, { useFindAndModify: false }, function(err, doc) {
+        console.log(doc);
+      });
+
+});
+
+
 //------------------------------------------------
 app.post('/fillForm', (req,res) => {
   var email = req.body.data;
