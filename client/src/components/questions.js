@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { UserContext } from '../context/userContext';
 import { IoMdCheckmark } from "react-icons/io";
-import { IoIosTrash } from "react-icons/io";
+import { IoMdTrash } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 
@@ -56,6 +56,10 @@ import axios from "axios";
         .then(res => {
 
       });
+    }
+
+    confirmDelete = (e) => {
+      var deleted = (this.refs[e.target.id].defaultValue)
     }
 
     render() {
