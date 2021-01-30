@@ -16,6 +16,7 @@ import axios from "axios";
         questions: [],
         schools: [],
         disabled: true,
+        somethingHappened: ''
       };
     }
 
@@ -41,10 +42,10 @@ import axios from "axios";
       this.refs[e.target.value] = e.target.value;
     }
 
+
     confirmChange = (e) => {
       var defaultData = (this.refs[e.target.id].defaultValue);
       var changed = (this.refs[ e.target.id].value);
-
 
       var data = {
         default: defaultData,
@@ -54,26 +55,36 @@ import axios from "axios";
       console.log(data);
       axios.post('http://localhost:5000/submitQhuahoo',{data})
         .then(res => {
-
       });
+      alert("We've changed you fuck");
     }
 
     confirmDelete = (e) => {
-      var deleted = (this.refs[e.target.id].defaultValue)
+      var del = e.target.className;
+      var deletion = this.refs[del].value
+
+      var remove = this.state.questions.map(function(e) { return e.question; }).indexOf(this.refs[del].value);
+      this.refs['set'+remove].remove();
+
+      axios.post('http://localhost:5000/deleteQhuahoo',{deletion})
+        .then( res => {
+      });
+
     }
 
     render() {
-      console.log(this.state.schools);
+      console.log(this.refs.set0);
       var counter = -1;
       return (
         <div>
         {this.state.questions.map(question => {
           counter++;
             return (
-              <div className = {'set' + counter}>
+              <div className = {'set' + counter} ref = {'set' + counter}>
                   <input ref = {'question' + counter} type = "text" style = {{display: "inline",}} defaultValue = {question.question} onChange={this.handleChange} />
                   <p  id = {'school' + counter} ref = {'school' + counter} style = {{display: "inline",}}>{question.area}</p>
-                  < IoMdCheckmark  onClick={this.confirmChange} id = {'question' + counter}/>
+                  < button  onClick={this.confirmChange} id = {'question' + counter}>EDIT</button>
+                  < button className = {'question' + counter} onClick = {this.confirmDelete}>DELETE </button>
                   <br />
                   <br />
               </div>

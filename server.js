@@ -139,6 +139,13 @@ app.post('/submitQhuahoo', function(req, res) { //EDIT ONE EXISTING submitQhuaho
 
 });
 
+app.post('/deleteQhuahoo', function(req, res) { //DELETE ONE EXISTING Qhuahoo
+      var  deletedQuestion = req.body.deletion;
+      Question.deleteOne({question: deletedQuestion}, function(err, doc) {
+        console.log(doc);
+      });
+
+});
 
 //------------------------------------------------
 app.post('/fillForm', (req,res) => {
