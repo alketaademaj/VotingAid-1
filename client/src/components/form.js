@@ -12,6 +12,7 @@ class Form extends React.Component {
       answers: [],
       answersDesc: [],
       disabled: false,
+      color: '',
     };
   }
 
@@ -28,7 +29,6 @@ class Form extends React.Component {
         }
     });
   }
-
 
   preFillForm() {
     var email = this.context.email;

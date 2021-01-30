@@ -33,15 +33,8 @@ import axios from "axios";
       });
     }
 
-<<<<<<< HEAD
     handleChange(e) {
       console.log(e.target.select.option)
-=======
-    handleChange = (e) => {
-      console.log(e.target.value);
-      console.log(e.target.defaultValue);
-      this.refs[e.target.value] = e.target.value;
->>>>>>> f0fbf28618f42c70d4f533305c1a0d45dbf63029
     }
 
     confirmChange = (e) => {
