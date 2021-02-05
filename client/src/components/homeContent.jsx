@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../context/userContext';
+import React from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 
 class Content extends React.Component {
   constructor(props) {
@@ -11,9 +11,18 @@ class Content extends React.Component {
   }
 
   handleChange() {
-    this.setState({value: this.refs.campus.value});
+    this.setState({ value: this.refs.campus.value });
   }
   static contextType = UserContext;
+
+  componentDidMount() {
+    if (window.location.pathname === "/") {
+      document.body.style.backgroundColor = "#D3CCE3";
+    } else {
+      console.log("toimii");
+    }
+  }
+
   render() {
     console.log(this.context);
 
@@ -44,8 +53,12 @@ class Content extends React.Component {
         <Link className="Form-button"
           to={{
             pathname: "/Form",
-             state: this.state
-          }}> Form </Link>
+            state: this.state,
+          }}
+        >
+          {" "}
+          Form{" "}
+        </Link>
       </div>
     );
   }
