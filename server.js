@@ -61,8 +61,9 @@ app.post('/forms', (req,res) => { //Shows all the forms
 
 app.post('/suggested', (req,res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
-  var filter = req.body.data.school
-  Candidate.find( {school: { $eq: filter } }, function(err, results) {
+  var filter = req.body.data.school;
+  console.log(filter);
+  Candidate.find( {studentAssociation: { $eq: filter } }, function(err, results) {
     var filteredResult = [];
     console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
     console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
@@ -102,7 +103,7 @@ app.post('/suggested', (req,res) => { //Shows all the suggested candidates
   });
 });
 
-app.post('/filteredCandidates', (req,res) => { //Shows all the candidates
+app.post('/filteredCandidates', (req,res) => { //Shows filtered andidates
   const school = req.body.data;
   Candidate.find({school: school}, function(err, results) {
     res.send(results);
@@ -117,12 +118,36 @@ app.post('/Profile', (req,res) => {
   });
 });
 
-app.post('/questions', (req,res) => { //Returns all the questions from database
+app.post('/questions', (req,res) => { //Form question and parse call
   const area = req.body.data;
   Question.find({area: {$in: [area, 'Undefined']}}, function(err, results) {
     res.send(results);
   });
 });
+
+app.get('/allQuestions', (req,res) => { //Shows all the questions
+  Question.find({}, function(err, results) {
+    res.send(results);
+  });
+});
+
+app.post('/submitQhuahoo', function(req, res) { //EDIT ONE EXISTING submitQhuahoo
+  var defaultData = req.body.data.default;
+  var changedData = req.body.data.changed;
+      Question.findOneAndUpdate({question: defaultData}, {$set: {question: changedData}}, { useFindAndModify: false }, function(err, doc) {
+        console.log(doc);
+      });
+
+});
+
+app.post('/deleteQhuahoo', function(req, res) { //DELETE ONE EXISTING Qhuahoo
+      var  deletedQuestion = req.body.deletion;
+      Question.deleteOne({question: deletedQuestion}, function(err, doc) {
+        console.log(doc);
+      });
+
+});
+
 //------------------------------------------------
 app.post('/fillForm', (req,res) => {
   var email = req.body.data;
@@ -261,6 +286,7 @@ async function addOneCandidate(data) {
     surname: data.surname,
     email: data.email,
     school: data.school,
+    studentAssociation: data.studentAssociation,
     campus: data.campus,
     electoralDistrict: data.electoralDistrict,
     electoralAlliance: data.electoralAlliance,
@@ -311,8 +337,8 @@ async function addOneCandidate(data) {
 //  TESTIALUE HEEBOJEN ESITÄYTÖLLE ---------------------------------------------------------------------------------------------------------------------------------------------
 app.get('/presend', function(req, res) {
 var taulukko = [-2,-1,0,1,2];
- Candidate.findOne({email: '186@laurea.fi'}, function (err, secondCandidate) {
-  var data = secondCandidate.school;
+ Candidate.findOne({email: 'julie.ahlberg@tamk.fi'}, function (err, secondCandidate) {
+  var data = secondCandidate.electoralAlliance;
   Question.find({
    $or: [
     {'area': data},
@@ -322,7 +348,7 @@ var taulukko = [-2,-1,0,1,2];
       for (var i = 0; i < cookie.length; i++) {
         var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
         var nestedOpt = 'filledForm.question'+i;
-        Candidate.findOneAndUpdate({email: '186@laurea.fi'}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
+        Candidate.findOneAndUpdate({email: 'julie.ahlberg@tamk.fi'}, {$set: {[nestedOpt]: rndnumero}}, { useFindAndModify: false }, function(err, doc) {
         });
       }
     });

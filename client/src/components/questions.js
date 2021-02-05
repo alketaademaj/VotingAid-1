@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { UserContext } from '../context/userContext';
-import { IoIosBrush } from "react-icons/io";
-import { IoIosTrash } from "react-icons/io";
+import { IoMdCheckmark } from "react-icons/io";
+import { IoMdTrash } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 
@@ -16,11 +16,12 @@ import axios from "axios";
         questions: [],
         schools: [],
         disabled: true,
+        somethingHappened: ''
       };
     }
 
     componentDidMount() {
-      axios.get('http://localhost:5000/questions')
+      axios.get('http://localhost:5000/allQuestions')
         .then(res => {
           let q = [];
           let s = [];
@@ -35,47 +36,62 @@ import axios from "axios";
       });
     }
 
-    handleChange() {
-      this.value = this;
+    handleChange = (e) => {
+      console.log(e.target.value);
+      console.log(e.target.defaultValue);
+      this.refs[e.target.value] = e.target.value;
     }
 
-    enableEdit(e) {
-      let target = e.target.getAttribute('name');
-      this.refs['question' + target].disabled = false;
-      this.refs['school' + target].disabled = false;
+
+    confirmChange = (e) => {
+      var defaultData = (this.refs[e.target.id].defaultValue);
+      var changed = (this.refs[ e.target.id].value);
+
+      var data = {
+        default: defaultData,
+        changed: changed,
+      }
+
+      console.log(data);
+      axios.post('http://localhost:5000/submitQhuahoo',{data})
+        .then(res => {
+      });
+      alert("We've changed you fuck");
     }
 
-    addQuestion() {
+    confirmDelete = (e) => {
+      var del = e.target.className;
+      var deletion = this.refs[del].value
+
+      var remove = this.state.questions.map(function(e) { return e.question; }).indexOf(this.refs[del].value);
+      this.refs['set'+remove].remove();
+
+      axios.post('http://localhost:5000/deleteQhuahoo',{deletion})
+        .then( res => {
+      });
 
     }
 
     render() {
-      console.log(this.state.schools);
+      console.log(this.refs.set0);
       var counter = -1;
       return (
         <div>
         {this.state.questions.map(question => {
           counter++;
             return (
-              <div className = {'set' + counter}>
-                  <input ref = {'question' + counter} type = "text" style = {{display: "inline",}} defaultValue = {question.question} onChange={this.handleChange.bind(this)} disabled = {this.state.disabled} />
-                  <select ref = {'school' + counter} /*onChange={this.handleChange.bind(this)}*/ value = {question.area} disabled = {this.state.disabled}>
-                    {this.state.schools.map(school => {
-                        return (
-                          <option value = {school}>{school}</option>
-                        );
-                    }
-                    )}
-                  </select>
-                  <IoIosBrush  name = {counter} onClick = {this.enableEdit.bind(this)}/>
-                  <IoIosTrash />
+              <div className = {'set' + counter} ref = {'set' + counter}>
+                  <input ref = {'question' + counter} type = "text" style = {{display: "inline",}} defaultValue = {question.question} onChange={this.handleChange} />
+                  <p  id = {'school' + counter} ref = {'school' + counter} style = {{display: "inline",}}>{question.area}</p>
+                  < button  onClick={this.confirmChange} id = {'question' + counter}>EDIT</button>
+                  < button className = {'question' + counter} onClick = {this.confirmDelete}>DELETE </button>
                   <br />
                   <br />
               </div>
             );
         }
       )}
-      <IoIosAddCircleOutline onClick = {this.addQuestion.bind(this)} style = {{cursor: 'pointer', fontSize: '50px'}} />
+
       </div>
 
       );
