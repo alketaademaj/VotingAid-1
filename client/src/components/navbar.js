@@ -22,7 +22,9 @@ import { UserContext } from '../context/userContext';
     static contextType = UserContext;
     constructor(props) {
       super(props);
-      this.state = {}
+      this.state = {
+        theme: 'default'
+      }
     }
 
     render() {
@@ -48,6 +50,24 @@ import { UserContext } from '../context/userContext';
 
   class NavLogin extends Component {
     static contextType = UserContext;
+
+    changeTheme = (e) => {
+      console.log('lol');
+      this.setState({theme: this.refs.theme.value});
+    }
+
+    componentDidUpdate() {
+      if (this.state.theme == 'BLACK') {
+        document.body.style.backgroundColor = 'black';
+      }
+      if (this.state.theme == 'BLUE') {
+        document.body.style.backgroundColor = 'blue';
+      }
+      else {
+        document.body.style.backgroundColor = 'white';
+      }
+    }
+
     render() {
       const { changeUser } = this.context;
       if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
@@ -76,6 +96,12 @@ import { UserContext } from '../context/userContext';
             </NavLink>
             <NavLink to="/Login"><BsLock /> Login </NavLink>
             <NavLink to="/Register"><HiOutlineUserAdd/> Registration </NavLink>
+              <select ref="theme" onChange={this.changeTheme}>
+                <option value="-">Valitse Teema</option>
+                <option value="BLACK">BLACK</option>
+                <option value="WHITE">WHITE</option>
+                <option value="BLUE">BLUE</option>
+              </select>
           </div>
         );
       }
