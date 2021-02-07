@@ -18,90 +18,91 @@ import AddQuestion from './addQuestion.js';
 
 import { UserContext } from '../context/userContext';
 
-  class NavContent extends Component {
-    static contextType = UserContext;
-    constructor(props) {
-      super(props);
-      this.state = {}
-    }
-
-    render() {
-      if(this.context.loggedIn && this.context.user != "Quest") { //BETTER FIX FOR THESE LINES PLEASE, THIS IS NOT WORKING AS INTENDED, CANDIDATES CAN SEE ADMIN BAR NOW
-        return (
-           <div>
-           <h2>Admin Navbar</h2>
-              <NavLink to="/"> Home |</NavLink>
-              <NavLink to="/addCandidates"> Add Candidates |</NavLink>
-              <NavLink to="/Candidates"> Browse Candidates |</NavLink>
-              <NavLink to="/addQuestion"> Add Question |</NavLink>
-              <NavLink to="/Questions"> Browse Questions </NavLink>
-           </div>
-         );
-      }
-      else {
-        return (
-          null
-        );
-      }
-    }
+class NavContent extends Component {
+  static contextType = UserContext;
+  constructor(props) {
+    super(props);
+    this.state = {}
   }
 
-  class NavLogin extends Component {
-    static contextType = UserContext;
-    render() {
-      const { changeUser } = this.context;
-      if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
-        return (
-          <div className ="homeNav">
-            <NavLink to="/">
-              <BiHome /> Home{" "}
-            </NavLink>
-            <NavLink
-              to="/logout"
-              onClick={() => changeUser("Quest", "", false)}
-            ><BsLock />
+  render() {
+    if (this.context.loggedIn && this.context.user != "Quest") { //BETTER FIX FOR THESE LINES PLEASE, THIS IS NOT WORKING AS INTENDED, CANDIDATES CAN SEE ADMIN BAR NOW
+      return (
+        <div>
+          <h2>Admin Navbar</h2>
+          <NavLink to="/"> Home |</NavLink>
+          <NavLink to="/addCandidates"> Add Candidates |</NavLink>
+          <NavLink to="/Candidates"> Browse Candidates |</NavLink>
+          <NavLink to="/addQuestion"> Add Question |</NavLink>
+          <NavLink to="/Questions"> Browse Questions </NavLink>
+        </div>
+      );
+    }
+    else {
+      return (
+        null
+      );
+    }
+  }
+}
+
+class NavLogin extends Component {
+  static contextType = UserContext;
+  render() {
+    const { changeUser } = this.context;
+    if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
+      return (
+        <div className="homeNav">
+          <NavLink to="/">
+            <BiHome /> Home{" "}
+          </NavLink>
+          <NavLink
+            to="/logout"
+            onClick={() => changeUser("Quest", "", false)}
+          ><BsLock />
               logout{" "}
-            </NavLink>
-            <NavLink to="/Profile"> Profile </NavLink>
-          </div>
-        );
-      }
-      else {
-        return (
-          <div className ="homeNav" >
-            <NavLink to="/">
-              {" "}
-              <BiHome />
+          </NavLink>
+          <NavLink to="/Profile"> Profile </NavLink>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="homeNav" >
+          <NavLink to="/">
+            {" "}
+            <BiHome />
               Home{" "}
-            </NavLink>
-            <NavLink to="/Login"><BsLock /> Login </NavLink>
-            <NavLink to="/Register"><HiOutlineUserAdd/> Registration </NavLink>
-          </div>
-        );
-      }
+          </NavLink>
+          <NavLink to="/Login"><BsLock /> Login </NavLink>
+          <NavLink to="/Register"><HiOutlineUserAdd /> Registration </NavLink>
+          <button className="click-me">Click me!</button>
+        </div>
+      );
     }
   }
+}
 
-  class Navigation extends Component {
+class Navigation extends Component {
   render() {
     return (
       <BrowserRouter>
-       <div>
-        <NavLogin />
-        <NavContent />
+        <div>
+          <NavLogin />
+          <NavContent />
           <Switch>
-            <Route path="/addQuestion" component={AddQuestion}/>
-            <Route path="/addCandidates" component={AddCandidates}/>
-            <Route path="/Candidates" component={Candidates}/>
-            <Route path="/suggestedCandidates" component={Suggestions}/>
-            <Route path="/Questions" component={Questions}/>
-            <Route path="/Form" component={Form}/>
-            <Route path="/Profile" component={Profile}/>
-            <Route path="/Login" component={Login}/>
-            <Route path="/Register" component={Registration}/>
-            <Route path="/" component={Content}/>
+            <Route path="/addQuestion" component={AddQuestion} />
+            <Route path="/addCandidates" component={AddCandidates} />
+            <Route path="/Candidates" component={Candidates} />
+            <Route path="/suggestedCandidates" component={Suggestions} />
+            <Route path="/Questions" component={Questions} />
+            <Route path="/Form" component={Form} />
+            <Route path="/Profile" component={Profile} />
+            <Route path="/Login" component={Login} />
+            <Route path="/Register" component={Registration} />
+            <Route path="/" component={Content} />
           </Switch>
-       </div>
+        </div>
       </BrowserRouter>
     );
   }

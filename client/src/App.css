@@ -1,8 +1,8 @@
 /* SOME STYLES */
 body {
-  background: #D3CCE3;  /* fallback for old browsers */
- /* background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; */
-  background-blend-mode: multiply,multiply;
+  background: #d3cce3; /* fallback for old browsers */
+  /* background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; */
+  background-blend-mode: multiply, multiply;
 }
 .homeScreen {
   border: 2px rgba(255, 255, 255, 0.829) solid;
@@ -24,7 +24,7 @@ body {
 }
 /*---------------------*/
 .radio {
-  width:100%;
+  width: 100%;
 }
 
 .container {
@@ -65,9 +65,9 @@ body {
   background-color: #ccc;
 }
 
-/* When the radio button is checked, add a blue background */
+/* When the radio button is checked, add a gray background */
 .container input:checked ~ .checkmark {
-  background-color: green;
+  background-color: rgb(118, 120, 122);
 }
 
 /* Show the indicator (dot/circle) when checked */
@@ -76,9 +76,9 @@ body {
 }
 
 label {
-  display:block;
+  display: block;
   width: 100%;
-  text-align:center;
+  text-align: center;
   margin-bottom: 1%;
 }
 form {
@@ -97,7 +97,7 @@ small {
   font-size: 50%;
 }
 .disa {
-  margin-right: 35%;
+  margin-right: 50%;
 }
 input[type="radio"]:checked {
   background-color: green;
@@ -119,7 +119,7 @@ a {
 a:hover {
   color: white;
 }
-.choice{
+.choice {
   display: flex;
   justify-content: center;
 }
@@ -131,7 +131,8 @@ a:hover {
   background-color: rgba(255, 255, 255, 0.829);
   border-radius: 1%;
 }
-input[type=email], input[type=password] {
+input[type="email"],
+input[type="password"] {
   width: 100%;
   padding: 5px 20px;
   margin: 6px 0;
@@ -163,7 +164,6 @@ input[type=email], input[type=password] {
   text-decoration: none !important;
   padding-left: 15px;
   padding-right: 15px;
-
 }
 .Form-button:hover {
   background-color: rgb(118, 120, 122);
@@ -178,7 +178,7 @@ input[type=email], input[type=password] {
   background-color: rgba(255, 255, 255, 0.829);
   border-radius: 1%;
 }
-.filled-form{
+.filled-form {
   width: auto;
   display: inline-block;
 }
@@ -198,5 +198,3 @@ input[type=email], input[type=password] {
   background-color: rgba(255, 255, 255, 0.829);
   border-radius: 1%;
 }
-
-
