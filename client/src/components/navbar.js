@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import { BiHome } from "react-icons/bi";
 import { BsLock } from "react-icons/bs";
 import { HiOutlineUserAdd } from "react-icons/hi";
+import swal from 'sweetalert';
 //Components
 import Form from './form.js';
 import Content from './homeContent.jsx';
@@ -56,6 +57,7 @@ class NavLogin extends Component {
     if (this.refs.theme.value == 'WHITE') {
           document.body.style.backgroundColor = 'white';
     }
+    swal("Color changed to " + this.refs.theme.value);
   }
   render() {
     const { changeUser } = this.context;

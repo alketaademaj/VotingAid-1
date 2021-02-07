@@ -58,7 +58,6 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   Candidate.find({ school: { $eq: filter } }, function (err, results) {
     var filteredResult = [];
     //console.log(results[0])
-
     //console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
     //console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
     //res.send(results);
@@ -196,7 +195,7 @@ app.post('/login', (req, res) => {
           res.send(user);
         }
         else {
-          res.send("Invalid Password");
+          //res.send("Invalid Password");
         }
       });
     }
@@ -327,4 +326,3 @@ app.get('/presend', function (req, res) {
   res.send("The answers were updated!")
   console.log('ok');
 });
-

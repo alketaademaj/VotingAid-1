@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { UserContext } from '../context/userContext';
 import { Link } from 'react-router-dom';
+import  { Redirect } from 'react-router-dom'
 
 import axios from "axios";
+import swal from 'sweetalert';
 
 class Login extends React.Component {
   constructor(props) {
@@ -36,8 +38,18 @@ class Login extends React.Component {
         this.setState({serverResponse: res.data.email});
         const { changeUser } = this.context;
         changeUser(res.data.status,res.data.email,true);
-        console.log(localStorage);
+        swal({
+          title: "You've Succesfully Logged In",
+          text: "You may now enter",
+          icon: "./theReconing.png",
+          button: "NICE COCK!",
+        });
+        this.props.history.push({
+          pathname: '/',
+        })
+
       });
+      swal('Invalid Password or Email Address')
   }
 
   componentWillMount() {
