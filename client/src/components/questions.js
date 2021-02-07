@@ -3,8 +3,6 @@ import { UserContext } from '../context/userContext';
 import { IoMdCheckmark } from "react-icons/io";
 import { IoMdTrash } from "react-icons/io";
 import { IoIosAddCircleOutline } from "react-icons/io";
-
-
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
 
@@ -36,10 +34,8 @@ import axios from "axios";
       });
     }
 
-    handleChange = (e) => {
-      console.log(e.target.value);
-      console.log(e.target.defaultValue);
-      this.refs[e.target.value] = e.target.value;
+    handleChange(e) {
+      console.log(e.target.select.option)
     }
 
 

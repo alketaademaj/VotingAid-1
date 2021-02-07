@@ -39,7 +39,7 @@ class Suggestions extends Component {
     }
     else {
       return (
-        <h2> You are so obscure that no one relates with you </h2>
+        <h2 className = "candidateSuggestions"> You are so obscure that no one relates with you </h2>
       );
     }
   }
