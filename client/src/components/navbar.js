@@ -48,6 +48,15 @@ class NavContent extends Component {
 
 class NavLogin extends Component {
   static contextType = UserContext;
+
+  changeTheme() {
+    if (this.refs.theme.value == 'BLACK') {
+      document.body.style.backgroundColor = 'black';
+    }
+    if (this.refs.theme.value == 'WHITE') {
+          document.body.style.backgroundColor = 'white';
+    }
+  }
   render() {
     const { changeUser } = this.context;
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
@@ -69,6 +78,11 @@ class NavLogin extends Component {
     else {
       return (
         <div className="homeNav" >
+        <select ref="theme" onChange={this.changeTheme.bind(this)}>
+          <option value="-">Valitse Teema</option>
+          <option value="BLACK">BLACK</option>
+          <option value="WHITE">WHITE</option>
+        </select>
           <NavLink to="/">
             {" "}
             <BiHome />
@@ -76,7 +90,6 @@ class NavLogin extends Component {
           </NavLink>
           <NavLink to="/Login"><BsLock /> Login </NavLink>
           <NavLink to="/Register"><HiOutlineUserAdd /> Registration </NavLink>
-          <button className="click-me">Click me!</button>
         </div>
       );
     }

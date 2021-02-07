@@ -40,11 +40,16 @@ class Content extends React.Component {
         </p>
         <label htmlFor="campus">Valitse Koulusi</label>
         <select ref="campus" onChange={this.handleChange.bind(this)}>
-          <option value="Laurea">Laurea</option>
-          <option value="Metropolia">Metropolia</option>
-          <option value="Haaga-Helia">Haaga-Helia</option>
-          <option value="JAMK">JAMK</option>
-          <option value="O'Diako">O'Diako</option>
+        <option value="-">Valitse opiskelijakuntasi</option>
+        <option value="Undefined">Undefined</option>
+        <option value="ASK">ASK</option>
+        <option value="Helga">Helga</option>
+        <option value="HUMAKO">HUMAKO</option>
+        <option value="JAMKO">JAMKO</option>
+        <option value="Laureamko">Laureamko</option>
+        <option value="METKA">METKA</option>
+        <option value="O'Diako">O'Diako</option>
+        <option value="TUO">TUO</option>
         </select>
         <Link
           className="Form-button"
