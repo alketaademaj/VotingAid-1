@@ -54,14 +54,8 @@ app.post('/forms', (req, res) => { //Shows all the forms
 
 app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
-<<<<<<< HEAD
   var filter = req.body.data.school
   Candidate.find({ school: { $eq: filter } }, function (err, results) {
-=======
-  var filter = req.body.data.school;
-  console.log(filter);
-  Candidate.find( {studentAssociation: { $eq: filter } }, function(err, results) {
->>>>>>> 98c08da59533e5ec63bac9c3c407942bd7afe69a
     var filteredResult = [];
     //console.log(results[0]) 
     //console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS

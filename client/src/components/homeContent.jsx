@@ -15,14 +15,6 @@ class Content extends React.Component {
   }
   static contextType = UserContext;
 
-  componentDidMount() {
-    if (window.location.pathname === "/") {
-      document.body.style.backgroundColor = "#D3CCE3";
-    } else {
-      console.log("toimii");
-    }
-  }
-
   render() {
     console.log(this.context);
 

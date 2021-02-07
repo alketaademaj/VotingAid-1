@@ -112,39 +112,6 @@ class Form extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    //change color here with conditions
-    // console.log(window.location.pathname === "/Form");
-    if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "Laurea"
-    ) {
-      document.body.style.backgroundColor = "pink";
-      //  document.getElementsByClassName('.checkmark').style.backgroundColor = "pink"; CHECK WHY IT DOESNT WORK
-      //console.log(document.getElementsByClassName('.checkmark'))
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "Metropolia"
-    ) {
-      document.body.style.backgroundColor = "green";
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "Haaga-Helia"
-    ) {
-      document.body.style.backgroundColor = "yellow";
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "JAMK"
-    ) {
-      document.body.style.backgroundColor = "orange";
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "O'Diako"
-    ) {
-      document.body.style.backgroundColor = "red";
-    }
-  }
-
   render() {
     if (this.props.location.state != null) {
       var area = this.props.location.state.value;
