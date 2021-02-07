@@ -35,7 +35,7 @@ class Registration extends React.Component {
 
     axios.post('http://localhost:5000/addQuestion',  question)
       .then(res => {
-
+        console.log(res);
       });
   }
 
