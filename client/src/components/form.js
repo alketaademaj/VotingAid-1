@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { UserContext } from '../context/userContext';
-import OptionButton from './optionButton.js';
+import React, { Component } from "react";
+import axios from "axios";
+import { UserContext } from "../context/userContext";
+import OptionButton from "./optionButton.js";
 
 class Form extends React.Component {
   static contextType = UserContext;
@@ -24,8 +24,8 @@ class Form extends React.Component {
         for (var i = 0; i < res.data.length; i++) {
           q.push(res.data[i]);
           var joined = this.state.questions.concat(q[i]);
-          this.setState({ questions: joined })
-          this.preFillForm()
+          this.setState({ questions: joined });
+          this.preFillForm();
         }
       });
   }

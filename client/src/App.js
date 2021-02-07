@@ -2,21 +2,21 @@ import React from 'react';
 import './App.css';
 import Navigation from './components/navbar.js'
 import Content from './components/homeContent.jsx'
-import  UserContextProvider  from './context/userContext';
+import UserContextProvider from './context/userContext';
 
-  class App extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        user: {}
-      };
-    }
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
+    };
+  }
 
   render() {
     return (
       <UserContextProvider>
         <div className="App">
-            <Navigation />
+          <Navigation />
         </div>
       </UserContextProvider>
     );

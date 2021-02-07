@@ -42,12 +42,16 @@ class Registration extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input type="question" name="question" placeholder="question" value={this.state.question} onChange={this.handleChange} required/>
           <select ref="area" onChange={this.handleArea.bind(this)}>
-            <option value="Undefined">Undefined</option>
-            <option value="Laurea">Laurea</option>
-            <option value="Metropolia">Metropolia</option>
-            <option value="Haaga-Helia">Haaga-Helia</option>
-            <option value="JAMK">JAMK</option>
-            <option value="O'Diako">O'Diako</option>
+          <option value="-">Oppilaskunta / universaali</option>
+          <option value="Undefined">Undefined</option>
+          <option value="ASK">ASK</option>
+          <option value="Helga">Helga</option>
+          <option value="HUMAKO">HUMAKO</option>
+          <option value="JAMKO">JAMKO</option>
+          <option value="Laureamko">Laureamko</option>
+          <option value="METKA">METKA</option>
+          <option value="O'Diako">O'Diako</option>
+          <option value="TUO">TUO</option>
           </select>
           <button type="submit">Add Question</button>
         </form>
