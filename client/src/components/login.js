@@ -4,15 +4,13 @@ import { Link } from 'react-router-dom';
 import  { Redirect } from 'react-router-dom'
 
 import axios from "axios";
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      serverResponse: "",
-    };
+    this.state = {};
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -35,26 +33,29 @@ class Login extends React.Component {
 
     axios.post('http://localhost:5000/login',  user)
       .then(res => {
-        this.setState({serverResponse: res.data.email});
-        const { changeUser } = this.context;
-        changeUser(res.data.status,res.data.email,true);
-        swal({
-          title: "You've Succesfully Logged In",
-          text: "You may now enter",
-          icon: "./theReconing.png",
-          button: "NICE COCK!",
-        });
-        this.props.history.push({
-          pathname: '/',
-        })
-
+        if (res) {
+          const { changeUser } = this.context;
+          changeUser(res.data.status,res.data.email,true);
+          if(!this.context.user || !this.context.email) {  // TODO: COME UP WITH SOMETHING BETTER MAYBE
+            changeUser('Quest','',false);
+            swal.fire({
+              icon: 'error',
+              title: 'ERROR',
+              text: 'Invalid Username Or Password',
+            })
+          } else {
+              swal.fire({
+                title: "You've Succesfully Logged In",
+                text: "You may now enter",
+                icon: "success",
+                confirmButtonText: "Confirm",
+              });
+              this.props.history.push({
+                pathname: '/',
+              })
+          }
+        }
       });
-      swal('Invalid Password or Email Address')
-  }
-
-  componentWillMount() {
-    console.log(this.context);
-          localStorage.setItem('rememberMe', this.context);
   }
 
   static contextType = UserContext;

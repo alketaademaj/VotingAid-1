@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios"
+import swal from "sweetalert2"
 
 import { CSVReader } from 'react-papaparse'
 
@@ -52,6 +53,26 @@ const buttonRef = React.createRef()
       this.setState({candidates: null})
       console.log(this.state.candiates);
     }
+  }
+
+  confirmSubmit() {
+    swal.fire({
+      title: 'Caution!',
+      text: "This will add all the candidates, which are not present in the database",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Procceed'
+    }).then((result) => {
+    if (result.isConfirmed) {
+      this.handeSubmit();
+        swal.fire(
+          'Candidates have been added into the database', // TODO:  ALERT THAT SHOWCASES HOW MANY CANDIDATES WERE ADDED, AND HOW MANY WERE IGNORED DUE TO DUPLICATE RULE
+          'success'
+        )
+      }
+    })
   }
 
   handeSubmit() {
@@ -132,7 +153,7 @@ const buttonRef = React.createRef()
           </aside>
         )}
       </CSVReader>
-      <button onClick={this.handeSubmit.bind(this)}>Submit</button>
+      <button onClick={this.confirmSubmit.bind(this)}>Submit</button>
       </div>
     )
   }
