@@ -54,8 +54,8 @@ app.post('/forms', (req, res) => { //Shows all the forms
 
 app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
-  var filter = req.body.data.school
-  Candidate.find({ school: { $eq: filter } }, function (err, results) {
+  var filter = req.body.data.studentAssociation;
+  Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
     var filteredResult = [];
     //console.log(results[0])
     //console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
@@ -288,6 +288,7 @@ async function addOneCandidate(data) {
       questiondesc0: '',
     },
   });
+
   console.log(candidate);
   Candidate.countDocuments({ email: data.email }, function (err, count) {
     if (count == 0) {
@@ -307,7 +308,7 @@ app.get('/presend', function (req, res) {
   Candidate.find({}, function (err, allCandidate) {
     allCandidate.forEach((oneCandidate) => {
       var id = oneCandidate._id;
-      var data = oneCandidate.school;
+      var data = oneCandidate.studentAssociation;
       Question.find({
         $or: [
           { 'area': data },
