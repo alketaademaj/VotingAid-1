@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/VotingAid/static/css/main.4ebbcf3f.chunk.css",
-    "main.js": "/VotingAid/static/js/main.3062832f.chunk.js",
-    "main.js.map": "/VotingAid/static/js/main.3062832f.chunk.js.map",
+    "main.js": "/VotingAid/static/js/main.2fc395a0.chunk.js",
+    "main.js.map": "/VotingAid/static/js/main.2fc395a0.chunk.js.map",
     "runtime-main.js": "/VotingAid/static/js/runtime-main.7eaf9a05.js",
     "runtime-main.js.map": "/VotingAid/static/js/runtime-main.7eaf9a05.js.map",
     "static/css/2.150d169a.chunk.css": "/VotingAid/static/css/2.150d169a.chunk.css",
-    "static/js/2.4a364141.chunk.js": "/VotingAid/static/js/2.4a364141.chunk.js",
-    "static/js/2.4a364141.chunk.js.map": "/VotingAid/static/js/2.4a364141.chunk.js.map",
+    "static/js/2.e4a249cd.chunk.js": "/VotingAid/static/js/2.e4a249cd.chunk.js",
+    "static/js/2.e4a249cd.chunk.js.map": "/VotingAid/static/js/2.e4a249cd.chunk.js.map",
     "index.html": "/VotingAid/index.html",
     "static/css/2.150d169a.chunk.css.map": "/VotingAid/static/css/2.150d169a.chunk.css.map",
     "static/css/main.4ebbcf3f.chunk.css.map": "/VotingAid/static/css/main.4ebbcf3f.chunk.css.map",
-    "static/js/2.4a364141.chunk.js.LICENSE.txt": "/VotingAid/static/js/2.4a364141.chunk.js.LICENSE.txt"
+    "static/js/2.e4a249cd.chunk.js.LICENSE.txt": "/VotingAid/static/js/2.e4a249cd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7eaf9a05.js",
     "static/css/2.150d169a.chunk.css",
-    "static/js/2.4a364141.chunk.js",
+    "static/js/2.e4a249cd.chunk.js",
     "static/css/main.4ebbcf3f.chunk.css",
-    "static/js/main.3062832f.chunk.js"
+    "static/js/main.2fc395a0.chunk.js"
   ]
 }
