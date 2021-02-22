@@ -2,20 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Laurea",
+      value: "Undefined",
     };
   }
 
   handleChange() {
     this.setState({ value: this.refs.campus.value });
   }
-  static contextType = UserContext;
 
+  static contextType = UserContext;
+  
   componentDidMount() {
+    const { checkExistingLogin } = this.context;
+    checkExistingLogin();
+
     if (window.location.pathname === "/") {
       document.body.style.backgroundColor = "#D3CCE3";
     } else {
@@ -24,8 +29,6 @@ class Content extends React.Component {
   }
 
   render() {
-    console.log(this.context);
-
     return (
       <div className="homeScreen">
         <p>

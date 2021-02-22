@@ -50,6 +50,8 @@ class Login extends React.Component {
                 icon: "success",
                 confirmButtonText: "Confirm",
               });
+              sessionStorage.setItem('email',this.context.email);
+              sessionStorage.setItem('status',this.context.user);
               this.props.history.push({
                 pathname: '/',
               })

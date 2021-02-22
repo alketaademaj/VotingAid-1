@@ -17,9 +17,22 @@ class UserContextProvider extends Component {
     });
   }
 
+  logOut = () => {
+    this.changeUser('Quest','',false);
+    sessionStorage.clear();
+  }
+
+  checkExistingLogin = () => {
+    var email = sessionStorage.getItem('email');
+    var status = sessionStorage.getItem('status');
+    if (email && status) {
+      this.changeUser(status,email,true);
+    }
+  }
+
   render() {
     return (
-      <UserContext.Provider value = {{...this.state, changeUser: this.changeUser }}>
+      <UserContext.Provider value = {{...this.state, changeUser: this.changeUser, checkExistingLogin: this.checkExistingLogin, logOut: this.logOut }}>
         {this.props.children}
       </UserContext.Provider>
     );

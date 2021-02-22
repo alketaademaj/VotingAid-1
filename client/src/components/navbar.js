@@ -4,6 +4,7 @@ import { BiHome } from "react-icons/bi";
 import { BsLock } from "react-icons/bs";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import swal from 'sweetalert2';
+
 //Components
 import Form from './form.js';
 import Content from './homeContent.jsx';
@@ -61,6 +62,7 @@ class NavLogin extends Component {
   }
   render() {
     const { changeUser } = this.context;
+    const { logOut } = this.context;
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
       return (
         <div className="homeNav">
@@ -69,7 +71,7 @@ class NavLogin extends Component {
           </NavLink>
           <NavLink
             to="/logout"
-            onClick={() => changeUser("Quest", "", false)}
+            onClick={() => logOut()}
           ><BsLock />
               logout{" "}
           </NavLink>
