@@ -16,11 +16,8 @@ class Content extends React.Component {
   }
 
   static contextType = UserContext;
-  
-  componentDidMount() {
-    const { checkExistingLogin } = this.context;
-    checkExistingLogin();
 
+  componentDidMount() {
     if (window.location.pathname === "/") {
       document.body.style.backgroundColor = "#D3CCE3";
     } else {
@@ -61,8 +58,7 @@ class Content extends React.Component {
             state: this.state,
           }}
         >
-          {" "}
-          Form{" "}
+        Form
         </Link>
       </div>
     );

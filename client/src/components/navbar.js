@@ -51,6 +51,11 @@ class NavContent extends Component {
 class NavLogin extends Component {
   static contextType = UserContext;
 
+  componentDidMount() {
+    const { checkExistingLogin } = this.context;
+    checkExistingLogin();
+  }
+
   changeTheme() {
     if (this.refs.theme.value == 'BLACK') {
       document.body.style.backgroundColor = 'black';
@@ -67,13 +72,13 @@ class NavLogin extends Component {
       return (
         <div className="homeNav">
           <NavLink to="/">
-            <BiHome /> Home{" "}
+            <BiHome /> Home
           </NavLink>
           <NavLink
             to="/logout"
             onClick={() => logOut()}
           ><BsLock />
-              logout{" "}
+              logout
           </NavLink>
           <NavLink to="/Profile"> Profile </NavLink>
         </div>
@@ -88,9 +93,8 @@ class NavLogin extends Component {
           <option value="WHITE">WHITE</option>
         </select>
           <NavLink to="/">
-            {" "}
             <BiHome />
-              Home{" "}
+              Home
           </NavLink>
           <NavLink to="/Login"><BsLock /> Login </NavLink>
           <NavLink to="/Register"><HiOutlineUserAdd /> Registration </NavLink>
