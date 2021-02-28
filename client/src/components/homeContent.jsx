@@ -7,7 +7,7 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Undefined",
+      studentAssociation: "Undefined",
     };
   }
 
@@ -41,7 +41,6 @@ class Content extends React.Component {
         <label htmlFor="campus">Valitse Koulusi</label>
         <select ref="campus" onChange={this.handleChange.bind(this)}>
         <option value="-">Valitse opiskelijakuntasi</option>
-        <option value="Undefined">Undefined</option>
         <option value="ASK">ASK</option>
         <option value="Helga">Helga</option>
         <option value="HUMAKO">HUMAKO</option>
@@ -55,7 +54,7 @@ class Content extends React.Component {
           className="Form-button"
           to={{
             pathname: "/Form",
-            state: this.state,
+            studentAssociation: this.state.studentAssociation,
           }}
         >
         Form

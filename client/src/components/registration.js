@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -32,12 +33,24 @@ class Registration extends React.Component {
       password_confirmation: this.state.password_confirmation,
       status: "Candidate"
     }
+    if (this.state.password == this.state.password_confirmation) {
+      axios.post('http://localhost:5000/registration',  user)
+        .then(res => {
+          console.log(user.email);
+          console.log(res.data);
+          Swal.fire({
+            text: res.data,
+            icon: res.data.includes('address') ? 'error' : 'success'
+          })
+        });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR',
+        text: 'Confirmation Password Must Match With Password',
+      })
+    }
 
-    axios.post('http://localhost:5000/registration',  user)
-      .then(res => {
-        console.log(user.email);
-        console.log(res.data);
-      });
   }
 
   render() {

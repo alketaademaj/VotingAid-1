@@ -162,18 +162,23 @@ app.post('/registration', (req, res) => {
       password: hash,
       status: "Candidate",
     });
-
-    User.countDocuments({ email: req.body.email }, function (err, count) {
-      if (count == 0) {
-        user.save(function (err, user) {
-          if (err) return console.log(err);
-          console.log("Succesfully added user to database!");
+    Candidate.countDocuments({email: req.body.email}, function (err, count) {
+      if (count != 0) {
+        User.countDocuments({ email: req.body.email }, function (err, count) {
+          if (count == 0) {
+            user.save(function (err, user) {
+              if (err) return console.log(err);
+              res.send("Succesfully added user to database!");
+            });
+          }
+          else {
+            res.send("Email with this address already exists as a user!");
+          }
         });
-      }
-      else {
-        console.log("Email with this address already exists as a user!");
-      }
-    });
+      } else {
+        res.send('You cannot register an account for email address that does not exist as a candidate!');
+      }  
+    })
   });
 });
 
@@ -303,7 +308,7 @@ async function addOneCandidate(data) {
   });
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-app.get('/presend', function (req, res) {
+app.get('/randomFill', function (req, res) {
   var taulukko = [-2, -1, 0, 1, 2];
   Candidate.find({}, function (err, allCandidate) {
     allCandidate.forEach((oneCandidate) => {
@@ -318,7 +323,8 @@ app.get('/presend', function (req, res) {
         for (var i = 0; i < cookie.length; i++) {
           var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
           var nestedOpt = 'filledForm.question' + i;
-          Candidate.findOneAndUpdate({ _id: id }, { $set: { [nestedOpt]: rndnumero } }, { useFindAndModify: false }, function (err, doc) {
+          var nestedDesc = 'filledForm.questiondesc' + i;
+          Candidate.findOneAndUpdate({ _id: id }, { $set: { [nestedOpt]: rndnumero, [nestedDesc]: "" } }, { useFindAndModify: false }, function (err, doc) {
           });
         }
       });

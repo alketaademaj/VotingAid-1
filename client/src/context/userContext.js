@@ -32,7 +32,11 @@ class UserContextProvider extends Component {
 
   render() {
     return (
-      <UserContext.Provider value = {{...this.state, changeUser: this.changeUser, checkExistingLogin: this.checkExistingLogin, logOut: this.logOut }}>
+      <UserContext.Provider value = {{...this.state,
+        changeUser: this.changeUser,
+        checkExistingLogin: this.checkExistingLogin,
+         logOut: this.logOut
+       }}>
         {this.props.children}
       </UserContext.Provider>
     );

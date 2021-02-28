@@ -10,7 +10,7 @@ import Profile from './profile.js';
       super(props);
       this.state = {
         amount: [],
-        schools: [],
+        Association: [],
       }
     }
 
@@ -24,11 +24,11 @@ import Profile from './profile.js';
            q.push(res.data[i].name);
            var joined = this.state.amount.concat(q[i]);
            this.setState({ amount: joined });
-           s.push(res.data[i].school);
+           s.push(res.data[i].studentAssociation);
 
          }
-         const uniqueSchools = Array.from(new Set(s));
-         this.setState({ schools: uniqueSchools });
+         const uniqueAssociations = Array.from(new Set(s));
+         this.setState({ Association: uniqueAssociations });
      });
    }
 
@@ -51,7 +51,7 @@ import Profile from './profile.js';
         <div style = {{width: '50%', marginLeft: '25%', marginTop: '5%'}}>
         <label htmlFor ="school">Filter by School</label>
         <select ref="school" onChange={this.handleChange.bind(this)}>
-          {this.state.schools.map(index => {
+          {this.state.Association.map(index => {
               return (
                 <option value = {index}>{index}</option>
               );
@@ -63,7 +63,7 @@ import Profile from './profile.js';
               <tr>
                 <th>#</th>
                 <th>Candidate</th>
-                <th>School</th>
+                <th>Student Association</th>
               </tr>
             </thead>
             <tbody>
@@ -80,7 +80,7 @@ import Profile from './profile.js';
                         }}> {this.state['Candidate' + counter].name + ' ' + this.state['Candidate' + counter].surname}
                       </Link>
                       </td>
-                      <td>{this.state['Candidate' + counter].school}</td>
+                      <td>{this.state['Candidate' + counter].studentAssociation}</td>
                     </tr>
                 );
             }

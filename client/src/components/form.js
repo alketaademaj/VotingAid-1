@@ -11,14 +11,13 @@ class Form extends React.Component {
       questions: [],
       answers: [],
       answersDesc: [],
-      disabled: false,
-      color: '',
+      //disabled: false,
+      //color: '',
     };
   }
 
   componentDidMount() {
-    // console.log(this.props.location.state.value);
-    axios.post('http://localhost:5000/questions', { data: this.props.location.state.value })
+    axios.post('http://localhost:5000/questions', { data: this.props.location.studentAssociation })
       .then(res => {
         let q = [];
         for (var i = 0; i < res.data.length; i++) {
@@ -42,22 +41,23 @@ class Form extends React.Component {
           // if(Object.keys(res.data.filledForm).length > 1) {
           //this.setState({disabled: true}); ENABLE THIS WHILE NOT TESTING
           // }
-          console.log(res)
+        console.log(res)
           for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
-            if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].value) {
-              this.refs['q' + i].childNodes[2].checked = true;
+            console.log(Object.keys(res.data.filledForm).length);
+            if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].childNodes[0].value) {
+              this.refs['q' + i].childNodes[2].childNodes[0].checked = true;
             }
-            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[3].value) {
-              this.refs['q' + i].childNodes[3].checked = true;
+            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[3].childNodes[0].value) {
+              this.refs['q' + i].childNodes[3].childNodes[0].checked = true;
             }
-            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[4].value) {
-              this.refs['q' + i].childNodes[4].checked = true;
+            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[4].childNodes[0].value) {
+              this.refs['q' + i].childNodes[4].childNodes[0].checked = true;
             }
-            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[5].value) {
-              this.refs['q' + i].childNodes[5].checked = true;
+            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[5].childNodes[0].value) {
+              this.refs['q' + i].childNodes[5].childNodes[0].checked = true;
             }
-            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[6].value) {
-              this.refs['q' + i].childNodes[6].checked = true;
+            else if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[6].childNodes[0].value) {
+              this.refs['q' + i].childNodes[6].childNodes[0].checked = true;
             }
             this.refs['desc' + i].value = res.data.filledForm['questiondesc' + i];
           }
@@ -72,7 +72,7 @@ class Form extends React.Component {
   }
 
   choice(counter, value) {
-    return <input type="radio" ref={"opt" + counter} value={value} name={counter} onChange={this.handleClick.bind(this)} disabled={this.state.disabled} />
+    return <input className="" type="radio" ref={"opt" + counter} value={value} name={counter} onChange={this.handleClick.bind(this)} disabled={this.state.disabled} />
 
   }
 
@@ -93,8 +93,6 @@ class Form extends React.Component {
       event.preventDefault();
       let answers = {};
       for (var i = 0; i < this.state.questions.length; i++) {
-        //  answers[i]
-        console.log();
       }
       axios.post('http://localhost:5000/send', { ans: this.state.answers, desc: this.state.answersDesc, email: this.context.email })
         .then(res => {
@@ -112,7 +110,7 @@ class Form extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+/*  componentDidUpdate() {
     //change color here with conditions
     // console.log(window.location.pathname === "/Form");
     if (
@@ -121,7 +119,7 @@ class Form extends React.Component {
     ) {
       document.body.style.backgroundColor = "pink";
       //  document.getElementsByClassName('.checkmark').style.backgroundColor = "pink"; CHECK WHY IT DOESNT WORK
-      //console.log(document.getElementsByClassName('.checkmark'))
+      console.log(document.getElementsByClassName('.checkmark'))
     } else if (
       window.location.pathname === "/Form" &&
       this.props.location.state.value === "Metropolia"
@@ -143,7 +141,7 @@ class Form extends React.Component {
     ) {
       document.body.style.backgroundColor = "red";
     }
-  }
+  }*/
 
   render() {
     if (this.props.location.state != null) {
@@ -155,52 +153,44 @@ class Form extends React.Component {
     }
     var counter = -1;
     return (
-      <form onSubmit={this.handleSubmit} method="POST">
+        <form onSubmit={this.handleSubmit} method="POST">
         {this.state.questions.map(index => {
           counter++;
-          //if(index.area == area || index.area == 'Undefined') {
-          return (
-            console.log(area),
-            <div className='questionSet' ref={'q' + counter} >
-              <label>{index.question}</label>
-              <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-              <label class="container">
-                {this.choice(counter, -2)}
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">
-                {this.choice(counter, -1)}
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">
-                {this.choice(counter, 0)}
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">
-                {this.choice(counter, 1)}
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">
-                {this.choice(counter, 2)}
-                <span class="checkmark"></span>
-              </label>
-              <br />
-              {this.isQuest(counter)}
-              <br />
-            </div>
-          );
-
-
-          //}
-          //if (index.area != area || index.area != 'Undefined') {
-          //counter--;
-          //}
+            return (
+              console.log(area),
+              <div className = 'questionSet' ref = {'q'+ counter} >
+                  <label>{index.question}</label>
+                  <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
+                  <label class="container">
+                    {this.choice(counter, -2)}
+                    <span class="checkmark"></span>
+                  </label>
+                  <label class="container">
+                    {this.choice(counter, -1)}
+                    <span class="checkmark"></span>
+                  </label>
+                  <label class="container">
+                    {this.choice(counter, 0)}
+                    <span class="checkmark"></span>
+                  </label>
+                  <label class="container">
+                    {this.choice(counter, 1)}
+                    <span class="checkmark"></span>
+                  </label>
+                  <label class="container">
+                    {this.choice(counter, 2)}
+                    <span class="checkmark"></span>
+                  </label>
+                  <br />
+                  {this.isQuest(counter)}
+                  <br />
+              </div>
+            );
         }
-        )}
-        <input className="filled-form" type="submit" value="Fill ur form"></input>
-      </form>
-    );
+      )}
+          <input type="submit" value="Fill ur form"></input>
+        </form>
+      );
   }
 }
-
 export default Form;
