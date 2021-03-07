@@ -1,7 +1,7 @@
 import FormOption from './formOption';
 
 
-const FormOptionContainer = ({counter, action}) => {
+const FormOptionContainer = ({counter, action, value}) => {
     return (
         <label class="container">
             <FormOption 
@@ -9,6 +9,7 @@ const FormOptionContainer = ({counter, action}) => {
                 counter={counter} 
                 action={action} 
                 isActive={true}
+                value={value}
             />
             <span class="checkmark"></span>
         </label>
