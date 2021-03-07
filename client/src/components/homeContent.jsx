@@ -1,30 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
+import { StudentAssociations } from './partials/selectMenuLists'
+import SubmitSelection from "./partials/submitSelection";
+import SelectMenu from './partials/selectMenu.js';
 
 
 class Content extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      studentAssociation: "Undefined",
-    };
-  }
-
-  handleChange() {
-    this.setState({ value: this.refs.campus.value });
-  }
-
   static contextType = UserContext;
 
-  componentDidMount() {
-    if (window.location.pathname === "/") {
-      document.body.style.backgroundColor = "#D3CCE3";
-    } else {
-      console.log("toimii");
-    }
+  constructor(props) {
+    super(props);
+    this.state = { value: 'Undefined' };
   }
 
+  handler = (e) => {
+    this.setState({value: e.target.value});
+  }
+    
   render() {
     return (
       <div className="homeScreen">
@@ -38,27 +30,13 @@ class Content extends React.Component {
           Mollit irure magna commodo voluptate. Aliquip mollit qui est minim
           nostrud commodo dolor non est.
         </p>
-        <label htmlFor="campus">Valitse Koulusi</label>
-        <select ref="campus" onChange={this.handleChange.bind(this)}>
-        <option value="-">Valitse opiskelijakuntasi</option>
-        <option value="ASK">ASK</option>
-        <option value="Helga">Helga</option>
-        <option value="HUMAKO">HUMAKO</option>
-        <option value="JAMKO">JAMKO</option>
-        <option value="Laureamko">Laureamko</option>
-        <option value="METKA">METKA</option>
-        <option value="O'Diako">O'Diako</option>
-        <option value="TUO">TUO</option>
-        </select>
-        <Link
-          className="Form-button"
-          to={{
-            pathname: "/Form",
-            studentAssociation: this.state.studentAssociation,
-          }}
-        >
-        Form
-        </Link>
+        <label className="campus">Valitse Koulusi</label>
+        <SelectMenu
+          action={this.handler}
+          className={'studentAssociationList'} 
+          selectMenuList={StudentAssociations} 
+        />
+        <SubmitSelection studentAssociation={this.state.value} />
       </div>
     );
   }

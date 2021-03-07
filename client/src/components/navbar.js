@@ -16,6 +16,7 @@ import Questions from './questions.js';
 import Suggestions from './suggestedCandidates.js';
 import AddCandidates from './addCandidates.js';
 import AddQuestion from './addQuestion.js';
+import SelectMenu from './partials/selectMenu.js';
 
 
 import { UserContext } from '../context/userContext';
@@ -120,6 +121,7 @@ class Navigation extends Component {
             <Route path="/Profile" component={Profile} />
             <Route path="/Login" component={Login} />
             <Route path="/Register" component={Registration} />
+            <Route path="/TESTINGOUT" component={SelectMenu} />
             <Route path="/" component={Content} />
           </Switch>
         </div>

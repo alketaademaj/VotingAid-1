@@ -32,7 +32,7 @@ app.use(session({
 }));
 
 //module for handling form data
-var bp = require('body-parser')
+var bp = require('body-parser');
 app.use(bp.json());       // to support JSON-encoded bodies
 app.use(bp.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -113,6 +113,7 @@ app.post('/Profile', (req, res) => {
 
 app.post('/questions', (req, res) => { //Form question and parse call
   const area = req.body.data;
+  console.log(area);
   Question.find({ area: { $in: [area, 'Undefined'] } }, function (err, results) {
     res.send(results);
   });
