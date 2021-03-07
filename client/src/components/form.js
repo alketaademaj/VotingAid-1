@@ -46,19 +46,9 @@ class Form extends React.Component {
     }
   }
 
-  isQuest(counter) {
-    if (this.context.user != 'Quest') {
-      return <input type="text" name={counter} ref={"desc" + counter} placeholder="Explain your choice" style={{ marginBottom: "41px", width: "50%" }} onChange={this.handleChange.bind(this)} disabled={this.state.disabled}></input>
-    }
-  }
   isCandidate() {
     if(this.context.user != 'Quest')
     return true;
-  }
-
-  choice(counter, value) {
-    return <input className="" type="radio" ref={"opt" + counter} value={value} name={counter} onChange={this.handleClick.bind(this)} disabled={this.state.disabled} />
-
   }
 
   handleChange(e) {
@@ -220,3 +210,14 @@ export default Form;
           }
         });
     }*/
+
+      /*isQuest(counter) {
+    if (this.context.user != 'Quest') {
+      return <input type="text" name={counter} ref={"desc" + counter} placeholder="Explain your choice" style={{ marginBottom: "41px", width: "50%" }} onChange={this.handleChange.bind(this)} disabled={this.state.disabled}></input>
+    }
+  }
+
+  choice(counter, value) {
+    return <input className="" type="radio" ref={"opt" + counter} value={value} name={counter} onChange={this.handleClick.bind(this)} disabled={this.state.disabled} />
+
+  }*/
