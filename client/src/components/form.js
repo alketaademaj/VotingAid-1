@@ -31,17 +31,16 @@ class Form extends React.Component {
   this.SetArea();
   }
 
-
   handleChange(e) {
     this.state.answersDesc[e.currentTarget.name] = e.currentTarget.value;
-    console.log(this.state.answersDesc);
+    //console.log(this.state.answersDesc);
   }
 
   handleClick(e) {
     this.state.answers[e.currentTarget.name] = parseInt(e.currentTarget.value);
-    console.log(this.state.answers);
+    //console.log(this.state.answers);
     let sum = this.state.answers.reduce((result, number) => result + number);
-    console.log(sum);
+    //console.log(sum);
   }
 
   handleSubmit = event => {
@@ -66,7 +65,7 @@ class Form extends React.Component {
   }
 
   render() {
-    console.log(this.state.area);
+    //console.log(this.state.area);
     var counter = -1;
     return (
       <div className="VotingAidForm">
@@ -81,8 +80,7 @@ class Form extends React.Component {
                 counter={counter} 
                 action={this.handleClick.bind(this)}
               />
-            );
-            
+            );       
         }
       )}
           <input type="submit" value="Fill ur form"></input>
