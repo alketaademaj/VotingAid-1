@@ -12,34 +12,33 @@ const GetQuestions = (filter, setStateArray) => {
 }
 
 
-const PreFillFormTesting = (email, stateArray) => {
-  console.log(email + 'email');
-  console.log('statearray');
-  console.log(stateArray);
-    //console.log(stateArray);
-   /*Axios.post('http://localhost:5000/fillForm', { data: email })
-    .then(res => {
-        for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
-            console.log(Object.keys(res.data.filledForm).length);
-            if (res.data.filledForm['question' + i] == form[0].childNodes[2].childNodes[0].value) {
-              form[0].childNodes[2].childNodes[0].checked = true;
-            }
-            else if (res.data.filledForm['question' + i] == form[0].childNodes[3].childNodes[0].value) {
-              form[0].childNodes[3].childNodes[0].checked = true;
-            }
-            else if (res.data.filledForm['question' + i] == form[0].childNodes[4].childNodes[0].value) {
-              form[0].childNodes[4].childNodes[0].checked = true;
-            }
-            else if (res.data.filledForm['question' + i] == form[0].childNodes[5].childNodes[0].value) {
-              form[0].childNodes[5].childNodes[0].checked = true;
-            }
-            else if (res.data.filledForm['question' + i] == form[0].childNodes[6].childNodes[0].value) {
-              form[0].childNodes[6].childNodes[0].checked = true;
-            }
-            form[0].childNodes[5+i].value = res.data.filledForm['questiondesc' + i];
-          }
-    });*/
+const PreFillFormTesting = (email) => {
+  
+          Axios.post('http://localhost:5000/fillForm', { data: email })
+            .then(res => {
+              for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
+                var formInputs = document.getElementsByName(i);
+                if (res.data.filledForm['question' + i] == formInputs[0].value) {
+                  formInputs[0].checked = true;
+                }
+                else if (res.data.filledForm['question' + i] == formInputs[1].value) {
+                  formInputs[1].checked = true;
+                }
+                else if (res.data.filledForm['question' + i] == formInputs[2].value) {
+                  formInputs[2].checked = true;
+                }
+                else if (res.data.filledForm['question' + i] == formInputs[3].value) {
+                  formInputs[3].checked = true;
+                }
+                else if (res.data.filledForm['question' + i] == formInputs[4].value) {
+                  formInputs[4].checked = true;
+                }
+                formInputs[5].value = res.data.filledForm['questiondesc' + i];
+              }
+            });
+        
 }
+
 
 
 export {

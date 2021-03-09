@@ -1,19 +1,23 @@
 import FormOption from './formOption';
+import React from 'react';
 
 
-const FormOptionContainer = ({counter, action, value}) => {
+
+
+const FormOptionContainer = ({className, counter, action, isActive, value}) => {
     return (
-        <label class="container">
+        <label className="container">
             <FormOption 
                 className={'questionOption'} 
-                counter={counter} 
+                counter={counter}
                 action={action} 
                 isActive={true}
                 value={value}
             />
-            <span class="checkmark"></span>
+            <span className="checkmark"></span>
         </label>
     );
 }
+
 
 export default FormOptionContainer;
