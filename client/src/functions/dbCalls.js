@@ -12,8 +12,7 @@ const GetQuestions = (filter, setStateArray) => {
 }
 
 
-const PreFillFormTesting = (email) => {
-  
+const PreFillForm = (email) => {
           Axios.post('http://localhost:5000/fillForm', { data: email })
             .then(res => {
               for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
@@ -42,6 +41,6 @@ const PreFillFormTesting = (email) => {
 
 
 export {
-    PreFillFormTesting,
+    PreFillForm,
     GetQuestions,
 };

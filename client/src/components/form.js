@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { UserContext } from "../context/userContext";
-import { GetQuestions, PreFillFormTesting } from "../functions/dbCalls";
+import { GetQuestions, PreFillForm } from "../functions/dbCalls";
 import  FormOptionSet  from "./partials/formOptionSet";
 
 class Form extends React.Component {
@@ -33,14 +33,11 @@ class Form extends React.Component {
 
   handleChange(e) {
     this.state.answersDesc[e.currentTarget.name] = e.currentTarget.value;
-    //console.log(this.state.answersDesc);
   }
 
   handleClick(e) {
     this.state.answers[e.currentTarget.name] = parseInt(e.currentTarget.value);
-    //console.log(this.state.answers);
     let sum = this.state.answers.reduce((result, number) => result + number);
-    //console.log(sum);
   }
 
   handleSubmit = event => {
@@ -48,7 +45,11 @@ class Form extends React.Component {
       event.preventDefault();
       for (var i = 0; i < this.state.questions.length; i++) {
       }
-      axios.post('http://localhost:5000/send', { ans: this.state.answers, desc: this.state.answersDesc, email: this.context.email })
+      axios.post('http://localhost:5000/send', { 
+        ans: this.state.answers, 
+        desc: this.state.answersDesc, 
+        email: this.context.email 
+      })
         .then(res => {
           console.log(res);
         });
@@ -65,7 +66,6 @@ class Form extends React.Component {
   }
 
   render() {
-    //console.log(this.state.area);
     var counter = -1;
     return (
       <div className="VotingAidForm">
@@ -85,7 +85,7 @@ class Form extends React.Component {
       )}
           <input type="submit" value="Fill ur form"></input>
         </form>
-        {this.context.loggedIn ? PreFillFormTesting(this.context.email) : ''}
+        {this.context.loggedIn ? PreFillForm(this.context.email) : ''}
         </div>
       );
   }
