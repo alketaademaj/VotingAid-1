@@ -1,72 +1,61 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { HandleRegistration } from '../functions/dbCalls';
+import SingleInputField from "./partials/singleInputField";
 
 class Registration extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      email: "",
-      password: "",
-      password_confirmation: "",
-      registrationErrors: ""
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {};
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+  handleChange = (e) => {
+    this.setState({[e.target.name]: e.target.value});
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-
+  handleSubmit = () => {
     const user = {
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.password_confirmation,
       status: "Candidate"
     }
-    if (this.state.password == this.state.password_confirmation) {
-      axios.post('http://localhost:5000/registration',  user)
-        .then(res => {
-          console.log(user.email);
-          console.log(res.data);
-          Swal.fire({
-            text: res.data,
-            icon: res.data.includes('address') ? 'error' : 'success'
-          })
-        });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'ERROR',
-        text: 'Confirmation Password Must Match With Password',
-      })
-    }
-
+    HandleRegistration(user, this.state.password, this.state.password_confirmation);
   }
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
-          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
-          <input type="password" name="password_confirmation" placeholder="Password confirmation" value={this.state.password_confirmation} onChange={this.handleChange} required/>
+          <SingleInputField 
+            type = {'email'} name = {'email'} 
+            placeholder = {'Email'} 
+            value={this.state.email}
+            action = {this.handleChange} 
+            mandatory = {true}
+          />
+          <SingleInputField 
+            type = {'password'} 
+            name = {'password'} 
+            placeholder = {'Password'} 
+            value={this.state.password} 
+            action = {this.handleChange} 
+            mandatory = {true} 
+          />
+          <SingleInputField 
+            type = {'password'} 
+            name = {'password_confirmation'}
+            placeholder = {'Confirm Password'} 
+            value={this.state.password_confirmation} 
+            action = {this.handleChange} 
+            mandatory = {true} 
+          />
           <button type="submit">Register</button>
-          <Link
-          to={{
-            pathname: "/"
-          }}> Back to MainPage </Link>
+          <Link to={{pathname: "/"}}> Back to MainPage </Link>
         </form>
       </div>
+      //ERRORS WORK, BUT FORM IS SUBMITTED EVEN WHEN ERROR IS GIVEN
     );
   }
 }

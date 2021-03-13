@@ -1,8 +1,5 @@
 import Axios from 'axios';
 import Swal from 'sweetalert2'
-import UserContext from '../context/userContext';
-import {useContext} from 'react';
-
 
 const GetQuestions = (filter, setStateArray) => {  
     return Axios.post('http://localhost:5000/questions', { data: filter })
@@ -42,39 +39,57 @@ const PreFillForm = (email) => {
         
 }
 
-const HandleLogin = ({userObject, changeUser}) => {
- /* Axios.post('http://localhost:5000/login',  userObject)
+const HandleLogin = (userObject, changeLogin) => {
+ Axios.post('http://localhost:5000/login',  userObject)
     .then(res => {
       if (res) {
-        changeUser(res.data.status,res.data.email,true);
-        if(!this.context.user || !this.context.email) {  // TODO: COME UP WITH SOMETHING BETTER MAYBE
-          changeUser('Quest','',false);
+        changeLogin(res.data.status,res.data.email,true);
+        /*if(!this.context.user || !this.context.email) {  // TODO: COME UP WITH SOMETHING BETTER MAYBE
+          changeLogin('Quest','',false);
           Swal.fire({
             icon: 'error',
             title: 'ERROR',
             text: 'Invalid Username Or Password',
-          })
-        } else {
+          })*/
+        //} else {
             Swal.fire({
               title: "You've Succesfully Logged In",
               text: "You may now enter",
               icon: "success",
               confirmButtonText: "Confirm",
             });
-            sessionStorage.setItem('email',this.context.email);
-            sessionStorage.setItem('status',this.context.user);
-            this.props.history.push({
-              pathname: '/',
-            })
-        }
+            return true;
+        //}
       }
-    });*/
+    });
 }
 
+
+
+const HandleRegistration = (userObject, pass, passconf) => {
+    if (pass == passconf) {
+      Axios.post('http://localhost:5000/registration',  userObject)
+        .then(res => {
+          Swal.fire({
+            text: res.data,
+            icon: res.data.includes('address') ? 'error' : 'success'
+          })
+          return true;
+        });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR',
+        text: 'Confirmation Password Must Match With Password',
+      });
+      return false;
+    }
+ }
 
 
 export {
     PreFillForm,
     GetQuestions,
     HandleLogin,
+    HandleRegistration,
 };
