@@ -1,17 +1,20 @@
-import React, { Component } from "react";
-import { UserContext } from '../context/userContext';
+import React, { Component, useContext } from "react";
+//import { UserContext } from '../context/userContext';
 import { Link } from 'react-router-dom';
-import  { Redirect } from 'react-router-dom'
+//import  { Redirect } from 'react-router-dom'
+import { HandleLogin } from '../functions/dbCalls';
+
 
 import axios from "axios";
 import Swal from 'sweetalert2';
+import SingleInputField from "./partials/singleInputField";
+import { UserContext } from "../context/userContext";
 
 class Login extends React.Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
-
     this.state = {};
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,14 +26,14 @@ class Login extends React.Component {
   }
 
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
-
     const user = {
       email: this.state.email,
       password: this.state.password,
     }
-
+    /*const { changeUser } = this.context;
+    HandleLogin(user, changeUser)*/
     axios.post('http://localhost:5000/login',  user)
       .then(res => {
         if (res) {
@@ -58,22 +61,30 @@ class Login extends React.Component {
           }
         }
       });
-  }
-
-  static contextType = UserContext;
+    }
 
   render() {
-    const { changeUser } = this.context;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
-          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
-          <button type="submit">Login</button>
-          <Link
-          to={{
-            pathname: "/"
-          }}> Back to MainPage </Link>
+          <SingleInputField
+           type = {'email'} 
+           name = {'email'} 
+           placeholder = {'Email'} 
+           value = {this.state.email} 
+           action = {this.handleChange} 
+           mandatory = {true}
+          />
+          <SingleInputField 
+            type = {'password'} 
+            name = {'password'} 
+            placeholder = {'Password'} 
+            value = {this.state.password} 
+            action = {this.handleChange} 
+            mandatory={true} 
+          /> 
+          <button type="submit"> Login </button>
+          <Link to={{ pathname: "/"}}> Back to MainPage </Link>
         </form>
       </div>
     );

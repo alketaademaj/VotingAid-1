@@ -3,6 +3,7 @@ import { UserContext } from "../context/userContext";
 import { StudentAssociations } from './partials/selectMenuLists'
 import SubmitSelection from "./partials/submitSelection";
 import SelectMenu from './partials/selectMenu.js';
+import TitleLabel from "./partials/titleLabel";
 
 
 class Content extends React.Component {
@@ -30,7 +31,7 @@ class Content extends React.Component {
           Mollit irure magna commodo voluptate. Aliquip mollit qui est minim
           nostrud commodo dolor non est.
         </p>
-        <label className="campus">Valitse Koulusi</label>
+        <TitleLabel questionTitle={'Valitse Koulusi'} />
         <SelectMenu
           action={this.handler}
           className={'studentAssociationList'} 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import QuestionTitle from './questionTitle';
+import TitleLabel from './titleLabel';
 import { UserContext } from '../../context/userContext';
 import { NavLink } from 'react-router-dom';
   
@@ -8,7 +8,7 @@ const AdminNavbar = () => {
     if (user.user == "Admin") {
         return (
             <div>
-                <QuestionTitle questionTitle={'Admin Navbar'} />
+                <TitleLabel questionTitle={'Admin Navbar'} />
                 <NavLink to="/addCandidates"> Add Candidates |</NavLink>
                 <NavLink to="/Candidates"> Browse Candidates |</NavLink>
                 <NavLink to="/addQuestion"> Add Question |</NavLink>
