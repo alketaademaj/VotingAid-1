@@ -4,6 +4,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('client-sessions');
 const async = require('async');
+const fileUpload = require('express-fileupload');
 
 const saltRounds = 10;
 const mongoose = require('mongoose');
@@ -162,7 +163,7 @@ app.post('/registration', (req, res) => {
       password: hash,
       status: "Candidate",
     });
-    Candidate.countDocuments({email: req.body.email}, function (err, count) {
+    Candidate.countDocuments({ email: req.body.email }, function (err, count) {
       if (count != 0) {
         User.countDocuments({ email: req.body.email }, function (err, count) {
           if (count == 0) {
@@ -177,7 +178,7 @@ app.post('/registration', (req, res) => {
         });
       } else {
         res.send('You cannot register an account for email address that does not exist as a candidate!');
-      }  
+      }
     })
   });
 });
@@ -333,3 +334,16 @@ app.get('/randomFill', function (req, res) {
   res.send("The answers were updated!")
   console.log('ok');
 });
+//----------------------------------------------------------------------------------------------
+app.post('/changeOneVariableWithinCandidate', (req, res) => {
+  var filepath = "/pictures/" + req.body.data;
+  console.log(filepath)
+  editOneCandidate(filepath, "image");
+
+});
+async function editOneCandidate(data, variable) {
+  Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false }, function (err, res) {
+    console.log(res)
+  })
+}
+//-----------------------------------------------------------------------

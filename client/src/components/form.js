@@ -41,7 +41,7 @@ class Form extends React.Component {
           // if(Object.keys(res.data.filledForm).length > 1) {
           //this.setState({disabled: true}); ENABLE THIS WHILE NOT TESTING
           // }
-        console.log(res)
+          console.log(res)
           for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
             console.log(Object.keys(res.data.filledForm).length);
             if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].childNodes[0].value) {
@@ -104,44 +104,44 @@ class Form extends React.Component {
         pathname: '/suggestedCandidates',
         data: {
           answers: this.state.answers,
-          school: this.props.location.state.value,
+          school: this.props.location.state.studentAssociation,
         }
       })
     }
   }
 
-/*  componentDidUpdate() {
-    //change color here with conditions
-    // console.log(window.location.pathname === "/Form");
-    if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "Laurea"
-    ) {
-      document.body.style.backgroundColor = "pink";
-      //  document.getElementsByClassName('.checkmark').style.backgroundColor = "pink"; CHECK WHY IT DOESNT WORK
-      console.log(document.getElementsByClassName('.checkmark'))
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "Metropolia"
-    ) {
-      document.body.style.backgroundColor = "green";
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "Haaga-Helia"
-    ) {
-      document.body.style.backgroundColor = "yellow";
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "JAMK"
-    ) {
-      document.body.style.backgroundColor = "orange";
-    } else if (
-      window.location.pathname === "/Form" &&
-      this.props.location.state.value === "O'Diako"
-    ) {
-      document.body.style.backgroundColor = "red";
-    }
-  }*/
+  /*  componentDidUpdate() {
+      //change color here with conditions
+      // console.log(window.location.pathname === "/Form");
+      if (
+        window.location.pathname === "/Form" &&
+        this.props.location.state.value === "Laurea"
+      ) {
+        document.body.style.backgroundColor = "pink";
+        //  document.getElementsByClassName('.checkmark').style.backgroundColor = "pink"; CHECK WHY IT DOESNT WORK
+        console.log(document.getElementsByClassName('.checkmark'))
+      } else if (
+        window.location.pathname === "/Form" &&
+        this.props.location.state.value === "Metropolia"
+      ) {
+        document.body.style.backgroundColor = "green";
+      } else if (
+        window.location.pathname === "/Form" &&
+        this.props.location.state.value === "Haaga-Helia"
+      ) {
+        document.body.style.backgroundColor = "yellow";
+      } else if (
+        window.location.pathname === "/Form" &&
+        this.props.location.state.value === "JAMK"
+      ) {
+        document.body.style.backgroundColor = "orange";
+      } else if (
+        window.location.pathname === "/Form" &&
+        this.props.location.state.value === "O'Diako"
+      ) {
+        document.body.style.backgroundColor = "red";
+      }
+    }*/
 
   render() {
     if (this.props.location.state != null) {
@@ -153,44 +153,44 @@ class Form extends React.Component {
     }
     var counter = -1;
     return (
-        <form onSubmit={this.handleSubmit} method="POST">
+      <form onSubmit={this.handleSubmit} method="POST">
         {this.state.questions.map(index => {
           counter++;
-            return (
-              console.log(area),
-              <div className = 'questionSet' ref = {'q'+ counter} >
-                  <label>{index.question}</label>
-                  <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
-                  <label class="container">
-                    {this.choice(counter, -2)}
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">
-                    {this.choice(counter, -1)}
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">
-                    {this.choice(counter, 0)}
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">
-                    {this.choice(counter, 1)}
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">
-                    {this.choice(counter, 2)}
-                    <span class="checkmark"></span>
-                  </label>
-                  <br />
-                  {this.isQuest(counter)}
-                  <br />
-              </div>
-            );
+          return (
+            console.log(area),
+            <div className='questionSet' ref={'q' + counter} >
+              <label>{index.question}</label>
+              <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
+              <label class="container">
+                {this.choice(counter, -2)}
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">
+                {this.choice(counter, -1)}
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">
+                {this.choice(counter, 0)}
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">
+                {this.choice(counter, 1)}
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">
+                {this.choice(counter, 2)}
+                <span class="checkmark"></span>
+              </label>
+              <br />
+              {this.isQuest(counter)}
+              <br />
+            </div>
+          );
         }
-      )}
-          <input type="submit" value="Fill ur form"></input>
-        </form>
-      );
+        )}
+        <input type="submit" value="Fill ur form"></input>
+      </form>
+    );
   }
 }
 export default Form;

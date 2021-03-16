@@ -1,0 +1,5 @@
+const Picture = ({ source, alt, className }) => {
+    return <img src={source} alt={alt} className={className} />
+}
+
+export default Picture
