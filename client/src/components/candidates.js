@@ -35,7 +35,6 @@ import CandidateTable from './partials/candidateTable';
         <div style = {{width: '50%', marginLeft: '25%', marginTop: '5%'}}>
         <label htmlFor ="school">Filter by School</label>
         <SelectMenu
-          action={this.handler}
           className={'studentAssociationList'} 
           selectMenuList={QuestionAreaList}
           action={this.handleChange.bind(this)}
