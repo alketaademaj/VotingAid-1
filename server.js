@@ -97,8 +97,8 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
 });
 
 app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
-  const school = req.body.data;
-  Candidate.find({ school: school }, function (err, results) {
+  const filter = req.body.data;
+  Candidate.find({ studentAssociation: filter }, function (err, results) {
     res.send(results);
   });
 });
@@ -308,6 +308,7 @@ async function addOneCandidate(data) {
     }
   });
 }
+
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 app.get('/randomFill', function (req, res) {
   var taulukko = [-2, -1, 0, 1, 2];
