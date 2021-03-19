@@ -14,29 +14,25 @@ const GetQuestions = (filter, setStateArray) => {
 
 
 const PreFillForm = (email) => {
-          Axios.post('http://localhost:5000/fillForm', { data: email })
-            .then(res => {
-              for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
-                var formInputs = document.getElementsByName(i);
-                if (res.data.filledForm['question' + i] == formInputs[0].value) {
-                  formInputs[0].checked = true;
-                }
-                else if (res.data.filledForm['question' + i] == formInputs[1].value) {
-                  formInputs[1].checked = true;
-                }
-                else if (res.data.filledForm['question' + i] == formInputs[2].value) {
-                  formInputs[2].checked = true;
-                }
-                else if (res.data.filledForm['question' + i] == formInputs[3].value) {
-                  formInputs[3].checked = true;
-                }
-                else if (res.data.filledForm['question' + i] == formInputs[4].value) {
-                  formInputs[4].checked = true;
-                }
-                formInputs[5].value = res.data.filledForm['questiondesc' + i];
-              }
-            });
-        
+  Axios.post('http://localhost:5000/fillForm', { data: email })
+    .then(res => {
+      for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
+        var formInputs = document.getElementsByName(i);
+
+        if (res.data.filledForm['question' + i] == formInputs[0].value) {
+            formInputs[0].checked = true;
+        } else if (res.data.filledForm['question' + i] == formInputs[1].value) {
+            formInputs[1].checked = true;
+        } else if (res.data.filledForm['question' + i] == formInputs[2].value) {
+            formInputs[2].checked = true;
+        } else if (res.data.filledForm['question' + i] == formInputs[3].value) {
+            formInputs[3].checked = true;
+        } else if (res.data.filledForm['question' + i] == formInputs[4].value) {
+            formInputs[4].checked = true;
+        }
+        formInputs[5].value = res.data.filledForm['questiondesc' + i];
+      }
+  });        
 }
 
 const HandleLogin = (userObject, changeLogin) => {
@@ -63,8 +59,6 @@ const HandleLogin = (userObject, changeLogin) => {
       }
     });
 }
-
-
 
 const HandleRegistration = (userObject, pass, passconf) => {
     if (pass == passconf) {
