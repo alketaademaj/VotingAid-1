@@ -3,7 +3,8 @@ import { UserContext } from '../context/userContext';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import Picture from './partials/picture';
-import ChangePic from './changePic';
+//import ChangePic from './changePic';
+import FileUpload from './FileUpload';
 
 
 class Profile extends Component {
@@ -27,9 +28,6 @@ class Profile extends Component {
         this.setState({ profile: res.data });
       });
   }
-  //--------------------------------------------------------------------------------------------
-
-
   //---------------------------------------------------------------------------------------------
   render() {
     return (
@@ -41,7 +39,7 @@ class Profile extends Component {
         <h5>{this.state.profile.description}</h5>
         <h6>{this.state.profile.campus}</h6>
         <Picture source={process.env.PUBLIC_URL + this.state.profile.image}></Picture>
-        <ChangePic></ChangePic>
+        <FileUpload></FileUpload>
         <Link
           to={{
             pathname: "/Form",

@@ -104,7 +104,7 @@ class Form extends React.Component {
         pathname: '/suggestedCandidates',
         data: {
           answers: this.state.answers,
-          school: this.props.location.state.studentAssociation,
+          school: this.props.location.studentAssociation,
         }
       })
     }

@@ -1,10 +1,10 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('client-sessions');
 const async = require('async');
-const fileUpload = require('express-fileupload');
 
 const saltRounds = 10;
 const mongoose = require('mongoose');
@@ -24,6 +24,7 @@ const app = express();
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client')));
+app.use(fileUpload());
 app.use(cors());
 app.use(session({
   cookieName: 'session',
@@ -334,16 +335,30 @@ app.get('/randomFill', function (req, res) {
   res.send("The answers were updated!")
   console.log('ok');
 });
-//----------------------------------------------------------------------------------------------
-app.post('/changeOneVariableWithinCandidate', (req, res) => {
-  var filepath = "/pictures/" + req.body.data;
-  console.log(filepath)
-  editOneCandidate(filepath, "image");
-
-});
-async function editOneCandidate(data, variable) {
-  Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false }, function (err, res) {
-    console.log(res)
-  })
-}
 //-----------------------------------------------------------------------
+app.post('/upload', (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: 'No file uploaded' });
+  }
+  const file = req.files.file;
+  file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+  });
+});
+//---------------------------
+// app.post('/changeOneVariableWithinCandidate', (req, res) => {
+//   var filepath = "/pictures/" + req.body.data;
+//   console.log(filepath)
+//   editOneCandidate(filepath, "image");
+
+// });
+// async function editOneCandidate(data, variable) {
+//   Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false }, function (err, res) {
+//     console.log(res)
+//   })
+// }
+
