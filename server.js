@@ -22,6 +22,8 @@ var User = mongoose.model('user');
 
 const app = express();
 
+console.log("johonki")
+
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(fileUpload());
