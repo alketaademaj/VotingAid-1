@@ -30,6 +30,7 @@ class Profile extends Component {
   }
   //---------------------------------------------------------------------------------------------
   render() {
+    console.log(this.state.profile.image)
     return (
       <div>
         <h1>{this.state.profile.name}</h1>

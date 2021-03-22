@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './AppMini.css';
 import Navigation from './components/navbar.js'
 //import Content from './components/homeContent.jsx'
 import UserContextProvider from './context/userContext';

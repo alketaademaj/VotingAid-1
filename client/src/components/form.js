@@ -153,7 +153,7 @@ class Form extends React.Component {
     }
     var counter = -1;
     return (
-      <form onSubmit={this.handleSubmit} method="POST">
+      <form className="homeScreen" onSubmit={this.handleSubmit} method="POST">
         {this.state.questions.map(index => {
           counter++;
           return (

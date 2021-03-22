@@ -346,19 +346,20 @@ app.post('/upload', (req, res) => {
       console.error(err);
       return res.status(500).send(err);
     }
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+    console.log(file)
+    editOneCandidate("/uploads/" + file.name, "image");
   });
 });
-//---------------------------
+//--------------------------- OLD CODE
 // app.post('/changeOneVariableWithinCandidate', (req, res) => {
 //   var filepath = "/pictures/" + req.body.data;
 //   console.log(filepath)
 //   editOneCandidate(filepath, "image");
 
 // });
-// async function editOneCandidate(data, variable) {
-//   Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false }, function (err, res) {
-//     console.log(res)
-//   })
-// }
+async function editOneCandidate(data, variable) {
+  Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false }, function (err, res) {
+    console.log(res)
+  })
+}
 
