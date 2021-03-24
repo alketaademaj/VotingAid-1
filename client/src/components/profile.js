@@ -28,18 +28,22 @@ class Profile extends Component {
         this.setState({ profile: res.data });
       });
   }
+
   //---------------------------------------------------------------------------------------------
   render() {
     console.log(this.state.profile.image)
     return (
       <div>
-        <h1>{this.state.profile.name}</h1>
-        <h2>{this.state.profile.surname}</h2>
-        <h3>{this.state.profile.school}</h3>
-        <h4>{this.state.profile.studentAssociation}</h4>
-        <h5>{this.state.profile.description}</h5>
-        <h6>{this.state.profile.campus}</h6>
-        <Picture source={process.env.PUBLIC_URL + this.state.profile.image}></Picture>
+        <div className="candidate">
+          <h1>{this.state.profile.name}</h1>
+          <h2>{this.state.profile.surname}</h2>
+          <h3>{this.state.profile.school}</h3>
+          <h4>{this.state.profile.studentAssociation}</h4>
+          <h5>{this.state.profile.description}</h5>
+          <h6>{this.state.profile.campus}</h6>
+        </div>
+        <Picture className="pic" source={process.env.PUBLIC_URL + this.state.profile.image}></Picture>
+        <br />
         <FileUpload></FileUpload>
         <Link
           to={{

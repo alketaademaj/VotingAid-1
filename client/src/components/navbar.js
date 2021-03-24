@@ -60,7 +60,7 @@ class NavLogin extends Component {
       document.body.style.backgroundColor = 'black';
     }
     if (this.refs.theme.value == 'WHITE') {
-          document.body.style.backgroundColor = 'white';
+      document.body.style.backgroundColor = 'white';
     }
     swal.fire("Color changed to " + this.refs.theme.value);
   }
@@ -70,6 +70,11 @@ class NavLogin extends Component {
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
       return (
         <div className="homeNav">
+          <select ref="theme" onChange={this.changeTheme.bind(this)}>
+            <option value="-">Valitse Teema</option>
+            <option value="BLACK">BLACK</option>
+            <option value="WHITE">WHITE</option>
+          </select>
           <NavLink to="/">
             <BiHome /> Home
           </NavLink>
@@ -86,11 +91,11 @@ class NavLogin extends Component {
     else {
       return (
         <div className="homeNav" >
-        <select ref="theme" onChange={this.changeTheme.bind(this)}>
-          <option value="-">Valitse Teema</option>
-          <option value="BLACK">BLACK</option>
-          <option value="WHITE">WHITE</option>
-        </select>
+          <select ref="theme" onChange={this.changeTheme.bind(this)}>
+            <option value="-">Valitse Teema</option>
+            <option value="BLACK">BLACK</option>
+            <option value="WHITE">WHITE</option>
+          </select>
           <NavLink to="/">
             <BiHome />
               Home

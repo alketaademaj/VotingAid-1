@@ -45,12 +45,12 @@ const FileUpload = () => {
                         {filename}
                     </label>
                 </div>
-                <input type="submit" value="Upload" className="btn btn-primary btn-block mt-4" />
+                <input type="submit" value="Upload" />
             </form>
-            {  uploadedFile ? <div className="row mt-5">
-                <div className=".col-md-6.m-auto">
+            {  uploadedFile ? <div>
+                <div>
                     <h3 className="text-center">{uploadedFile.fileName}</h3>
-                    <img style={{ width: '10%' }} src={uploadedFile.filePath} alt=""></img>
+                    <img src={uploadedFile.filePath} alt=""></img>
                 </div>
             </div> : null}
         </Fragment>

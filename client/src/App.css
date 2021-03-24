@@ -4,6 +4,9 @@ body {
   /* background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; */
   background-blend-mode: multiply, multiply;
 }
+.app {
+  width: 10%;
+}
 .homeScreen {
   border: 2px rgba(255, 255, 255, 0.829) solid;
   padding-bottom: 7px;
@@ -12,6 +15,7 @@ body {
   display: inline-block;
   background-color: rgba(255, 255, 255, 0.829);
   border-radius: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .App {
   text-align: center;
@@ -91,6 +95,7 @@ form {
   margin-top: 100px;
   border: 2px white solid;
   padding-top: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 small {
   font-size: 50%;
@@ -160,13 +165,15 @@ input[type="text"] {
 .Form-button {
   border: rgb(118, 120, 122) 2px solid;
   transition: 0.5s;
-  color: black;
   text-decoration: none !important;
+  background-color: rgb(148, 150, 151);
+  border-radius: 5%;
+  width: 10%;
   padding-left: 15px;
   padding-right: 15px;
 }
 .Form-button:hover {
-  background-color: rgb(118, 120, 122);
+  background-color: rgb(88, 87, 87);
   color: white;
 }
 .addCan {
@@ -197,4 +204,8 @@ input[type="text"] {
   display: inline-block;
   background-color: rgba(255, 255, 255, 0.829);
   border-radius: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.pic {
+  width: 10%;
 }

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
-
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +27,7 @@ class Content extends React.Component {
   render() {
     return (
       <div className="homeScreen">
+        <h1>Tervetuloa vaalikoneeseen!</h1>
         <p>
           Here will be information about the voting machine. Sunt labore laboris
           enim velit tempor esse reprehenderit tempor consectetur mollit
@@ -40,15 +40,15 @@ class Content extends React.Component {
         </p>
         <label htmlFor="campus">Valitse Koulusi</label>
         <select ref="campus" onChange={this.handleChange.bind(this)}>
-        <option value="-">Valitse opiskelijakuntasi</option>
-        <option value="ASK">ASK</option>
-        <option value="Helga">Helga</option>
-        <option value="HUMAKO">HUMAKO</option>
-        <option value="JAMKO">JAMKO</option>
-        <option value="Laureamko">Laureamko</option>
-        <option value="METKA">METKA</option>
-        <option value="O'Diako">O'Diako</option>
-        <option value="TUO">TUO</option>
+          <option value="-">Valitse opiskelijakuntasi</option>
+          <option value="ASK">ASK</option>
+          <option value="Helga">Helga</option>
+          <option value="HUMAKO">HUMAKO</option>
+          <option value="JAMKO">JAMKO</option>
+          <option value="Laureamko">Laureamko</option>
+          <option value="METKA">METKA</option>
+          <option value="O'Diako">O'Diako</option>
+          <option value="TUO">TUO</option>
         </select>
         <Link
           className="Form-button"
@@ -57,7 +57,7 @@ class Content extends React.Component {
             studentAssociation: this.state.studentAssociation,
           }}
         >
-        Form
+          Form
         </Link>
       </div>
     );

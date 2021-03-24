@@ -16,6 +16,8 @@ class Suggestions extends Component {
       answers: this.props.location.data.answers,
       school: this.props.location.data.school
     };
+    console.log(this.props.location.data.school)
+    console.log(data) //korjaa näyttämään koulun aluen kandit, nyt näyttää undefined
 
     axios.post('http://localhost:5000/suggested', { data: data })
       .then(res => {
