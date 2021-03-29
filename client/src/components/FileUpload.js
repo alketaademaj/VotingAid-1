@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from 'react'
+// import { ProgressBar } from "react-bootstrap"
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
-const FileUpload = () => {
+const FileUpload = ({ email, onUpload }) => {
 
     const [file, setFile] = useState(''); //useState is the default file: ''; only call setFile instead of setState 
     const [filename, setFilename] = useState('Choose file');
@@ -12,21 +14,24 @@ const FileUpload = () => {
         setFilename(e.target.files[0].name);
     }
 
-    const onSubmit = async e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+        formData.append('email', email)
         formData.append('file', file);
 
         try {
             const res = await axios.post('/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
-                }
+                },
             });
 
             const { fileName, filePath } = res.data;
             setUploadedFile({ fileName, filePath });
-
+            if (typeof onUpload === 'function') {
+                onUpload({ fileName, filePath })
+            }
         } catch (err) {
             if (err.response.status === 500) {
                 console.log('There was a problem with the server');
@@ -36,24 +41,26 @@ const FileUpload = () => {
         }
     }
 
+    const alert = () => {
+        Swal.fire({
+            title: 'You have succesfully submitted a question!',
+            icon: "success",
+            confirmButtonText: "Confirm",
+        })
+    }
+
     return (
-        <Fragment>
+        <div>
             <form onSubmit={onSubmit}>
-                <div class="custom-file mb-4">
-                    <input type="file" class="custom-file-input" id="customFile" onChange={onChange} />
-                    <label class="custom-file-label" htmlFor="custom-file">
+                <div className="custom-file mb-4">
+                    <input type="file" className="custom-file-input" id="customFile" onChange={onChange} />
+                    <label className="custom-file-label" htmlFor="custom-file">
                         {filename}
                     </label>
                 </div>
-                <input type="submit" value="Upload" />
+                <input onClick={alert} type="submit" value="Upload" />
             </form>
-            {  uploadedFile ? <div>
-                <div>
-                    <h3 className="text-center">{uploadedFile.fileName}</h3>
-                    <img src={uploadedFile.filePath} alt=""></img>
-                </div>
-            </div> : null}
-        </Fragment>
+        </div>
     )
 }
 export default FileUpload

@@ -24,7 +24,10 @@ class NavContent extends Component {
   static contextType = UserContext;
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      color: ''
+    }
+
   }
 
   render() {
@@ -55,12 +58,17 @@ class NavLogin extends Component {
     checkExistingLogin();
   }
 
-  changeTheme() {
+  changeTheme = () => {
     if (this.refs.theme.value == 'BLACK') {
       document.body.style.backgroundColor = 'black';
+      console.log("Black")
     }
-    if (this.refs.theme.value == 'WHITE') {
+    else if (this.refs.theme.value == 'WHITE') {
       document.body.style.backgroundColor = 'white';
+      console.log("White")
+    }
+    else if (this.refs.theme.value == '-') {
+      document.body.style.backgroundColor = '#5da57b93';
     }
     swal.fire("Color changed to " + this.refs.theme.value);
   }
@@ -70,11 +78,6 @@ class NavLogin extends Component {
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
       return (
         <div className="homeNav">
-          <select ref="theme" onChange={this.changeTheme.bind(this)}>
-            <option value="-">Valitse Teema</option>
-            <option value="BLACK">BLACK</option>
-            <option value="WHITE">WHITE</option>
-          </select>
           <NavLink to="/">
             <BiHome /> Home
           </NavLink>
@@ -91,7 +94,7 @@ class NavLogin extends Component {
     else {
       return (
         <div className="homeNav" >
-          <select ref="theme" onChange={this.changeTheme.bind(this)}>
+          <select ref="theme" onChange={this.changeTheme}>
             <option value="-">Valitse Teema</option>
             <option value="BLACK">BLACK</option>
             <option value="WHITE">WHITE</option>
@@ -111,7 +114,7 @@ class NavLogin extends Component {
 class Navigation extends Component {
   render() {
     return (
-      <BrowserRouter>
+      < BrowserRouter >
         <div>
           <NavLogin />
           <NavContent />
@@ -128,7 +131,7 @@ class Navigation extends Component {
             <Route path="/" component={Content} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </BrowserRouter >
     );
   }
 }

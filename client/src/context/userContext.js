@@ -1,12 +1,15 @@
-import React, { createContext, Component} from 'react';
+import React, { createContext, Component } from 'react';
 
 export const UserContext = createContext();
 
 class UserContextProvider extends Component {
-  state = {
-    user: 'Quest',
-    email: '',
-    loggedIn: false,
+  constructor(props) {
+    super(props)
+    this.state = this.existingLogin() || {
+      user: 'Quest',
+      email: '',
+      loggedIn: false,
+    }
   }
 
   changeUser = (user, email, loggedIn) => {
@@ -18,7 +21,7 @@ class UserContextProvider extends Component {
   }
 
   logOut = () => {
-    this.changeUser('Quest','',false);
+    this.changeUser('Quest', '', false);
     sessionStorage.clear();
   }
 
@@ -26,17 +29,30 @@ class UserContextProvider extends Component {
     var email = sessionStorage.getItem('email');
     var status = sessionStorage.getItem('status');
     if (email && status) {
-      this.changeUser(status,email,true);
+      this.changeUser(status, email, true);
+    }
+  }
+
+  existingLogin() {
+    var email = sessionStorage.getItem('email');
+    var status = sessionStorage.getItem('status');
+    if (email && status) {
+      return {
+        user: status,
+        email: email,
+        loggedIn: true
+      }
     }
   }
 
   render() {
     return (
-      <UserContext.Provider value = {{...this.state,
+      <UserContext.Provider value={{
+        ...this.state,
         changeUser: this.changeUser,
         checkExistingLogin: this.checkExistingLogin,
-         logOut: this.logOut
-       }}>
+        logOut: this.logOut
+      }}>
         {this.props.children}
       </UserContext.Provider>
     );

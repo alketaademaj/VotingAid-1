@@ -84,6 +84,7 @@ class Questions extends Component {
                 < button onClick={this.confirmChange} id={'question' + counter}>EDIT</button>
                 < button className={'question' + counter} onClick={this.confirmDelete}>DELETE </button>
                 < br />
+                < br />
               </div>
             );
           }

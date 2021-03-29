@@ -3,26 +3,26 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
 class Content extends React.Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
       studentAssociation: "Undefined",
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange() {
     this.setState({ value: this.refs.campus.value });
   }
 
-  static contextType = UserContext;
-
-  componentDidMount() {
-    if (window.location.pathname === "/") {
-      document.body.style.backgroundColor = "#D3CCE3";
-    } else {
-      console.log("toimii");
-    }
-  }
+  // componentDidMount() {
+  //   if (window.location.pathname === "/") {
+  //     // document.body.style.backgroundColor = "#D3CCE3";
+  //   } else {
+  //     console.log("toimii");
+  //   }
+  // }
 
   render() {
     return (

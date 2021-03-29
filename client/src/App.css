@@ -1,12 +1,15 @@
 /* SOME STYLES */
 body {
-  background: #d3cce3; /* fallback for old browsers */
+  background: #5da57b93; /* fallback for old browsers */
   /* background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; */
-  background-blend-mode: multiply, multiply;
+  /* background-blend-mode: multiply, multiply; */
+  /* height: 100%; */
+  width: 100%;
+  height: 100%;
 }
-.app {
-  width: 10%;
-}
+/* .app {
+  width: 100%;
+} */
 .homeScreen {
   border: 2px rgba(255, 255, 255, 0.829) solid;
   padding-bottom: 7px;
@@ -208,4 +211,5 @@ input[type="text"] {
 }
 .pic {
   width: 10%;
+  border-radius: 50%;
 }

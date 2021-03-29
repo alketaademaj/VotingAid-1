@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs')
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const cors = require('cors');
@@ -22,8 +23,6 @@ var User = mongoose.model('user');
 
 const app = express();
 
-console.log("johonki")
-
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(fileUpload());
@@ -36,7 +35,8 @@ app.use(session({
 }));
 
 //module for handling form data
-var bp = require('body-parser')
+var bp = require('body-parser');
+const { default: Axios } = require('axios');
 app.use(bp.json());       // to support JSON-encoded bodies
 app.use(bp.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -59,6 +59,7 @@ app.post('/forms', (req, res) => { //Shows all the forms
 app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
   var filter = req.body.data.studentAssociation;
+  // console.log(req.body.data)
   Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
     var filteredResult = [];
     //console.log(results[0])
@@ -108,9 +109,16 @@ app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
 });
 
 app.post('/Profile', (req, res) => {
-  const email = req.body.data;
+  const email = req.body.email;
   Candidate.findOne({ email: email }, function (err, results) {
-    console.log(results);
+    if (err) {
+      return res.status(500).send();
+    }
+
+    if (!results) {
+      return res.status(404).send();
+    }
+
     res.send(results);
   });
 });
@@ -338,30 +346,36 @@ app.get('/randomFill', function (req, res) {
   console.log('ok');
 });
 //-----------------------------------------------------------------------
+//ADDING THE PICTURE 
 app.post('/upload', (req, res) => {
   if (req.files === null) {
     return res.status(400).json({ msg: 'No file uploaded' });
   }
   const file = req.files.file;
-  file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+  file.mv(`${__dirname}/client/public/uploads/${file.name}`, async err => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
-    console.log(file)
-    editOneCandidate("/uploads/" + file.name, "image");
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+    const email = req.body.email;
+
+    const candidate = await Candidate.findOne({ email: email });
+    fs.unlink(`${__dirname}/client/public/${candidate.image}`, (err) => {
+      if (err) {
+        console.error(err)
+      }
+    })
+
+    await editOneCandidate("/uploads/" + file.name, "image");
+    //res.send(image)
+    res.status(200).send();
   });
 });
-//--------------------------- OLD CODE
-// app.post('/changeOneVariableWithinCandidate', (req, res) => {
-//   var filepath = "/pictures/" + req.body.data;
-//   console.log(filepath)
-//   editOneCandidate(filepath, "image");
 
-// });
 async function editOneCandidate(data, variable) {
-  Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false }, function (err, res) {
-    console.log(res)
-  })
+  return await Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false })
 }
+
+
 

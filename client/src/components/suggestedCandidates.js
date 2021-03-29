@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import Picture from './partials/picture';
 
 class Suggestions extends Component {
   constructor(props) {
@@ -16,9 +15,7 @@ class Suggestions extends Component {
       answers: this.props.location.data.answers,
       school: this.props.location.data.school
     };
-    console.log(this.props.location.data.school)
-    console.log(data) //korjaa näyttämään koulun aluen kandit, nyt näyttää undefined
-
+    console.log(this.props.location.data.school) //KORJAA, miks ne on undefined? 
     axios.post('http://localhost:5000/suggested', { data: data })
       .then(res => {
         this.setState({ suggestions: res.data });
