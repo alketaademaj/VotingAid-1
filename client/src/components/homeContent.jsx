@@ -16,14 +16,6 @@ class Content extends React.Component {
     this.setState({ value: this.refs.campus.value });
   }
 
-  // componentDidMount() {
-  //   if (window.location.pathname === "/") {
-  //     // document.body.style.backgroundColor = "#D3CCE3";
-  //   } else {
-  //     console.log("toimii");
-  //   }
-  // }
-
   render() {
     return (
       <div className="homeScreen">

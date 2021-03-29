@@ -376,6 +376,7 @@ app.post('/upload', (req, res) => {
 async function editOneCandidate(data, variable) {
   return await Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false })
 }
+//change this to match each candidate
 
 
 

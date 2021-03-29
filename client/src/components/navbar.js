@@ -61,11 +61,11 @@ class NavLogin extends Component {
   changeTheme = () => {
     if (this.refs.theme.value == 'BLACK') {
       document.body.style.backgroundColor = 'black';
-      console.log("Black")
+      console.log("Black works")
     }
     else if (this.refs.theme.value == 'WHITE') {
       document.body.style.backgroundColor = 'white';
-      console.log("White")
+      console.log("White works")
     }
     else if (this.refs.theme.value == '-') {
       document.body.style.backgroundColor = '#5da57b93';

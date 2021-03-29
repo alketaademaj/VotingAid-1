@@ -11,6 +11,7 @@ class UserContextProvider extends Component {
       loggedIn: false,
     }
   }
+  //fix the email 
 
   changeUser = (user, email, loggedIn) => {
     this.setState({

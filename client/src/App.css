@@ -212,4 +212,5 @@ input[type="text"] {
 .pic {
   width: 10%;
   border-radius: 50%;
+  /* height: 10%; */
 }

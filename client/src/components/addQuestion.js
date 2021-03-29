@@ -37,7 +37,7 @@ class Registration extends React.Component {
       });
   }
 
-  onSubmit = () => {
+  onSubmit = () => { //alert as soon as a question is added 
     Swal.fire({
       title: 'You have succesfully submitted a question!',
       icon: "success",

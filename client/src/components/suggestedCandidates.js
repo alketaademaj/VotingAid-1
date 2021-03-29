@@ -23,6 +23,8 @@ class Suggestions extends Component {
     //JOS HALUTAAN PROSENTUAALISTA VERTAILUA if(userSum >= (candSum * 0.75))
   }
 
+  //korjaa tää siten, että näyttää valitun koulun kandidaatit, tällä hetkellä ei toimi
+
   render() {
     if (this.state.suggestions.length > 0) {
       return (

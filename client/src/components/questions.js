@@ -52,7 +52,7 @@ class Questions extends Component {
     axios.post('http://localhost:5000/submitQhuahoo', { data })
       .then(res => {
       });
-    alert("We've changed you fuck");
+    alert("We've changed you");
   }
 
   confirmDelete = (e) => {

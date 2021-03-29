@@ -43,7 +43,7 @@ class Candidates extends Component {
     // axios.post('http://localhost:5000/filteredCandidates', { data: this.refs.school.value })
     //   .then(res => {
     //     this.setState({ candidates: res.data })
-    //   });
+    //   }); -- no need for this at this moment
   }
 
   clearFilter = () => {
