@@ -367,14 +367,15 @@ app.post('/upload', (req, res) => {
       }
     })
 
-    await editOneCandidate("/uploads/" + file.name, "image");
+    await editOneCandidate("/uploads/" + file.name, "image", email);
     //res.send(image)
     res.status(200).send();
   });
 });
 
-async function editOneCandidate(data, variable) {
-  return await Candidate.findOneAndUpdate({ email: "michael.chandler@arcada.fi" }, { $set: { [variable]: data } }, { useFindAndModify: false })
+async function editOneCandidate(data, variable, email) {
+  console.log(email)
+  return await Candidate.findOneAndUpdate({ email: email }, { $set: { [variable]: data } }, { useFindAndModify: false })
 }
 //change this to match each candidate
 
