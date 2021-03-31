@@ -5,5 +5,61 @@
     /* background-blend-mode: multiply, multiply; */
     height: 100%;
   }
+  .homeScreen {
+    border: 2px rgba(255, 255, 255, 0.829) solid;
+    padding-bottom: 7px;
+    width: 100%;
+    margin-top: 50px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.829);
+    border-radius: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .radio {
+    width: 100%;
+  }
+  .container {
+    display: inline;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 40px;
+    background-color: #eee;
+    border-radius: 0%;
+  }
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  .container input:checked ~ .checkmark {
+    background-color: rgb(118, 120, 122);
+  }
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  /* label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1%;
+  } */
 }
 /* 'change this to match the a phone screen ' */

@@ -7,7 +7,7 @@ const FileUpload = ({ email, onUpload }) => { //fix the email, each candidate sh
 
     const [file, setFile] = useState(''); //useState is the default file: ''; only call setFile instead of setState 
     const [filename, setFilename] = useState('Choose file');
-    const [uploadedFile, setUploadedFile] = useState({});
+    const [uploadedFile, setUploadedFile] = useState({}); //maybe delete this, it is not being used
 
     const onChange = e => {
         setFile(e.target.files[0]); //html input you can do multiple files, so it is like an array
