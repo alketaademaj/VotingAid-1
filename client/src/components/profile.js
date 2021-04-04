@@ -5,7 +5,6 @@ import axios from "axios";
 import Picture from './partials/picture';
 import FileUpload from './FileUpload';
 
-
 class Profile extends Component {
   static contextType = UserContext;
   constructor(props) {
@@ -62,8 +61,9 @@ class Profile extends Component {
           <h5>{this.state.profile.description}</h5>
           <h6>{this.state.profile.campus}</h6>
         </div>
-        {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
-        <br /> < br />
+        <div> {profile.image === "" ? (<img src={process.env.PUBLIC_URL + '/auto.png'} style={{ "width": "10%" }}></img>) : (
+          profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>)}</div>
+        <br />
         <Link
           to={{
             pathname: "/Form",
