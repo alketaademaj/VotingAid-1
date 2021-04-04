@@ -61,8 +61,7 @@ class Profile extends Component {
           <h5>{this.state.profile.description}</h5>
           <h6>{this.state.profile.campus}</h6>
         </div>
-        <div> {profile.image === "" ? (<img src={process.env.PUBLIC_URL + '/auto.png'} style={{ "width": "10%" }}></img>) : (
-          profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>)}</div>
+        {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
         <br />
         <Link
           to={{

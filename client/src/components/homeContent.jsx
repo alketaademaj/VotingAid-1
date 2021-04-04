@@ -13,7 +13,7 @@ class Content extends React.Component {
   }
 
   handleChange() {
-    this.setState({ value: this.refs.campus.value });
+    this.setState({ studentAssociation: this.refs.campus.value });
   }
 
   render() {

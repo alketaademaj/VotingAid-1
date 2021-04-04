@@ -59,7 +59,7 @@ app.post('/forms', (req, res) => { //Shows all the forms
 app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
   var filter = req.body.data.studentAssociation;
-  // console.log(req.body.data)
+  console.log(req.body)
   Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
     var filteredResult = [];
     //console.log(results[0])
@@ -299,7 +299,7 @@ async function addOneCandidate(data) {
     electoralAlliance: data.electoralAlliance,
     description: data.description,
     picture: data.picture,
-    image: data.image,
+    image: '/auto.png',
     filledForm: {
       question0: '',
       questiondesc0: '',
@@ -362,11 +362,13 @@ app.post('/upload', (req, res) => {
     const email = req.body.email;
 
     const candidate = await Candidate.findOne({ email: email });
-    fs.unlink(`${__dirname}/client/public/${candidate.image}`, (err) => {
-      if (err) {
-        console.error(err)
-      }
-    })
+    if (candidate.image !== '/auto.png') {
+      fs.unlink(`${__dirname}/client/public/${candidate.image}`, (err) => {
+        if (err) {
+          console.error(err)
+        }
+      })
+    }
 
     await editOneCandidate("/uploads/" + file.name, "image", email);
     //res.send(image)
@@ -378,7 +380,23 @@ async function editOneCandidate(data, variable, email) {
   console.log(email)
   return await Candidate.findOneAndUpdate({ email: email }, { $set: { [variable]: data } }, { useFindAndModify: false })
 }
-//change this to match each candidate
+//alustaa kaikki kuvat
+app.get('/initPictures', function (req, res) {
+  Candidate.find({}, function (err, allCandidate) {
+    allCandidate.forEach((oneCandidate) => {
+      let id = oneCandidate._id;
+      Question.find({
+      }, function (err, cookie) {
+        for (var i = 0; i < cookie.length; i++) {
+          Candidate.findOneAndUpdate({ _id: id }, { $set: { image: '/auto.png' } }, { useFindAndModify: false }, function (err, doc) {
+          });
+        }
+      });
+    })
+  });
+  res.send("The answers were updated!")
+  console.log('ok');
+});
 
 
 

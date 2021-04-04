@@ -13,17 +13,14 @@ class Suggestions extends Component {
     var userAnswers = this.props.location.data.answers;
     var data = {
       answers: this.props.location.data.answers,
-      school: this.props.location.data.school
+      studentAssociation: this.props.location.data.studentAssociation
     };
-    console.log(this.props.location.data.school) //KORJAA, miks ne on undefined? 
     axios.post('http://localhost:5000/suggested', { data: data })
       .then(res => {
         this.setState({ suggestions: res.data });
       });
     //JOS HALUTAAN PROSENTUAALISTA VERTAILUA if(userSum >= (candSum * 0.75))
   }
-
-  //korjaa tää siten, että näyttää valitun koulun kandidaatit, tällä hetkellä ei toimi
 
   render() {
     if (this.state.suggestions.length > 0) {
@@ -32,6 +29,7 @@ class Suggestions extends Component {
           <h1>Candidates With Matching Values:</h1>
           {this.state.suggestions.map((candidate, index) => {
             return (
+              console.log(this.state.suggestions),
               <h2>{candidate.name} </h2>
             );
           }

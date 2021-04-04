@@ -1,9 +1,8 @@
-import React, { Fragment, useState } from 'react'
-// import { ProgressBar } from "react-bootstrap"
+import React, { useState } from 'react'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const FileUpload = ({ email, onUpload }) => { //fix the email, each candidate should be able to change their profile pic 
+const FileUpload = ({ email, onUpload }) => {
 
     const [file, setFile] = useState(''); //useState is the default file: ''; only call setFile instead of setState 
     const [filename, setFilename] = useState('Choose file');

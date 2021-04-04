@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { UserContext } from "../context/userContext";
-import OptionButton from "./optionButton.js";
 
 class Form extends React.Component {
   static contextType = UserContext;
@@ -11,9 +10,14 @@ class Form extends React.Component {
       questions: [],
       answers: [],
       answersDesc: [],
-      //disabled: false,
-      //color: '',
+      area: ""
     };
+  }
+
+  SetArea = () => {
+    this.props.location.studentAssociation == undefined ?
+      this.setState({ area: this.props.location.data.studentAssociation }) :
+      this.setState({ area: this.props.location.studentAssociation })
   }
 
   componentDidMount() {
@@ -27,6 +31,7 @@ class Form extends React.Component {
           this.preFillForm();
         }
       });
+    this.SetArea();
   }
 
   preFillForm() {
@@ -89,6 +94,14 @@ class Form extends React.Component {
   }
 
   handleSubmit = event => {
+    if (this.props.location.studentAssociation != null) {
+      var area = this.props.location.studentAssociation;
+    }
+
+    if (this.props.location.data != null) {
+      area = this.props.location.data.studentAssociation
+    }
+    console.log(area)
     if (this.context.user != 'Quest') {
       event.preventDefault();
       let answers = {};
@@ -100,64 +113,24 @@ class Form extends React.Component {
         });
     }
     else {
+      console.log(this.state.area)
       this.props.history.push({
         pathname: '/suggestedCandidates',
         data: {
           answers: this.state.answers,
-          school: this.props.location.studentAssociation,
+          studentAssociation: this.state.area,
         }
       })
     }
   }
 
-  /*  componentDidUpdate() {
-      //change color here with conditions
-      // console.log(window.location.pathname === "/Form");
-      if (
-        window.location.pathname === "/Form" &&
-        this.props.location.state.value === "Laurea"
-      ) {
-        document.body.style.backgroundColor = "pink";
-        //  document.getElementsByClassName('.checkmark').style.backgroundColor = "pink"; CHECK WHY IT DOESNT WORK
-        console.log(document.getElementsByClassName('.checkmark'))
-      } else if (
-        window.location.pathname === "/Form" &&
-        this.props.location.state.value === "Metropolia"
-      ) {
-        document.body.style.backgroundColor = "green";
-      } else if (
-        window.location.pathname === "/Form" &&
-        this.props.location.state.value === "Haaga-Helia"
-      ) {
-        document.body.style.backgroundColor = "yellow";
-      } else if (
-        window.location.pathname === "/Form" &&
-        this.props.location.state.value === "JAMK"
-      ) {
-        document.body.style.backgroundColor = "orange";
-      } else if (
-        window.location.pathname === "/Form" &&
-        this.props.location.state.value === "O'Diako"
-      ) {
-        document.body.style.backgroundColor = "red";
-      }
-    }*/
-
   render() {
-    if (this.props.location.state != null) {
-      var area = this.props.location.state.value;
-    }
-
-    if (this.props.location.data != null) {
-      area = this.props.location.data.school;
-    }
     var counter = -1;
     return (
       <form className="homeScreen" onSubmit={this.handleSubmit} method="POST">
         {this.state.questions.map(index => {
           counter++;
           return (
-            console.log(area),
             <div className='questionSet' ref={'q' + counter} >
               <label>{index.question}</label>
               <div><sub className="disa">Disagree</sub><sub className="agg">Agree</sub></div>
