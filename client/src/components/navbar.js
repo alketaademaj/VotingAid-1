@@ -31,12 +31,12 @@ class NavContent extends Component {
   }
 
   render() {
-    if (this.context.loggedIn && this.context.user != "Quest") { //BETTER FIX FOR THESE LINES PLEASE, THIS IS NOT WORKING AS INTENDED, CANDIDATES CAN SEE ADMIN BAR NOW
+    if (this.context.loggedIn && this.context.user == "Admin") { //BETTER FIX FOR THESE LINES PLEASE, THIS IS NOT WORKING AS INTENDED, CANDIDATES CAN SEE ADMIN BAR NOW
       return (
         <div>
           <h2>Admin Navbar</h2>
           <NavLink to="/addCandidates"> Add Candidates |</NavLink>
-          <NavLink to="/Candidates"> Browse Candidates |</NavLink>
+          {/* <NavLink to="/Candidates"> Browse Candidates |</NavLink> */}
           <NavLink to="/addQuestion"> Add Question |</NavLink>
           <NavLink to="/Questions"> Browse Questions </NavLink>
         </div>
