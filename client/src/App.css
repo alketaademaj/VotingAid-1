@@ -214,3 +214,8 @@ input[type="text"] {
   border-radius: 50%;
   /* height: 10%; */
 }
+.candidateSuggestionCenter {
+  display: flex;
+  /* border: purple solid 2px; */
+  justify-content: right;
+}

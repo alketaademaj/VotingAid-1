@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import Picture from './partials/picture';
 
 class Suggestions extends Component {
   constructor(props) {
@@ -30,7 +31,9 @@ class Suggestions extends Component {
           {this.state.suggestions.map((candidate, index) => {
             return (
               console.log(this.state.suggestions),
-              <h2>{candidate.name} </h2>
+              <div className="candidateSuggestionCenter">
+                <h2> {<Picture className="pic" source={process.env.PUBLIC_URL + candidate.image}></Picture>} {candidate.name} {candidate.surname}</h2>
+              </div>
             );
           }
           )}
@@ -39,7 +42,7 @@ class Suggestions extends Component {
     }
     else {
       return (
-        <h2 className="candidateSuggestions"> You are so obscure that no one relates with you </h2>
+        <h2 className="candidateSuggestions"> Unfortunately no one related with your answers </h2>
       );
     }
   }

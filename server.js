@@ -111,6 +111,7 @@ app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
 app.post('/Profile', (req, res) => {
   const email = req.body.email;
   Candidate.findOne({ email: email }, function (err, results) {
+    console.log(email)
     if (err) {
       return res.status(500).send();
     }

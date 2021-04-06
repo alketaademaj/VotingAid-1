@@ -36,7 +36,7 @@ class NavContent extends Component {
         <div>
           <h2>Admin Navbar</h2>
           <NavLink to="/addCandidates"> Add Candidates |</NavLink>
-          {/* <NavLink to="/Candidates"> Browse Candidates |</NavLink> */}
+          <NavLink to="/Candidates"> Browse Candidates |</NavLink>
           <NavLink to="/addQuestion"> Add Question |</NavLink>
           <NavLink to="/Questions"> Browse Questions </NavLink>
         </div>
