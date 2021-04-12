@@ -381,7 +381,8 @@ async function editOneCandidate(data, variable, email) {
   console.log(email)
   return await Candidate.findOneAndUpdate({ email: email }, { $set: { [variable]: data } }, { useFindAndModify: false })
 }
-//alustaa kaikki kuvat
+
+//----------alustaa kaikki kuvat
 app.get('/initPictures', function (req, res) {
   Candidate.find({}, function (err, allCandidate) {
     allCandidate.forEach((oneCandidate) => {
@@ -395,9 +396,16 @@ app.get('/initPictures', function (req, res) {
       });
     })
   });
-  res.send("The answers were updated!")
-  console.log('ok');
+  res.send("The pictures were updated!")
 });
 
+//------------------------- delete candidate
+app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candidate
+  var deleteCandidate = req.body.del;
+  console.log(req.body)
+  Candidate.deleteOne({ email: deleteCandidate }, function (err, doc) {
+    console.log(doc);
+  });
+});
 
 

@@ -4,6 +4,8 @@ import Table from 'react-bootstrap/Table';
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import Profile from './profile.js';
+import { BsFillTrashFill } from "react-icons/bs";
+
 
 class Candidates extends Component {
   constructor(props) {
@@ -40,10 +42,6 @@ class Candidates extends Component {
           ? null
           : state.candidates.filter(c => c.studentAssociation === association)
     }))
-    // axios.post('http://localhost:5000/filteredCandidates', { data: this.refs.school.value })
-    //   .then(res => {
-    //     this.setState({ candidates: res.data })
-    //   }); -- no need for this at this moment
   }
 
   clearFilter = () => {
@@ -51,6 +49,16 @@ class Candidates extends Component {
       filter: '$select',
       filteredCandidates: null
     })
+  }
+
+  confirmDelete = (e) => {
+    var del = e.target.className;
+    console.log(del)
+
+    axios.post('http://localhost:5000/deleteCandidate', { del })
+      .then(res => {
+      });
+
   }
 
   render() {
@@ -74,12 +82,13 @@ class Candidates extends Component {
               <th>#</th>
               <th>Candidate</th>
               <th>Student Association</th>
+              <th><BsFillTrashFill /></th>
             </tr>
           </thead>
           <tbody>
             {candidates.map((candidate, i) => {
               return (
-                <tr key={i}>
+                <tr key={i} className="candidate">
                   <td>{i + 1}</td>
                   <td style={{ cursor: "pointer" }}>
                     <Link
@@ -90,6 +99,7 @@ class Candidates extends Component {
                     </Link>
                   </td>
                   <td>{candidate.studentAssociation}</td>
+                  <td><BsFillTrashFill className='candidelete' onClick={this.confirmDelete} /></td>
                 </tr>
               );
             }
