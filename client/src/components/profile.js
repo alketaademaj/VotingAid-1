@@ -12,16 +12,15 @@ class Profile extends Component {
     this.state = {
       profile: null,
       filename: null,
-      pics: [],
     };
     this.fetchData = this.fetchData.bind(this);
   }
 
   fetchData = async () => {
     var email = this.context.email;
-    // if (this.props.location.data != null) {
-    //   email = this.props.location.data;
-    // }
+    if (this.props.location.data != null) {
+      email = this.props.location.data;
+    }
     await axios.post('http://localhost:5000/Profile', { email: email })
       .then(res => {
         console.log(res.data)

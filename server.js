@@ -400,12 +400,12 @@ app.get('/initPictures', function (req, res) {
 });
 
 //------------------------- delete candidate
-app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candidate
-  var deleteCandidate = req.body.del;
-  console.log(req.body)
-  Candidate.deleteOne({ email: deleteCandidate }, function (err, doc) {
-    console.log(doc);
-  });
-});
+// app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candidate
+//   var deleteCandidate = req.body.del;
+//   console.log(req.body)
+//   Candidate.deleteOne({ email: deleteCandidate }, function (err, doc) {
+//     console.log(doc);
+//   });
+// });
 
 
