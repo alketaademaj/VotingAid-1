@@ -11,7 +11,7 @@ const CandidateTableItemRow = ({ text, textOne, textTwo, data }) => {
         axios.post('http://localhost:5000/deleteCandidate', { n: name })
             .then(res => {
             });
-        history.push("/");
+        window.location.reload(true);
     }
 
     return (
