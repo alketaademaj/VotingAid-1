@@ -38,7 +38,6 @@ class Questions extends Component {
     console.log(e.target.select.option)
   }
 
-
   confirmChange = (e) => {
     var defaultData = (this.refs[e.target.id].defaultValue);
     var changed = (this.refs[e.target.id].value);
@@ -65,7 +64,6 @@ class Questions extends Component {
     axios.post('http://localhost:5000/deleteQhuahoo', { deletion })
       .then(res => {
       });
-
   }
 
   render() {

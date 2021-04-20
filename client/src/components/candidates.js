@@ -14,6 +14,7 @@ class Candidates extends Component {
   }
 
   SetStateArray = (stateArray, value) => {
+    console.log(value)
     this.setState({ [stateArray]: value });
   }
 

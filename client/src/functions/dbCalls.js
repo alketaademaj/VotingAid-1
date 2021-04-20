@@ -20,6 +20,7 @@ const SetCandidateTable = (setStateArray) => {
 const FilterCandidateTable = (setStateArray, filter) => {
     Axios.post('http://localhost:5000/filteredCandidates', { data: filter })
         .then(res => {
+            console.log(res)
             let q = [];
             for (var i = 0; i < res.data.length; i++) {
                 setStateArray(['Candidate' + i], res.data[i])
