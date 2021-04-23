@@ -24,11 +24,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "export NODE_ENV=dev && npm run build && npm run start-server",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
