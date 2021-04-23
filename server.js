@@ -24,13 +24,7 @@ var User = mongoose.model('user');
 const app = express();
 
 // Serve the static files from the React app
-if (process.env.NODE_ENV === "dev") {
-  app.use(express.static(path.join(__dirname, '/client/build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
-  })
-}
-
+app.use(express.static(path.join(__dirname, 'client')));
 app.use(fileUpload());
 app.use(cors());
 app.use(session({
