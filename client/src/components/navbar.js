@@ -17,7 +17,6 @@ import Suggestions from './suggestedCandidates.js';
 import AddCandidates from './addCandidates.js';
 import AddQuestion from './addQuestion.js';
 
-
 import { UserContext } from '../context/userContext';
 
 class NavContent extends Component {
@@ -75,6 +74,8 @@ class NavLogin extends Component {
   render() {
     const { changeUser } = this.context;
     const { logOut } = this.context;
+    const { changeLanguage } = this.context;
+
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
       return (
         <div className="homeNav">

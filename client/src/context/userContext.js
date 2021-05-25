@@ -9,9 +9,14 @@ class UserContextProvider extends Component {
       user: 'Quest',
       email: '',
       loggedIn: false,
+      language: 'fin' // suomi vai englanti - fix
     }
   }
-  //fix the email 
+
+  changeLangague = (e) => {
+    this.setState({ language: e })
+    console.log("is the language working")
+  }
 
   changeUser = (user, email, loggedIn) => {
     this.setState({
@@ -52,7 +57,8 @@ class UserContextProvider extends Component {
         ...this.state,
         changeUser: this.changeUser,
         checkExistingLogin: this.checkExistingLogin,
-        logOut: this.logOut
+        logOut: this.logOut,
+        changeLangague: this.changeLangague
       }}>
         {this.props.children}
       </UserContext.Provider>
