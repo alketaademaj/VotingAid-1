@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/userContext";
+import language from "../properties/language";
 
 class Content extends React.Component {
   static contextType = UserContext;
@@ -19,20 +20,12 @@ class Content extends React.Component {
   render() {
     return (
       <div className="homeScreen">
-        <h1>Tervetuloa vaalikoneeseen!</h1>
-        <p>
-          Here will be information about the voting machine. Sunt labore laboris
-          enim velit tempor esse reprehenderit tempor consectetur mollit
-          cupidatat consequat velit deserunt. Quis dolor quis in cupidatat
-          reprehenderit dolor. Officia eiusmod proident dolore nisi exercitation
-          incididunt et sit proident elit pariatur. Proident fugiat deserunt
-          mollit mollit voluptate ut. Tempor occaecat aute pariatur ut deserunt.
-          Mollit irure magna commodo voluptate. Aliquip mollit qui est minim
-          nostrud commodo dolor non est.
-        </p>
-        <label htmlFor="campus">Valitse Koulusi</label>
+        <h1>{language.title[this.context.language]}</h1>
+        <p>{language.homePageDescription[this.context.language]}</p>
+        <label htmlFor="campus">
+          {language.selectStudentAssociation[this.context.language]}
+        </label>
         <select ref="campus" onChange={this.handleChange.bind(this)}>
-          <option value="-">Valitse opiskelijakuntasi</option>
           <option value="ASK">ASK</option>
           <option value="Helga">Helga</option>
           <option value="HUMAKO">HUMAKO</option>
@@ -49,7 +42,7 @@ class Content extends React.Component {
             studentAssociation: this.state.studentAssociation,
           }}
         >
-          Form
+          {language.formButton[this.context.language]}
         </Link>
       </div>
     );

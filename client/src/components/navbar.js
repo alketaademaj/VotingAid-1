@@ -15,9 +15,9 @@ import Candidates from './candidates.js';
 import Questions from './questions.js';
 import Suggestions from './suggestedCandidates.js';
 import AddCandidates from './addCandidates.js';
+import AddOneCandidate from './addOneCandidate.js';
 import AddQuestion from './addQuestion.js';
-
-
+import language from "../properties/language";
 import { UserContext } from '../context/userContext';
 
 class NavContent extends Component {
@@ -36,6 +36,7 @@ class NavContent extends Component {
         <div>
           <h2>Admin Navbar</h2>
           <NavLink to="/addCandidates"> Add Candidates |</NavLink>
+          <NavLink to="/addOneCandidate"> Add a Single Candidate |</NavLink>
           <NavLink to="/Candidates"> Browse Candidates |</NavLink>
           <NavLink to="/addQuestion"> Add Question |</NavLink>
           <NavLink to="/Questions"> Browse Questions </NavLink>
@@ -72,22 +73,35 @@ class NavLogin extends Component {
     }
     swal.fire("Color changed to " + this.refs.theme.value);
   }
+
   render() {
     const { changeUser } = this.context;
     const { logOut } = this.context;
+    const { changeLanguage } = this.context;
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
       return (
         <div className="homeNav">
+          <select ref="theme" onChange={this.changeTheme}>
+            <option value="-">Valitse Teema</option>
+            <option value="BLACK">BLACK</option>
+            <option value="WHITE">WHITE</option>
+          </select>
           <NavLink to="/">
-            <BiHome /> Home
+            <BiHome />
+            {language.navigationHome[this.context.language]}
           </NavLink>
           <NavLink
             to="/logout"
             onClick={() => logOut()}
           ><BsLock />
-              logout
+            {language.navigationLogOut[this.context.language]}
           </NavLink>
-          <NavLink to="/Profile"> Profile </NavLink>
+          <NavLink to="/Profile">  {language.navigationProfile[this.context.language]} </NavLink>
+          <select name="lang" onChange={changeLanguage}>
+            <option value="-">Valitse kieli</option>
+            <option value="fin">Finnish</option>
+            <option value="eng">English</option>
+          </select>
         </div>
       );
     }
@@ -101,10 +115,15 @@ class NavLogin extends Component {
           </select>
           <NavLink to="/">
             <BiHome />
-              Home
+            {language.navigationHome[this.context.language]}
           </NavLink>
-          <NavLink to="/Login"><BsLock /> Login </NavLink>
-          <NavLink to="/Register"><HiOutlineUserAdd /> Registration </NavLink>
+          <NavLink to="/Login"><BsLock /> {language.navigationLogin[this.context.language]} </NavLink>
+          <NavLink to="/Register"><HiOutlineUserAdd /> {language.navigationRegister[this.context.language]} </NavLink>
+          <select name="lang" onChange={changeLanguage}>
+            <option value="-">Valitse kieli</option>
+            <option value="fin">Finnish</option>
+            <option value="eng">English</option>
+          </select>
         </div>
       );
     }
@@ -121,6 +140,7 @@ class Navigation extends Component {
           <Switch>
             <Route path="/addQuestion" component={AddQuestion} />
             <Route path="/addCandidates" component={AddCandidates} />
+            <Route path="/addOneCandidate" component={AddOneCandidate} />
             <Route path="/Candidates" component={Candidates} />
             <Route path="/suggestedCandidates" component={Suggestions} />
             <Route path="/Questions" component={Questions} />

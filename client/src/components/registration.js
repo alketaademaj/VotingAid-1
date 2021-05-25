@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import language from "../properties/language";
+import { UserContext } from '../context/userContext';
 
 class Registration extends React.Component {
   constructor(props) {
@@ -34,7 +36,7 @@ class Registration extends React.Component {
       status: "Candidate"
     }
     if (this.state.password == this.state.password_confirmation) {
-      axios.post('http://localhost:5000/registration',  user)
+      axios.post('http://localhost:5000/registration', user)
         .then(res => {
           console.log(user.email);
           console.log(res.data);
@@ -50,21 +52,22 @@ class Registration extends React.Component {
         text: 'Confirmation Password Must Match With Password',
       })
     }
-
   }
+
+  static contextType = UserContext;
 
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
-          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
-          <input type="password" name="password_confirmation" placeholder="Password confirmation" value={this.state.password_confirmation} onChange={this.handleChange} required/>
-          <button type="submit">Register</button>
+          <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required />
+          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required />
+          <input type="password" name="password_confirmation" placeholder="Password confirmation" value={this.state.password_confirmation} onChange={this.handleChange} required />
+          <button type="submit"> {language.registerButton[this.context.language]} </button>
           <Link
-          to={{
-            pathname: "/"
-          }}> Back to MainPage </Link>
+            to={{
+              pathname: "/"
+            }}> {language.mainPageLink[this.context.language]} </Link>
         </form>
       </div>
     );

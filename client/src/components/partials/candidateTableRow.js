@@ -1,17 +1,19 @@
 import CandidateTableLinkItem from './candidateTableLinkItem'
 import CandidateTableItem from './candidateTableItem'
 import axios from "axios";
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
-const CandidateTableItemRow = ({ text, textOne, textTwo, data }) => {
-    let history = useHistory();
+const CandidateTableItemRow = ({ text, textOne, textTwo, data, candidateDeleted }) => {
+    // let history = useHistory();
+
     const confirmDelete = (name) => {
-        console.log(name)
+        // console.log(name)
 
-        axios.post('http://localhost:5000/deleteCandidate', { n: name })
-            .then(res => {
-            });
-        window.location.reload(true);
+        const callback = () => candidateDeleted(data)
+
+        axios
+            .post('/deleteCandidate', { n: name })
+            .then(callback, callback);
     }
 
     return (
@@ -25,6 +27,3 @@ const CandidateTableItemRow = ({ text, textOne, textTwo, data }) => {
 
 
 export default CandidateTableItemRow;
-
-
-
