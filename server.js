@@ -143,8 +143,12 @@ app.post('/submitQhuahoo', function (req, res) { //EDIT ONE EXISTING submitQhuah
   Question.findOneAndUpdate({ question: defaultData }, { $set: { question: changedData } }, { useFindAndModify: false }, function (err, doc) {
     console.log(doc);
   });
-
 });
+
+app.post('/editInformation', function (req, res) {
+  let data = req.body.data;
+  console.log(data);
+})
 
 app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
   var deletedQuestion = req.body.deletion;

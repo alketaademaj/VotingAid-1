@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import Picture from './partials/picture';
 import FileUpload from './FileUpload';
+import SingleInputField from "./partials/singleInputField";
+import language from '../properties/language';
 
 class Profile extends Component {
   static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
-      profile: null,
+      profile: [],
       filename: null,
     };
     this.fetchData = this.fetchData.bind(this);
@@ -44,6 +46,18 @@ class Profile extends Component {
     this.fetchData();
   }
 
+  submitData = async () => {
+      await axios.post('http://localhost:5000/editInformation', { data: 'email' })
+          .then(res => {
+              console.log(res.data)
+              this.setState({ profile: res.data });
+          }).catch(err => {
+              console.log(err)
+          });
+  }
+  onChange = (e) => {
+      //this.setState({[this.profile[e.target.id]]: e.target.value});
+  }
   //---------------------------------------------------------------------------------------------
   render() {
     const { profile } = this.state
@@ -54,12 +68,14 @@ class Profile extends Component {
     return (
       <div>
         <div className="candidate">
-          <h1>{this.state.profile.name} {this.state.profile.surname}</h1>
-          <h3>{this.state.profile.school}</h3>
-          <h4>{this.state.profile.studentAssociation}</h4>
-          <h5>{this.state.profile.description}</h5>
-          <h6>{this.state.profile.campus}</h6>
+            <SingleInputField action={this.onChange} id={'name'} defaultValue={this.state.profile.name}/> <br/>
+            <SingleInputField action={this.onChange} id={'surname'} defaultValue={this.state.profile.surname}/> <br/>
+            <SingleInputField action={this.onChange} id={'school'} defaultValue={this.state.profile.school}/> <br/>
+            <SingleInputField action={this.onChange} id={'studentAssociation'} defaultValue={this.state.profile.studentAssociation}/> <br/>
+            <SingleInputField action={this.onChange} id={'description'} defaultValue={this.state.profile.description}/> <br/>
+            <SingleInputField action={this.onChange} id={'campus'} defaultValue={this.state.profile.campus}/><br/>
         </div>
+          <button onClick={this.submitData}>{language.profileButton[this.context.language]}</button>
         {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
         <br />
         <Link

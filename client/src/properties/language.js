@@ -11,6 +11,8 @@ const language = {
     loginButton: { fin: 'Kirjaudu', eng: 'Login' },
     mainPageLink: { fin: 'Takaisin etusivulle', eng: 'Back to main page' },
     registerButton: { fin: 'Rekisteröidy', eng: 'Register' },
+    emailPlaceHolder: {fin: 'Sähköpostiosoite', eng: 'Email'},
+    profileButton: {fin: 'Varmista tiedot' , eng: 'Submit Information'}
 }
 
 export default language;

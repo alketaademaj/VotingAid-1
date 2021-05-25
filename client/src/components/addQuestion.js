@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import language from "../properties/language";
 
 class Registration extends React.Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Registration extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="question" name="question" placeholder="question" value={this.state.question} onChange={this.handleChange} required />
+          <input type="question" name="question" placeholder={''} value={this.state.question} onChange={this.handleChange} required />
           <select ref="area" onChange={this.handleArea.bind(this)}>
             <option value="-">Oppilaskunta / universaali</option>
             <option value="Undefined">Undefined</option>
