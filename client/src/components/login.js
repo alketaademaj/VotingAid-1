@@ -36,9 +36,9 @@ class Login extends React.Component {
       .then(res => {
         if (res) {
           const { changeUser } = this.context;
-          changeUser(res.data.status, res.data.email, true);
+          changeUser(res.data.status, res.data.email, true, this.context.language);
           if (!this.context.user || !this.context.email) {  // TODO: COME UP WITH SOMETHING BETTER MAYBE
-            changeUser('Quest', '', false);
+            changeUser('Quest', '', false, this.context.language);
             Swal.fire({
               icon: 'error',
               title: 'ERROR',
@@ -53,6 +53,7 @@ class Login extends React.Component {
             });
             sessionStorage.setItem('email', this.context.email);
             sessionStorage.setItem('status', this.context.user);
+            sessionStorage.setItem('language', this.context.language);
             this.props.history.push({
               pathname: '/',
             })

@@ -44,9 +44,7 @@ class NavContent extends Component {
       );
     }
     else {
-      return (
-        null
-      );
+      return null;
     }
   }
 }
@@ -60,6 +58,7 @@ class NavLogin extends Component {
   }
 
   changeTheme = () => {
+      console.log(this.context)
     if (this.refs.theme.value == 'BLACK') {
       document.body.style.backgroundColor = 'black';
       console.log("Black works")
@@ -72,6 +71,7 @@ class NavLogin extends Component {
       document.body.style.backgroundColor = '#5da57b93';
     }
     swal.fire("Color changed to " + this.refs.theme.value);
+
   }
 
   render() {
@@ -98,9 +98,9 @@ class NavLogin extends Component {
           </NavLink>
           <NavLink to="/Profile">  {language.navigationProfile[this.context.language]} </NavLink>
           <select name="lang" onChange={changeLanguage}>
-            <option value="-">Valitse kieli</option>
-            <option value="fin">Finnish</option>
-            <option value="eng">English</option>
+            <option>Valitse kieli</option>
+            <option selected={this.context.language = !!'fin'} value="fin">Finnish</option>
+            <option selected={sessionStorage.getItem('language') === 'eng'} value="eng">English</option>
           </select>
         </div>
       );
@@ -120,9 +120,9 @@ class NavLogin extends Component {
           <NavLink to="/Login"><BsLock /> {language.navigationLogin[this.context.language]} </NavLink>
           <NavLink to="/Register"><HiOutlineUserAdd /> {language.navigationRegister[this.context.language]} </NavLink>
           <select name="lang" onChange={changeLanguage}>
-            <option value="-">Valitse kieli</option>
-            <option value="fin">Finnish</option>
-            <option value="eng">English</option>
+            <option value="fin">Valitse kieli</option>
+            <option value="fin">Finnish</option>{/*selected={this.context.language = !!'fin'}*/}
+            <option value="eng">English</option>{/*selected={this.context.language = !!'fin'}*/}
           </select>
         </div>
       );

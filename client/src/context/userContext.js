@@ -1,4 +1,5 @@
 import React, { createContext, Component } from 'react';
+import language from "../properties/language";
 
 export const UserContext = createContext();
 
@@ -9,43 +10,49 @@ class UserContextProvider extends Component {
       user: 'Quest',
       email: '',
       loggedIn: false,
-      language: 'fin',
+      language: sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'fin'
     }
   }
 
   changeLanguage = (e) => {
     this.setState({ language: e.target.value });
+    sessionStorage.setItem('language', e.target.value);
   }
 
-  changeUser = (user, email, loggedIn) => {
+  changeUser = (user, email, loggedIn, language) => {
     this.setState({
       user: user,
       email: email,
-      loggedIn: loggedIn
+      loggedIn: loggedIn,
+      language: language,
     });
+    console.log(this.state);
   }
 
   logOut = () => {
-    this.changeUser('Quest', '', false);
+    this.changeUser('Quest', '', false, language);
     sessionStorage.clear();
   }
 
   checkExistingLogin = () => {
-    var email = sessionStorage.getItem('email');
-    var status = sessionStorage.getItem('status');
+    let email = sessionStorage.getItem('email');
+    let status = sessionStorage.getItem('status');
+    let language = sessionStorage.getItem('language');
     if (email && status) {
-      this.changeUser(status, email, true);
+      this.changeUser(status, email, true, language);
     }
   }
 
   existingLogin() {
-    var email = sessionStorage.getItem('email');
-    var status = sessionStorage.getItem('status');
+    let email = sessionStorage.getItem('email');
+    let status = sessionStorage.getItem('status');
+    let language = sessionStorage.getItem('language');
     if (email && status) {
       return {
         user: status,
         email: email,
-        loggedIn: true
+        loggedIn: true,
+        language: language
       }
     }
   }

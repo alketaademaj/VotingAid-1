@@ -4,7 +4,7 @@ import './AppMini.css';
 import Navigation from './components/navbar.js'
 //import Content from './components/homeContent.jsx'
 import UserContextProvider from './context/userContext';
-//import swal from 'sweetalert';
+import language from "./properties/language";
 
 const App = () =>
   <div>

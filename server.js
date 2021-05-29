@@ -147,7 +147,30 @@ app.post('/submitQhuahoo', function (req, res) { //EDIT ONE EXISTING submitQhuah
 
 app.post('/editInformation', function (req, res) {
   let data = req.body.data;
-  console.log(data);
+  /*let update = {
+      name: data.name,
+      surname: data.surname,
+      school: data.school,
+      description: data.description,
+      studentAssociation: data.studentAssociation,
+      campus: data.campus
+  }*/
+  Candidate.findOneAndUpdate(
+      {email: data.email},
+      { $set:
+            {
+              name: data.name,
+              surname: data.surname,
+              school: data.school,
+              description: data.description,
+              studentAssociation: data.studentAssociation,
+              campus: data.campus
+            }
+      },
+      {useFindAndModify: false}, function(err, doc) {
+        console.log('lol')
+        console.log(doc);
+      });
 })
 
 app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
