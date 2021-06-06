@@ -2,9 +2,9 @@ import CandidateTableItemRow from './candidateTableRow'
 import CandidateTableHeader from './candidateTableHeader'
 import Table from 'react-bootstrap/Table';
 
-const CandidateTable = ({ stateArray, counter }) => {
+const CandidateTable = ({ stateArray, counter, candidateDeleted }) => {
     return (
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover variant="light">
             <thead>
                 <tr>
                     <CandidateTableHeader header={'Candidate'} />
@@ -17,6 +17,7 @@ const CandidateTable = ({ stateArray, counter }) => {
                     counter++;
                     return (
                         <CandidateTableItemRow id="candidate"
+                            candidateDeleted={candidateDeleted}
                             text={stateArray['Candidate' + counter].studentAssociation}
                             textOne={stateArray['Candidate' + counter].name}
                             textTwo={stateArray['Candidate' + counter].surname}

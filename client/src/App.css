@@ -220,3 +220,9 @@ input[type="text"] {
   /* border: purple solid 2px; */
   justify-content: right;
 }
+.white:hover {
+  color: blue;
+}
+#candidate {
+  border-bottom: solid black 2px;
+}

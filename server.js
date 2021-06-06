@@ -156,21 +156,22 @@ app.post('/editInformation', function (req, res) {
       campus: data.campus
   }*/
   Candidate.findOneAndUpdate(
-      {email: data.email},
-      { $set:
-            {
-              name: data.name,
-              surname: data.surname,
-              school: data.school,
-              description: data.description,
-              studentAssociation: data.studentAssociation,
-              campus: data.campus
-            }
-      },
-      {useFindAndModify: false}, function(err, doc) {
-        console.log('lol')
-        console.log(doc);
-      });
+    { email: data.email },
+    {
+      $set:
+      {
+        name: data.name,
+        surname: data.surname,
+        school: data.school,
+        description: data.description,
+        studentAssociation: data.studentAssociation,
+        campus: data.campus
+      }
+    },
+    { useFindAndModify: false }, function (err, doc) {
+      console.log('lol')
+      console.log(doc);
+    });
 })
 
 app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
@@ -441,5 +442,16 @@ app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candida
 // app.get('*', function (req, res) {
 //   res.sendFile(__dirname + '/dist/index.html')
 // })
+//----------------------------------- add only one candidate
+app.post('/addOneCandidate', (req, res) => {
+  var data = req.body;
+  console.log(data)
+  addOneCandidate(data);
+  if (err) {
+    return res.status(400).end()
+  }
+
+  res.status(200).end()
+});
 
 

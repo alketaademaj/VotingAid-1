@@ -14,16 +14,16 @@ class Candidates extends Component {
   }
 
   SetStateArray = (stateArray, value) => {
-    console.log(value)
+    // console.log(value)
     this.setState({ [stateArray]: value });
   }
 
   componentDidMount() {
-    SetCandidateTable(this.SetStateArray);
+    SetCandidateTable(this.SetStateArray)
   }
 
   handleChange(e) {
-    if (e.target.value != 'Undefined') {
+    if (e.target.value != 'Select filter') {
       FilterCandidateTable(this.SetStateArray, e.target.value);
     } else {
       SetCandidateTable(this.SetStateArray); // IF undefined value is given, Return table state including every candidate
@@ -40,8 +40,15 @@ class Candidates extends Component {
           selectMenuList={QuestionAreaList}
           action={this.handleChange.bind(this)}
         />
-        {console.log(this.state.amount)}
-        <CandidateTable stateArray={this.state} counter={-1} />
+        {/* {console.log(this.state.amount)} */}
+        <CandidateTable
+          stateArray={this.state} counter={-1}
+          candidateDeleted={(data) => {
+            console.log('Got event')
+            console.log(data)
+            SetCandidateTable(this.SetStateArray)
+          }}
+        />
       </div>
     );
   }

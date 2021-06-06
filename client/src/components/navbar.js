@@ -58,9 +58,10 @@ class NavLogin extends Component {
   }
 
   changeTheme = () => {
-      console.log(this.context)
+    console.log(this.context)
     if (this.refs.theme.value == 'BLACK') {
       document.body.style.backgroundColor = 'black';
+      document.body.style.color = 'white';
       console.log("Black works")
     }
     else if (this.refs.theme.value == 'WHITE') {
@@ -78,7 +79,7 @@ class NavLogin extends Component {
     const { changeUser } = this.context;
     const { logOut } = this.context;
     const { changeLanguage } = this.context;
-    
+
     if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
       return (
         <div className="homeNav">
