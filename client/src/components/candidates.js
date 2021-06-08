@@ -34,7 +34,7 @@ class Candidates extends Component {
   render() {
     return (
       <div style={{ width: '50%', marginLeft: '25%', marginTop: '5%' }}>
-        <label htmlFor="school">Filter by School</label>
+        <label htmlFor="school" className="filterCandidateLabel">Filter by School</label>
         <SelectMenu
           className={'studentAssociationList'}
           selectMenuList={QuestionAreaList}
