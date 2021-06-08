@@ -3,7 +3,9 @@ import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import { BiHome } from "react-icons/bi";
 import { BsLock } from "react-icons/bs";
 import { HiOutlineUserAdd } from "react-icons/hi";
+import { CgProfile } from "react-icons/cg";
 import swal from 'sweetalert2';
+
 
 //Components
 import Form from './form.js';
@@ -118,7 +120,8 @@ class NavLogin extends Component {
           ><BsLock />
             {language.navigationLogOut[this.context.language]}
           </NavLink>
-          <NavLink to="/Profile">  {language.navigationProfile[this.context.language]} </NavLink>
+          <NavLink to="/Profile">
+            <CgProfile /> {language.navigationProfile[this.context.language]} </NavLink>
           <select name="lang" onChange={changeLanguage}>
             <option>Valitse kieli</option>
             <option selected={this.context.language = !!'fin'} value="fin">Finnish</option>
@@ -163,7 +166,7 @@ class Navigation extends Component {
             <Route path="/addQuestion" component={AddQuestion} />
             <Route path="/addCandidates" component={AddCandidates} />
             <Route path="/addOneCandidate" component={AddOneCandidate} />
-            <Route path="/Candidates" component={Candidates} theme={this.refs.theme} />
+            <Route path="/Candidates" component={Candidates} />
             <Route path="/suggestedCandidates" component={Suggestions} />
             <Route path="/Questions" component={Questions} />
             <Route path="/Form" component={Form} />

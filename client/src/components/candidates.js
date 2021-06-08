@@ -21,10 +21,6 @@ class Candidates extends Component {
 
   componentDidMount() {
     SetCandidateTable(this.SetStateArray)
-    console.log(this.props.theme)
-    // if (this.theme.value = "black") {
-    //   console.log('this theme props is working')
-    // }
   }
 
   handleChange(e) {
@@ -35,12 +31,10 @@ class Candidates extends Component {
     }
   }
 
-
-
   render() {
     return (
       <div style={{ width: '50%', marginLeft: '25%', marginTop: '5%' }}>
-        <label className="whiteFont" htmlFor="school">Filter by School</label>
+        <label htmlFor="school">Filter by School</label>
         <SelectMenu
           className={'studentAssociationList'}
           selectMenuList={QuestionAreaList}
