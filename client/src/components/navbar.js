@@ -35,11 +35,11 @@ class NavContent extends Component {
       return (
         <div>
           <h2>Admin Navbar</h2>
-          <NavLink to="/addCandidates"> Add Candidates |</NavLink>
-          <NavLink to="/addOneCandidate"> Add a Single Candidate |</NavLink>
-          <NavLink to="/Candidates"> Browse Candidates |</NavLink>
-          <NavLink to="/addQuestion"> Add Question |</NavLink>
-          <NavLink to="/Questions"> Browse Questions </NavLink>
+          <NavLink to="/addCandidates" className="whiteFont"> Add Candidates |</NavLink>
+          <NavLink to="/addOneCandidate" className="whiteFont"> Add a Single Candidate |</NavLink>
+          <NavLink to="/Candidates" className="whiteFont"> Browse Candidates |</NavLink>
+          <NavLink to="/addQuestion" className="whiteFont"> Add Question |</NavLink>
+          <NavLink to="/Questions" className="whiteFont"> Browse Questions </NavLink>
         </div>
       );
     }
@@ -61,15 +61,35 @@ class NavLogin extends Component {
     console.log(this.context)
     if (this.refs.theme.value == 'BLACK') {
       document.body.style.backgroundColor = 'black';
-      document.body.style.color = 'white';
+      if (this.context.loggedIn && this.context.user == "Admin") {
+        const allWhite = document.getElementsByClassName('whiteFont')[0].style.color = 'white'
+        const allWhite1 = document.getElementsByClassName('whiteFont')[1].style.color = 'white'
+        const allWhite2 = document.getElementsByClassName('whiteFont')[2].style.color = 'white'
+        const allWhite3 = document.getElementsByClassName('whiteFont')[3].style.color = 'white'
+        const allWhite4 = document.getElementsByClassName('whiteFont')[4].style.color = 'white'
+      }
       console.log("Black works")
     }
     else if (this.refs.theme.value == 'WHITE') {
       document.body.style.backgroundColor = 'white';
+      if (this.context.loggedIn && this.context.user == "Admin") {
+        const allWhite = document.getElementsByClassName('whiteFont')[0].style.color = 'black'
+        const allWhite1 = document.getElementsByClassName('whiteFont')[1].style.color = 'black'
+        const allWhite2 = document.getElementsByClassName('whiteFont')[2].style.color = 'black'
+        const allWhite3 = document.getElementsByClassName('whiteFont')[3].style.color = 'black'
+        const allWhite4 = document.getElementsByClassName('whiteFont')[4].style.color = 'black'
+        const allWhite5 = document.getElementsByClassName('homeNav')[0].style.backgroundColor = ' #d3d3d3'
+      }
       console.log("White works")
     }
     else if (this.refs.theme.value == '-') {
       document.body.style.backgroundColor = '#5da57b93';
+      const allWhite = document.getElementsByClassName('whiteFont')[0].style.color = 'black'
+      const allWhite1 = document.getElementsByClassName('whiteFont')[1].style.color = 'black'
+      const allWhite2 = document.getElementsByClassName('whiteFont')[2].style.color = 'black'
+      const allWhite3 = document.getElementsByClassName('whiteFont')[3].style.color = 'black'
+      const allWhite4 = document.getElementsByClassName('whiteFont')[4].style.color = 'black'
+      const allWhite5 = document.getElementsByClassName('homeNav')[0].style.backgroundColor = 'rgba(255, 255, 255, 0.829)'
     }
     swal.fire("Color changed to " + this.refs.theme.value);
 
@@ -143,7 +163,7 @@ class Navigation extends Component {
             <Route path="/addQuestion" component={AddQuestion} />
             <Route path="/addCandidates" component={AddCandidates} />
             <Route path="/addOneCandidate" component={AddOneCandidate} />
-            <Route path="/Candidates" component={Candidates} />
+            <Route path="/Candidates" component={Candidates} theme={this.refs.theme} />
             <Route path="/suggestedCandidates" component={Suggestions} />
             <Route path="/Questions" component={Questions} />
             <Route path="/Form" component={Form} />

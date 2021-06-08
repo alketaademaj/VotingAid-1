@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 const FileUpload = ({ email, onUpload }) => {
 
     const [file, setFile] = useState(''); //useState is the default file: ''; only call setFile instead of setState 
-    const [filename, setFilename] = useState('Choose file');
+    const [filename, setFilename] = useState('Upload profile picture');
     const [uploadedFile, setUploadedFile] = useState({}); //maybe delete this, it is not being used
 
     const onChange = e => {
@@ -50,7 +50,7 @@ const FileUpload = ({ email, onUpload }) => {
 
     return (
         <div>
-            <form onSubmit={onSubmit}>
+            <form className="profileForm" onSubmit={onSubmit}>
                 <div className="custom-file mb-4">
                     <input type="file" className="custom-file-input" id="customFile" onChange={onChange} />
                     <label className="custom-file-label" htmlFor="custom-file">

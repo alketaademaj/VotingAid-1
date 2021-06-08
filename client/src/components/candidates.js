@@ -10,6 +10,7 @@ class Candidates extends Component {
     this.state = {
       amount: [],
       Association: [],
+      theme: this.props.theme
     }
   }
 
@@ -20,6 +21,10 @@ class Candidates extends Component {
 
   componentDidMount() {
     SetCandidateTable(this.SetStateArray)
+    console.log(this.props.theme)
+    // if (this.theme.value = "black") {
+    //   console.log('this theme props is working')
+    // }
   }
 
   handleChange(e) {
@@ -31,10 +36,11 @@ class Candidates extends Component {
   }
 
 
+
   render() {
     return (
       <div style={{ width: '50%', marginLeft: '25%', marginTop: '5%' }}>
-        <label htmlFor="school">Filter by School</label>
+        <label className="whiteFont" htmlFor="school">Filter by School</label>
         <SelectMenu
           className={'studentAssociationList'}
           selectMenuList={QuestionAreaList}
@@ -43,9 +49,8 @@ class Candidates extends Component {
         {/* {console.log(this.state.amount)} */}
         <CandidateTable
           stateArray={this.state} counter={-1}
-          candidateDeleted={(data) => {
+          candidateDeleted={() => {
             console.log('Got event')
-            console.log(data)
             SetCandidateTable(this.SetStateArray)
           }}
         />

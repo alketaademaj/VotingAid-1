@@ -211,7 +211,7 @@ input[type="text"] {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .pic {
-  width: 10%;
+  width: 18%;
   border-radius: 50%;
   /* height: 10%; */
 }
@@ -225,4 +225,15 @@ input[type="text"] {
 }
 #candidate {
   border-bottom: solid black 2px;
+}
+.profileForm {
+  border-radius: 1%;
+  background-color: rgba(255, 255, 255, 0.829);
+  display: inline-block;
+  width: 40%;
+  height: auto;
+  justify-content: left;
+  border: 2px white solid;
+  padding-top: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

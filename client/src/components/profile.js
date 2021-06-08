@@ -81,6 +81,8 @@ class Profile extends Component {
       <div>
         <div className="candidate">
           <form>
+            {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
+            <br></br><br></br>
             {information.map((info) => (
               <input id={info.id} defaultValue={info.value} onChange={this.onChange} />
             ))}
@@ -93,7 +95,6 @@ class Profile extends Component {
             <SingleInputField action={this.handler} id={'campus'} defaultValue={this.state.profile.campus}/><br/>*/}
         </div>
         <button onClick={this.submitData}>{language.profileButton[this.context.language]}</button>
-        {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
         <br />
         <Link
           to={{
