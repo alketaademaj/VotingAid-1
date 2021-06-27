@@ -60,6 +60,10 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
   var filter = req.body.data.studentAssociation;
   console.log(req.body)
+  console.log('USERANSWER')
+  console.log(userAnswer)
+  console.log('FILTER')
+  console.log(filter)
   Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
     var filteredResult = [];
     //console.log(results[0])
@@ -68,6 +72,8 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
     //res.send(results);
 
     var finalResults = [];
+    console.log('RESULTS')
+    console.log(results)
 
     for (var i = 0; i < results.length; i++) {
       var similarity = 1;
@@ -85,14 +91,17 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
         if ((userAnswer[j] == 2 && results[i].filledForm['question' + j] == -2) || (userAnswer[j] == -2 && results[i].filledForm['question' + j] == 2)) {
           danger += 1; //Check for opposite answer
         }
+      }
+      let userSum = userAnswer.reduce((result, number) => result + number);
+      let candSum = candidateArray.reduce((result, number) => result + number);
 
-        let userSum = userAnswer.reduce((result, number) => result + number);
-        let candSum = candidateArray.reduce((result, number) => result + number);
-
-        if ((userSum >= (candSum * 0.50) || danger <= 0.25 * userAnswer.length) && similarity >= (0.30 * userAnswer.length)) {
-          finalResults.push(results[i]);
-        }
-
+      if ((userSum >= (candSum * 0.50) || danger <= 0.25 * userAnswer.length) && similarity >= (0.30 * userAnswer.length)) {
+        console.log((similarity / userAnswer.length) + '%')
+        let copy = { ...results[i]._doc };
+        copy["similarity"] = (similarity / userAnswer.length) * 100;
+        finalResults.push(copy);
+        console.log('TÄMÄ ON KOPIOOOOO')
+        console.log(copy)
       }
     }
     let unique = [...new Set(finalResults)];
@@ -103,6 +112,8 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
 
 app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
   const filter = req.body.data;
+  console.log('FILTTERI')
+  console.log(filter)
   Candidate.find({ studentAssociation: filter }, function (err, results) {
     res.send(results);
   });
@@ -126,6 +137,8 @@ app.post('/Profile', (req, res) => {
 
 app.post('/questions', (req, res) => { //Form question and parse call
   const area = req.body.data;
+  console.log('PALVELIMEN PUOLEN KOODI')
+  console.log(area)
   Question.find({ area: { $in: [area, 'Undefined'] } }, function (err, results) {
     res.send(results);
   });
@@ -186,7 +199,7 @@ app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
 app.post('/fillForm', (req, res) => {
   var email = req.body.data;
   Candidate.findOne({ email: email }, function (err, results) {
-    // console.log(results.filledForm);
+    console.log(results.filledForm);
     res.send(results);
   });
 });
@@ -277,6 +290,7 @@ app.post('/send', function (req, res) {
 });
 
 app.post('/addCandidates', (req, res) => {
+  console.log(req)
   for (var i = 0; i < req.body.candidate.length - 1; i++) {
     var data = req.body.candidate[i].data;
     addOneCandidate(data);
@@ -316,8 +330,8 @@ console.log('App is listening on port ' + port);
 
 //Functions --------------------------------------------------------------------
 
-async function addOneCandidate(data) {
-  var candidate = new Candidate({
+function addOneCandidate(data) {
+  let candidate = new Candidate({
     name: data.name,
     surname: data.surname,
     email: data.email,
@@ -335,15 +349,14 @@ async function addOneCandidate(data) {
     },
   });
 
-  console.log(candidate);
   Candidate.countDocuments({ email: data.email }, function (err, count) {
     if (count == 0) {
       candidate.save(function (err, user) {
         if (err) return console.log(err);
+        if (user) { console.log(user) }
         console.log("Succesfully added candidate to database!");
       });
-    }
-    else {
+    } else {
       console.log("Email with this address already exists as a candidate!");
     }
   });
@@ -406,8 +419,8 @@ app.post('/upload', (req, res) => {
 });
 
 async function editOneCandidate(data, variable, email) {
-  console.log(email)
-  return await Candidate.findOneAndUpdate({ email: email }, { $set: { [variable]: data } }, { useFindAndModify: false })
+  //TODO: Remove Await because i think dont need to be async because this will return value when method return the value
+  return Candidate.findOneAndUpdate({ email: email }, { $set: { [variable]: data } }, { useFindAndModify: false });
 }
 
 //----------alustaa kaikki kuvat
@@ -429,8 +442,8 @@ app.get('/initPictures', function (req, res) {
 
 //------------------------- delete candidate
 app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candidate
-  var deleteCandidate = req.body.n;
-  Candidate.deleteOne({ name: deleteCandidate }, function (err, doc) {
+  var deleteCandidate = req.body.deleteCandidateByEmail;
+  Candidate.deleteOne({ email: deleteCandidate }, function (err, doc) {
     if (err) {
       return res.status(400).end()
     }
@@ -444,14 +457,13 @@ app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candida
 // })
 //----------------------------------- add only one candidate
 app.post('/addOneCandidate', (req, res) => {
-  var data = req.body;
+  let data = req.body;
+  console.log(res.status)
   console.log(data)
   addOneCandidate(data);
-  if (err) {
-    return res.status(400).end()
-  }
+  // if (err) {
 
+  // }
+  // res.status(400).end()
   res.status(200).end()
 });
-
-

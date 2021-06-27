@@ -6,13 +6,13 @@ import axios from "axios";
 const CandidateTableItemRow = ({ text, textOne, textTwo, data, candidateDeleted }) => {
     // let history = useHistory();
 
-    const confirmDelete = (name) => {
-        // console.log(name)
+    const confirmDelete = (email) => {
+        console.log(data)
 
         const callback = () => candidateDeleted(data)
 
         axios
-            .post('/deleteCandidate', { n: name })
+            .post('/deleteCandidate', { deleteCandidateByEmail: email })
             .then(callback, callback);
     }
 
@@ -20,7 +20,7 @@ const CandidateTableItemRow = ({ text, textOne, textTwo, data, candidateDeleted 
         <tr id="candidate" >
             <CandidateTableLinkItem textOne={textOne} textTwo={textTwo} pathname={'/Profile'} data={data} />
             <CandidateTableItem text={text} />
-            <button onClick={() => confirmDelete(textOne)}>delete</button>
+            <button onClick={() => confirmDelete(data)}>delete</button>
         </tr >
     );
 }

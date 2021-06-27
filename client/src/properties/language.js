@@ -11,8 +11,14 @@ const language = {
     loginButton: { fin: 'Kirjaudu', eng: 'Login' },
     mainPageLink: { fin: 'Takaisin etusivulle', eng: 'Back to main page' },
     registerButton: { fin: 'Rekisteröidy', eng: 'Register' },
-    emailPlaceHolder: {fin: 'Sähköpostiosoite', eng: 'Email'},
-    profileButton: {fin: 'Varmista tiedot' , eng: 'Submit Information'}
+    emailPlaceHolder: { fin: 'Sähköpostiosoite', eng: 'Email' },
+    profileButton: { fin: 'Varmista tiedot', eng: 'Submit Information' },
+    adminLogo: { fin: 'Ylläpitäjän paneli', eng: 'Admin Panel' },
+    addCandidates: { fin: 'Lisää monta kandidaattia', eng: 'Add Candidates' },
+    addCandidate: { fin: 'Lisää yksi kandidaatti', eng: 'Add One Candidate' },
+    browseCandidates: { fin: 'Selaa kandidaatteja', eng: 'Browse Candidates' },
+    addQuestion: { fin: 'Lisää kysymys', eng: 'Add Question' },
+    browseQuestions: { fin: 'Selaa kysymyksiä', eng: 'Browse Questions' },
 }
 
 export default language;

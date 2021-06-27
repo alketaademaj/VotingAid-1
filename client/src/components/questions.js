@@ -34,7 +34,7 @@ class Questions extends Component {
       });
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     console.log(e.target.select.option)
   }
 
@@ -71,7 +71,20 @@ class Questions extends Component {
     var counter = -1;
     return (
       <div>
-        <form>
+        {/* <div style={{ marginTop: '5%' }}>
+          <label htmlFor="school" className="filterCandidateLabel">Filter by School</label>
+          <select ref="campus" onChange={this.handleChange}>
+            <option value="ASK">ASK</option>
+            <option value="Helga">Helga</option>
+            <option value="HUMAKO">HUMAKO</option>
+            <option value="JAMKO">JAMKO</option>
+            <option value="Laureamko">Laureamko</option>
+            <option value="METKA">METKA</option>
+            <option value="O'Diako">O'Diako</option>
+            <option value="TUO">TUO</option>
+          </select> <br></br>
+        </div> */}
+        <form style={{ marginTop: '2%' }}>
           {this.state.questions.map(question => {
             counter++;
             return (

@@ -10,7 +10,8 @@ class Candidates extends Component {
     this.state = {
       amount: [],
       Association: [],
-      theme: this.props.theme
+      theme: this.props.theme,
+      filtered: false,
     }
   }
 
@@ -20,11 +21,13 @@ class Candidates extends Component {
   }
 
   componentDidMount() {
-    SetCandidateTable(this.SetStateArray)
+    this.state.filtered ? console.log('filtteröinnin ja poiston chekki') :
+      SetCandidateTable(this.SetStateArray)
   }
 
   handleChange(e) {
     if (e.target.value != 'Select filter') {
+      this.setState({ filtered: true })
       FilterCandidateTable(this.SetStateArray, e.target.value);
     } else {
       SetCandidateTable(this.SetStateArray); // IF undefined value is given, Return table state including every candidate

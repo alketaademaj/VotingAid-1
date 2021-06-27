@@ -23,7 +23,7 @@ class Profile extends Component {
     if (this.props.location.data != null) {
       email = this.props.location.data;
     }
-    await axios.post('http://localhost:5000/Profile', { email: email })
+    await axios.post('http://localhost:5000/profile', { email: email })
       .then(res => {
         console.log(res.data)
         this.setState({ profile: res.data });
@@ -79,36 +79,38 @@ class Profile extends Component {
     ];
     return (
       <div>
-        <form>
-          <div className="candidate">
-            <form>
-              {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
-              <br></br><br></br>
-              {information.map((info) => (
-                <input id={info.id} defaultValue={info.value} onChange={this.onChange} />
-              ))}
-            </form>
-            {/*<SingleInputField action={this.handler} id={'name'} defaultValue={this.state.profile.name}/> <br/>
+        <div className="candidate">
+          <form>
+            {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
+            <br></br><br></br>
+            {information.map((info) => (
+              <input id={info.id} defaultValue={info.value} onChange={this.onChange} />
+            ))}
+            <br></br>
+            <button onClick={this.submitData}>Päivitä tiedot</button>
+            <br></br>
+            {/*fix this because right now this part only shows undefined questions*/}
+            {console.log(profile.email, profile.studentAssociation)}
+            <Link
+              to={{
+                pathname: "/Form",
+                data: {
+                  email: profile.email,
+                  studentAssociation: profile.studentAssociation,
+                }
+              }}> {profile.name + "'s Form"}
+            </Link>
+            < br />
+            <FileUpload email={profile.email} onUpload={this.updatePicture}></FileUpload>
+          </form>
+          {/*<SingleInputField action={this.handler} id={'name'} defaultValue={this.state.profile.name}/> <br/>
             <SingleInputField action={this.handler} id={'surname'} defaultValue={this.state.profile.surname}/> <br/>
             <SingleInputField action={this.handler} id={'school'} defaultValue={this.state.profile.school}/> <br/>
             <SingleInputField action={this.handler} id={'studentAssociation'} defaultValue={this.state.profile.studentAssociation}/> <br/>
             <SingleInputField action={this.handler} id={'description'} defaultValue={this.state.profile.description}/> <br/>
             <SingleInputField action={this.handler} id={'campus'} defaultValue={this.state.profile.campus}/><br/>*/}
-          </div>
-          <button onClick={this.submitData}>{language.profileButton[this.context.language]}</button>
-          <br />
-          <Link
-            to={{
-              pathname: "/Form",
-              data: {
-                email: profile.email,
-                studentAssociation: profile.studentAssociation,
-              }
-            }}> {profile.name + "'s Form"}
-          </Link>
-          < br />
-          <FileUpload email={profile.email} onUpload={this.updatePicture}></FileUpload>
-        </form>
+        </div>
+
       </div >
     );
   }

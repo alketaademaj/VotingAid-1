@@ -1,5 +1,5 @@
 const QuestionAreaList = {
-    universal: 'Undefined',
+    universal: 'Select filter',
     ask: 'ASK',
     helga: 'Helga',
     humako: 'HUMAKO',

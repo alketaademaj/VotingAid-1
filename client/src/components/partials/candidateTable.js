@@ -16,7 +16,7 @@ const CandidateTable = ({ stateArray, counter, candidateDeleted }) => {
                 {stateArray.amount.map(index => {
                     counter++;
                     return (
-                        <CandidateTableItemRow id="candidate"
+                        <CandidateTableItemRow key={index} id="candidate"
                             candidateDeleted={candidateDeleted}
                             text={stateArray['Candidate' + counter].studentAssociation}
                             textOne={stateArray['Candidate' + counter].name}

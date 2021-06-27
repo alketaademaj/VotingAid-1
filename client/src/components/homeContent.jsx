@@ -8,13 +8,14 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentAssociation: "Undefined",
+      studentAssociation: "-",
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange() {
     this.setState({ studentAssociation: this.refs.campus.value });
+    console.log(this.state.studentAssociation);
   }
 
   render() {
@@ -26,6 +27,7 @@ class Content extends React.Component {
           {language.selectStudentAssociation[this.context.language]}
         </label>
         <select ref="campus" onChange={this.handleChange.bind(this)}>
+          <option value="-">Valitse opiskelijakuntasi</option>
           <option value="ASK">ASK</option>
           <option value="Helga">Helga</option>
           <option value="HUMAKO">HUMAKO</option>
@@ -37,6 +39,10 @@ class Content extends React.Component {
         </select>
         <Link
           className="Form-button"
+          style={{
+            visibility:
+              this.state.studentAssociation != "-" ? "visible" : "hidden",
+          }}
           to={{
             pathname: "/Form",
             studentAssociation: this.state.studentAssociation,

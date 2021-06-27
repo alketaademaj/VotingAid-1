@@ -42,7 +42,7 @@ const FileUpload = ({ email, onUpload }) => {
 
     const alert = () => {
         Swal.fire({
-            title: 'You have succesfully submitted a question!',
+            title: 'You have succesfully changed your profile picture!',
             icon: "success",
             confirmButtonText: "Confirm",
         })
@@ -51,6 +51,7 @@ const FileUpload = ({ email, onUpload }) => {
     return (
         <div>
             <form className="profileForm" onSubmit={onSubmit}>
+                <p>Upload profile pic</p>
                 <div className="custom-file mb-4">
                     <input type="file" className="custom-file-input" id="customFile" onChange={onChange} />
                     <label className="custom-file-label" htmlFor="custom-file">

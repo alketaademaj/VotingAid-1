@@ -2,7 +2,6 @@ import React, { createContext, Component } from 'react';
 import language from "../properties/language";
 
 export const UserContext = createContext();
-
 class UserContextProvider extends Component {
   constructor(props) {
     super(props)
@@ -10,13 +9,19 @@ class UserContextProvider extends Component {
       user: 'Quest',
       email: '',
       loggedIn: false,
-      language: sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'fin'
+      language: 'fin',
+    }
+  }
+
+  componentDidMount() {
+    if (sessionStorage.getItem('language')) {
+      this.setState({ language: sessionStorage.getItem('language') })
     }
   }
 
   changeLanguage = (e) => {
-    this.setState({ language: e.target.value });
-    sessionStorage.setItem('language', e.target.value);
+    this.setState({ language: e });
+    sessionStorage.setItem('language', e);
   }
 
   changeUser = (user, email, loggedIn, language) => {
@@ -24,35 +29,31 @@ class UserContextProvider extends Component {
       user: user,
       email: email,
       loggedIn: loggedIn,
-      language: language,
     });
-    console.log(this.state);
   }
 
   logOut = () => {
-    this.changeUser('Quest', '', false, language);
-    sessionStorage.clear();
+    this.changeUser('Quest', '', false);
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('status');
   }
 
   checkExistingLogin = () => {
     let email = sessionStorage.getItem('email');
     let status = sessionStorage.getItem('status');
-    let language = sessionStorage.getItem('language');
     if (email && status) {
-      this.changeUser(status, email, true, language);
+      this.changeUser(status, email, true);
     }
   }
 
   existingLogin() {
     let email = sessionStorage.getItem('email');
     let status = sessionStorage.getItem('status');
-    let language = sessionStorage.getItem('language');
     if (email && status) {
       return {
         user: status,
         email: email,
         loggedIn: true,
-        language: language
       }
     }
   }
@@ -64,7 +65,7 @@ class UserContextProvider extends Component {
         changeUser: this.changeUser,
         checkExistingLogin: this.checkExistingLogin,
         logOut: this.logOut,
-        changeLanguage: this.changeLanguage
+        changeLanguage: this.changeLanguage,
       }}>
         {this.props.children}
       </UserContext.Provider>

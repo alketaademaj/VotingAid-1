@@ -75,7 +75,12 @@ class Login extends React.Component {
           <Link
             to={{
               pathname: "/"
-            }}> {language.mainPageLink[this.context.language]} </Link>
+            }}> {language.mainPageLink[this.context.language]} </Link> <br></br><br></br>
+          {/* <p className="forgot-password text-right">
+            <Link
+              to={{
+                pathname: "/newPassword"
+              }}> Unohditko salasanan? </Link></p> */}
         </form>
       </div>
     );

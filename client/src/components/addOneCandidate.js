@@ -19,6 +19,10 @@ export class addOneCandidate extends Component {
         };
     }
 
+    handleChange() {
+        this.setState({ studentAssociation: this.refs.campus.value });
+    }
+
     addCandidate = () => {
         Swal.fire({
             title: 'You have succesfully added one candidate!',
@@ -29,6 +33,7 @@ export class addOneCandidate extends Component {
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
+        this.setState({ studentAssociation: this.refs.campus.value })
         // console.log(event.target.name + '    ' + event.target.value)
     }
 
@@ -47,8 +52,8 @@ export class addOneCandidate extends Component {
             description: this.state.description,
         }
         axios.post('http://localhost:5000/addOneCandidate', oneCandidate)
-            .then(res => {
-                console.log(res);
+            .then(res => console.log(res)).catch(error => {
+                console.log(error)
             });
     }
 
@@ -65,8 +70,17 @@ export class addOneCandidate extends Component {
                     <input type="text" name="email" value={this.state.email} placeholder={''} onChange={this.handleChange}></input>
                     <label>School: </label>
                     <input type="text" name="school" value={this.state.school} placeholder={''} onChange={this.handleChange}></input>
-                    <label>Student Association: </label>
-                    <input type="text" name="studentAssociation" value={this.state.studentAssociation} placeholder={''} onChange={this.handleChange}></input>
+                    <label htmlFor="campus">Student Association: </label>
+                    <select ref="campus" onChange={this.handleChange}>
+                        <option value="ASK">ASK</option>
+                        <option value="Helga">Helga</option>
+                        <option value="HUMAKO">HUMAKO</option>
+                        <option value="JAMKO">JAMKO</option>
+                        <option value="Laureamko">Laureamko</option>
+                        <option value="METKA">METKA</option>
+                        <option value="O'Diako">O'Diako</option>
+                        <option value="TUO">TUO</option>
+                    </select>
                     <label>Campus: </label>
                     <input type="text" name="campus" value={this.state.campus} placeholder={''} onChange={this.handleChange}></input>
                     <label>Electoral District: </label>

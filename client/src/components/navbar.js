@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
+import React, { Component, useContext } from 'react';
+import { BrowserRouter, Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { BiHome } from "react-icons/bi";
 import { BsLock } from "react-icons/bs";
 import { HiOutlineUserAdd } from "react-icons/hi";
@@ -22,7 +22,14 @@ import AddQuestion from './addQuestion.js';
 import language from "../properties/language";
 import { UserContext } from '../context/userContext';
 
-class NavContent extends Component {
+import ThemeToggleButton from "./themeToggleButton";
+// import { theme } from "./context/theme";
+// import { ThemeContext } from "./context/ThemeProvider";
+
+import NavLogin from "./NavLogin";
+
+// Create new file for this component
+class AdminNavbar extends Component {
   static contextType = UserContext;
   constructor(props) {
     super(props);
@@ -33,151 +40,58 @@ class NavContent extends Component {
   }
 
   render() {
-    if (this.context.loggedIn && this.context.user == "Admin") { //BETTER FIX FOR THESE LINES PLEASE, THIS IS NOT WORKING AS INTENDED, CANDIDATES CAN SEE ADMIN BAR NOW
-      return (
-        <div>
-          <h2>Admin Navbar</h2>
-          <NavLink to="/addCandidates" className="whiteFont"> Add Candidates |</NavLink>
-          <NavLink to="/addOneCandidate" className="whiteFont"> Add a Single Candidate |</NavLink>
-          <NavLink to="/Candidates" className="whiteFont"> Browse Candidates |</NavLink>
-          <NavLink to="/addQuestion" className="whiteFont"> Add Question |</NavLink>
-          <NavLink to="/Questions" className="whiteFont"> Browse Questions </NavLink>
+    return this.context.loggedIn && this.context.user === "Admin" &&
+      <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#404040', color: '#FFFFFF', paddingLeft: 10, paddingRight: 10, fontSize: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h5 style={{ margin: 0 }}>{language.adminLogo[this.context.language]}</h5>
         </div>
-      );
-    }
-    else {
-      return null;
-    }
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <NavLink style={{ color: '#FFFFFF' }} to="/addCandidates" className="whiteFont"> {language.addCandidates[this.context.language]}</NavLink>
+          <NavLink style={{ color: '#FFFFFF' }} to="/addOneCandidate" className="whiteFont">  {language.addCandidate[this.context.language]} </NavLink>
+          <NavLink style={{ color: '#FFFFFF' }} to="/Candidates" className="whiteFont"> {language.browseCandidates[this.context.language]} </NavLink>
+          <NavLink style={{ color: '#FFFFFF' }} to="/addQuestion" className="whiteFont"> {language.addQuestion[this.context.language]} </NavLink>
+          <NavLink style={{ color: '#FFFFFF' }} to="/Questions" className="whiteFont"> {language.browseQuestions[this.context.language]} </NavLink>
+        </div>
+      </div>
   }
 }
 
-class NavLogin extends Component {
-  static contextType = UserContext;
 
-  componentDidMount() {
-    const { checkExistingLogin } = this.context;
-    checkExistingLogin();
-  }
+// Simple Auth check with out token just to stop us to navigate in any private route
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    // Here need to check if Token exist because is unsecure
+    sessionStorage.getItem("status") // TODO: TOKEN
+      ? <Component {...props} />
+      : <Redirect to={{
+        pathname: '/Login',
+        state: { from: props.location }
+      }} />
+  )} />
+)
 
-  changeTheme = () => {
-    console.log(this.context)
-    if (this.refs.theme.value == 'BLACK') {
-      document.body.style.backgroundColor = 'black';
-      if (this.context.loggedIn && this.context.user == "Admin") {
-        const allWhite = document.getElementsByClassName('whiteFont')[0].style.color = 'white'
-        const allWhite1 = document.getElementsByClassName('whiteFont')[1].style.color = 'white'
-        const allWhite2 = document.getElementsByClassName('whiteFont')[2].style.color = 'white'
-        const allWhite3 = document.getElementsByClassName('whiteFont')[3].style.color = 'white'
-        const allWhite4 = document.getElementsByClassName('whiteFont')[4].style.color = 'white'
-      }
-      console.log("Black works")
-    }
-    else if (this.refs.theme.value == 'WHITE') {
-      document.body.style.backgroundColor = 'white';
-      if (this.context.loggedIn && this.context.user == "Admin") {
-        const allWhite = document.getElementsByClassName('whiteFont')[0].style.color = 'black'
-        const allWhite1 = document.getElementsByClassName('whiteFont')[1].style.color = 'black'
-        const allWhite2 = document.getElementsByClassName('whiteFont')[2].style.color = 'black'
-        const allWhite3 = document.getElementsByClassName('whiteFont')[3].style.color = 'black'
-        const allWhite4 = document.getElementsByClassName('whiteFont')[4].style.color = 'black'
-        const allWhite5 = document.getElementsByClassName('homeNav')[0].style.backgroundColor = ' #d3d3d3'
-      }
-      console.log("White works")
-    }
-    else if (this.refs.theme.value == '-') {
-      document.body.style.backgroundColor = '#5da57b93';
-      const allWhite = document.getElementsByClassName('whiteFont')[0].style.color = 'black'
-      const allWhite1 = document.getElementsByClassName('whiteFont')[1].style.color = 'black'
-      const allWhite2 = document.getElementsByClassName('whiteFont')[2].style.color = 'black'
-      const allWhite3 = document.getElementsByClassName('whiteFont')[3].style.color = 'black'
-      const allWhite4 = document.getElementsByClassName('whiteFont')[4].style.color = 'black'
-      const allWhite5 = document.getElementsByClassName('homeNav')[0].style.backgroundColor = 'rgba(255, 255, 255, 0.829)'
-    }
-    swal.fire("Color changed to " + this.refs.theme.value);
-
-  }
-
-  render() {
-    const { changeUser } = this.context;
-    const { logOut } = this.context;
-    const { changeLanguage } = this.context;
-
-    if (this.context.loggedIn) { //BETTER FIX FOR THESE LINES PLEASE
-      return (
-        <div className="homeNav">
-          <select ref="theme" onChange={this.changeTheme}>
-            <option value="-">Valitse Teema</option>
-            <option value="BLACK">BLACK</option>
-            <option value="WHITE">WHITE</option>
-          </select>
-          <NavLink to="/">
-            <BiHome />
-            {language.navigationHome[this.context.language]}
-          </NavLink>
-          <NavLink
-            to="/logout"
-            onClick={() => logOut()}
-          ><BsLock />
-            {language.navigationLogOut[this.context.language]}
-          </NavLink>
-          <NavLink to="/Profile">
-            <CgProfile /> {language.navigationProfile[this.context.language]} </NavLink>
-          <select name="lang" onChange={changeLanguage}>
-            <option>Valitse kieli</option>
-            <option selected={this.context.language = !!'fin'} value="fin">Finnish</option>
-            <option selected={sessionStorage.getItem('language') === 'eng'} value="eng">English</option>
-          </select>
-        </div>
-      );
-    }
-    else {
-      return (
-        <div className="homeNav" >
-          <select ref="theme" onChange={this.changeTheme}>
-            <option value="-">Valitse Teema</option>
-            <option value="BLACK">BLACK</option>
-            <option value="WHITE">WHITE</option>
-          </select>
-          <NavLink to="/">
-            <BiHome />
-            {language.navigationHome[this.context.language]}
-          </NavLink>
-          <NavLink to="/Login"><BsLock /> {language.navigationLogin[this.context.language]} </NavLink>
-          <NavLink to="/Register"><HiOutlineUserAdd /> {language.navigationRegister[this.context.language]} </NavLink>
-          <select name="lang" onChange={changeLanguage}>
-            <option value="fin">Valitse kieli</option>
-            <option value="fin">Finnish</option>{/*selected={this.context.language = !!'fin'}*/}
-            <option value="eng">English</option>{/*selected={this.context.language = !!'fin'}*/}
-          </select>
-        </div>
-      );
-    }
-  }
+const Navigation = () => {
+  return <>
+    <BrowserRouter>
+      <div>
+        <AdminNavbar />
+        <NavLogin />
+        <Switch>
+          <PrivateRoute path="/addQuestion" component={AddQuestion} />
+          <PrivateRoute path="/addCandidates" component={AddCandidates} />
+          <PrivateRoute path="/addOneCandidate" component={AddOneCandidate} />
+          <PrivateRoute path="/Candidates" component={Candidates} />
+          <PrivateRoute path="/Questions" component={Questions} />
+          <PrivateRoute path="/Profile" component={Profile} />
+          <Route path="/suggestedCandidates" component={Suggestions} />
+          <Route path="/Form" component={Form} />
+          <Route path="/Login" component={Login} />
+          <Route path="/Register" component={Registration} />
+          <Route path="/" component={Content} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  </>
 }
 
-class Navigation extends Component {
-  render() {
-    return (
-      < BrowserRouter >
-        <div>
-          <NavLogin />
-          <NavContent />
-          <Switch>
-            <Route path="/addQuestion" component={AddQuestion} />
-            <Route path="/addCandidates" component={AddCandidates} />
-            <Route path="/addOneCandidate" component={AddOneCandidate} />
-            <Route path="/Candidates" component={Candidates} />
-            <Route path="/suggestedCandidates" component={Suggestions} />
-            <Route path="/Questions" component={Questions} />
-            <Route path="/Form" component={Form} />
-            <Route path="/Profile" component={Profile} />
-            <Route path="/Login" component={Login} />
-            <Route path="/Register" component={Registration} />
-            <Route path="/" component={Content} />
-          </Switch>
-        </div>
-      </BrowserRouter >
-    );
-  }
-}
 export default Navigation;

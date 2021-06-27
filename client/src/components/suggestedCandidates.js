@@ -6,7 +6,8 @@ class Suggestions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      suggestions: []
+      suggestions: [],
+      similarity: []
     };
   }
 
@@ -19,7 +20,10 @@ class Suggestions extends Component {
     axios.post('http://localhost:5000/suggested', { data: data })
       .then(res => {
         this.setState({ suggestions: res.data });
+        this.setState({ similarity: res.data[0].filledForm });
+        console.log(this.similarity) // yhden kandidaatin formivastaukset, seuraava vaihe on laskea ne yhteen ja verrata ne omaan yhteenlaskettuun summaan
       });
+    console.log(this.similarity)
     //JOS HALUTAAN PROSENTUAALISTA VERTAILUA if(userSum >= (candSum * 0.75))
   }
 

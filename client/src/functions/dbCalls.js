@@ -1,6 +1,8 @@
 import Axios from 'axios';
 
 const SetCandidateTable = (setStateArray) => {
+    console.log('alustava yhde kandin poisto ilamn, että page refresh testausta varten')
+    // korjaa tämä, onko mahdollista poistaa ilman, että se päivittää koko sivun uusiksi
     Axios.get('http://localhost:5000/')
         .then(res => {
             let q = [];
@@ -18,6 +20,7 @@ const SetCandidateTable = (setStateArray) => {
 }
 
 const FilterCandidateTable = (setStateArray, filter) => {
+    console.log('yhde kandin poisto ilamn, että page refresh')
     Axios.post('http://localhost:5000/filteredCandidates', { data: filter })
         .then(res => {
             console.log(res)

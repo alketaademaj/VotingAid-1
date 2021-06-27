@@ -21,13 +21,14 @@ class Form extends React.Component {
   }
 
   componentDidMount() {
-    axios.post('http://localhost:5000/questions', { data: this.props.location.studentAssociation })
+    axios.post('http://localhost:5000/questions', { data: this.props.location.studentAssociation == undefined ? this.props.location.data.studentAssociation : this.props.location.studentAssociation })
       .then(res => {
         let q = [];
         for (var i = 0; i < res.data.length; i++) {
           q.push(res.data[i]);
           var joined = this.state.questions.concat(q[i]);
           this.setState({ questions: joined });
+          console.log(joined)
           this.preFillForm();
         }
       });
@@ -39,7 +40,8 @@ class Form extends React.Component {
     if (this.props.location.data != null) {
       email = this.props.location.data.email;
     }
-
+    console.log('formin area')
+    console.log(this.state.area)
     if (this.context.loggedIn) {
       axios.post('http://localhost:5000/fillForm', { data: email })
         .then(res => {
@@ -49,6 +51,7 @@ class Form extends React.Component {
           console.log(res)
           for (var i = 0; i < Object.keys(res.data.filledForm).length / 2; i++) {
             console.log(Object.keys(res.data.filledForm).length);
+            console.log(res.data.filledForm)
             if (res.data.filledForm['question' + i] == this.refs['q' + i].childNodes[2].childNodes[0].value) {
               this.refs['q' + i].childNodes[2].childNodes[0].checked = true;
             }
@@ -102,6 +105,8 @@ class Form extends React.Component {
       area = this.props.location.data.studentAssociation
     }
     console.log(area)
+    console.log('context form submitattaessa')
+    console.log(this.context)
     if (this.context.user != 'Quest') {
       event.preventDefault();
       let answers = {};
@@ -127,6 +132,8 @@ class Form extends React.Component {
   render() {
     var counter = -1;
     return (
+      console.log('KYSYMYKSET'),
+      console.log(this.state.questions),
       <form className="homeScreen" onSubmit={this.handleSubmit} method="POST">
         {this.state.questions.map(index => {
           counter++;

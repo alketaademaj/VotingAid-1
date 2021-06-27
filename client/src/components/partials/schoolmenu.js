@@ -11,34 +11,33 @@ class Schoolmenu extends Component {
   }
 
   handleChange() {
-    this.setState({value: this.refs.campus.value});
+    this.setState({ value: this.refs.campus.value });
   }
 
-
   componentDidMount() {
-   axios.get('http://localhost:5000/')
-     .then(res => {
-       let s = [];
-       for(var i = 0; i < res.data.length;i++) {
-         s.push(res.data[i].school);
-       }
-       const uniqueSchools = Array.from(new Set(s));
-       this.setState({ schools: uniqueSchools });
-   });
- }
+    axios.get('/')
+      .then(res => {
+        let s = [];
+        for (var i = 0; i < res.data.length; i++) {
+          s.push(res.data[i].school);
+        }
+        const uniqueSchools = Array.from(new Set(s));
+        this.setState({ schools: uniqueSchools });
+      });
+  }
 
- render() {
-   return (
-     <select ref="campus" onChange={this.handleChange.bind(this)}>
-       {this.state.schools.map(index => {
-           return (
-             <option value = {index}>{index}</option>
-           );
-       }
-       )}
-     </select>
-   );
- }
+  render() {
+    return (
+      <select ref="campus" onChange={this.handleChange.bind(this)}>
+        {this.state.schools.map(index => {
+          return (
+            <option value={index}>{index}</option>
+          );
+        }
+        )}
+      </select>
+    );
+  }
 }
 
 export default Schoolmenu;

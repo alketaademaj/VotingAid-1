@@ -1,15 +1,25 @@
-/* SOME STYLES */
+/* -----------------------------------------
+      GLOBAL Style - START
+----------------------------------------- */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 991px;
+  display: flex;
+}
 body {
-  background: #5da57b93; /* fallback for old browsers */
+  background: #e0e0e0; /* fallback for old browsers */
   /* background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; */
   /* background-blend-mode: multiply, multiply; */
   /* height: 100%; */
   width: 100%;
   height: 100%;
 }
-/* .app {
-  width: 100%;
-} */
+
+/* -----------------------------------------
+      GLOBAL Style - START
+----------------------------------------- */
+
 .homeScreen {
   border: 2px rgba(255, 255, 255, 0.829) solid;
   padding-bottom: 7px;
@@ -38,8 +48,6 @@ body {
   display: inline;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
-  margin-top: 20px;
   margin: 15px;
   cursor: pointer;
   font-size: 22px;
@@ -202,13 +210,31 @@ input[type="text"] {
   width: auto;
   display: inline-block;
 }
-.homeNav {
-  width: auto;
+/* -----------------------------------------------
+    Style of NavLogin Component - START
+----------------------------------------------- */
+
+.navLoginWrapper {
+  display: flex;
+  justify-content: center;
+}
+.navLoginWrapperLight {
+  color: #000000;
   background-color: rgba(255, 255, 255, 0.829);
 }
-.homeNav a {
-  color: black !important;
+.navLoginWrapperDark {
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.829);
 }
+.navLoginContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* -----------------------------------------------
+    Style of NavLogin Component - END
+----------------------------------------------- */
+
 .candidateSuggestions {
   border: 2px rgba(255, 255, 255, 0.829) solid;
   padding-bottom: 7px;
