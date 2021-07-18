@@ -70,12 +70,12 @@ class Profile extends Component {
       return null
     }
     let information = [
-      { value: profile.name, id: 'name' },
-      { value: profile.surname, id: 'surname' },
-      { value: profile.school, id: 'school' },
-      { value: profile.studentAssociation, id: 'studentAssociation' },
-      { value: profile.description, id: 'description' },
-      { value: profile.campus, id: 'campus' },
+      { value: profile.name, id: 'name', placeholder: language.firstName[this.context.language] },
+      { value: profile.surname, id: 'surname', placeholder: language.surName[this.context.language] },
+      { value: profile.school, id: 'school', placeholder: language.school[this.context.language] },
+      { value: profile.studentAssociation, id: 'studentAssociation', placeholder: language.selectStudentAssociation[this.context.language] },
+      { value: profile.description, id: 'description', placeholder: language.description[this.context.language] },
+      { value: profile.campus, id: 'campus', placeholder: language.campus[this.context.language] },
     ];
     return (
       <div>
@@ -84,13 +84,13 @@ class Profile extends Component {
             {profile.image && <Picture className="pic" source={process.env.PUBLIC_URL + profile.image}></Picture>}
             <br></br><br></br>
             {information.map((info) => (
-              <input id={info.id} defaultValue={info.value} onChange={this.onChange} />
+              <input id={info.id} defaultValue={info.value} placeholder={info.placeholder} onChange={this.onChange} />
             ))}
             <br></br>
-            <button onClick={this.submitData}>Päivitä tiedot</button>
-            <br></br>
+            <button onClick={this.submitData}>{language.updateButton[this.context.language]}</button>
+            <br></br>  <br></br>
             {/*fix this because right now this part only shows undefined questions*/}
-            {console.log(profile.email, profile.studentAssociation)}
+            {/* {console.log(profile.email, profile.studentAssociation)} */}
             <Link
               to={{
                 pathname: "/Form",
@@ -98,7 +98,7 @@ class Profile extends Component {
                   email: profile.email,
                   studentAssociation: profile.studentAssociation,
                 }
-              }}> {profile.name + "'s Form"}
+              }}> {language.formLink[this.context.language]}
             </Link>
             < br />
             <FileUpload email={profile.email} onUpload={this.updatePicture}></FileUpload>

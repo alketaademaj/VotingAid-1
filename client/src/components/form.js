@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { UserContext } from "../context/userContext";
+import Swal from 'sweetalert2';
 
 class Form extends React.Component {
   static contextType = UserContext;
@@ -116,6 +117,11 @@ class Form extends React.Component {
         .then(res => {
           console.log(res);
         });
+      Swal.fire({
+        title: 'You have succesfully filled the form!',
+        icon: "success",
+        confirmButtonText: "Confirm",
+      })
     }
     else {
       console.log(this.state.area)

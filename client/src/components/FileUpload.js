@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import language from "../properties/language";
+import { UserContext } from '../context/userContext';
 
 const FileUpload = ({ email, onUpload }) => {
+    const context = useContext(UserContext);
+    const { language } = context;
 
     const [file, setFile] = useState(''); //useState is the default file: ''; only call setFile instead of setState 
-    const [filename, setFilename] = useState('Upload profile picture');
-    const [uploadedFile, setUploadedFile] = useState({}); //maybe delete this, it is not being used
+    const [filename, setFilename] = useState('New profile picture');
+    const [uploadedFile, setUploadedFile] = useState({});
 
     const onChange = e => {
         setFile(e.target.files[0]); //html input you can do multiple files, so it is like an array
@@ -51,7 +55,7 @@ const FileUpload = ({ email, onUpload }) => {
     return (
         <div>
             <form className="profileForm" onSubmit={onSubmit}>
-                <p>Upload profile pic</p>
+                <p>Upload your profile picture</p>
                 <div className="custom-file mb-4">
                     <input type="file" className="custom-file-input" id="customFile" onChange={onChange} />
                     <label className="custom-file-label" htmlFor="custom-file">

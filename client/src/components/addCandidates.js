@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import axios from "axios"
 import swal from "sweetalert2"
 import { CSVReader } from 'react-papaparse'
+import { UserContext } from "../context/userContext";
+import language from "../properties/language";
 
 const buttonRef = React.createRef()
 class AddCandidates extends Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -119,8 +122,8 @@ class AddCandidates extends Component {
                   paddingRight: 0
                 }}
               >
-                Browse file
-            </button>
+                {language.browseButton[this.context.language]}
+              </button>
               <div
                 style={{
                   borderWidth: 1,
@@ -147,12 +150,12 @@ class AddCandidates extends Component {
                 }}
                 onClick={this.handleRemoveFile}
               >
-                Remove
-            </button>
+                {language.removeButton[this.context.language]}
+              </button>
             </aside>
           )}
         </CSVReader>
-        <button onClick={this.confirmSubmit.bind(this)}>Submit</button>
+        <button onClick={this.confirmSubmit.bind(this)}>{language.fillFormButton[this.context.language]}</button>
       </div>
     )
   }

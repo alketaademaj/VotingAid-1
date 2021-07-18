@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import Swal from 'sweetalert2';
 import axios from "axios";
+import language from "../properties/language";
+import { UserContext } from '../context/userContext';
 
 export class addOneCandidate extends Component {
+    static contextType = UserContext;
     constructor(props) {
         super(props);
 
@@ -21,14 +24,6 @@ export class addOneCandidate extends Component {
 
     handleChange() {
         this.setState({ studentAssociation: this.refs.campus.value });
-    }
-
-    addCandidate = () => {
-        Swal.fire({
-            title: 'You have succesfully added one candidate!',
-            icon: "success",
-            confirmButtonText: "Confirm",
-        })
     }
 
     handleChange = (event) => {
@@ -52,8 +47,12 @@ export class addOneCandidate extends Component {
             description: this.state.description,
         }
         axios.post('http://localhost:5000/addOneCandidate', oneCandidate)
-            .then(res => console.log(res)).catch(error => {
-                console.log(error)
+            .then(res => {
+                console.log(res.data);
+                Swal.fire({
+                    text: res.data,
+                    icon: res.data.includes('address') ? 'error' : 'success'
+                })
             });
     }
 
@@ -61,16 +60,16 @@ export class addOneCandidate extends Component {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <p>Fill in the information below to add one candidate</p>
-                    <label>First name: </label>
+                    <p>{language.oneCandidate[this.context.language]}</p>
+                    <label>{language.firstName[this.context.language]}</label>
                     <input type="text" name="name" value={this.state.name} placeholder={''} onChange={this.handleChange}></input>
-                    <label>Surname: </label>
+                    <label>{language.surName[this.context.language]}</label>
                     <input type="text" name="surname" value={this.state.surname} placeholder={''} onChange={this.handleChange}></input>
-                    <label>Email: </label>
+                    <label>{language.emailPlaceHolder[this.context.language]}: </label>
                     <input type="text" name="email" value={this.state.email} placeholder={''} onChange={this.handleChange}></input>
-                    <label>School: </label>
+                    <label>{language.school[this.context.language]}</label>
                     <input type="text" name="school" value={this.state.school} placeholder={''} onChange={this.handleChange}></input>
-                    <label htmlFor="campus">Student Association: </label>
+                    <label htmlFor="campus">{language.selectStudentAssociation[this.context.language]}</label>
                     <select ref="campus" onChange={this.handleChange}>
                         <option value="ASK">ASK</option>
                         <option value="Helga">Helga</option>
@@ -81,15 +80,15 @@ export class addOneCandidate extends Component {
                         <option value="O'Diako">O'Diako</option>
                         <option value="TUO">TUO</option>
                     </select>
-                    <label>Campus: </label>
+                    <label>{language.campus[this.context.language]}</label>
                     <input type="text" name="campus" value={this.state.campus} placeholder={''} onChange={this.handleChange}></input>
-                    <label>Electoral District: </label>
+                    <label>{language.electoralDistrict[this.context.language]}</label>
                     <input type="text" name="electoralDistrict" value={this.state.electoralDistrict} placeholder={''} onChange={this.handleChange}></input>
-                    <label>Electoral Alliance: </label>
+                    <label>{language.electoralAlliance[this.context.language]}</label>
                     <input type="text" name="electoralAlliance" value={this.state.electoralAlliance} placeholder={''} onChange={this.handleChange}></input>
-                    <label>Description: </label>
+                    <label>{language.description[this.context.language]}</label>
                     <input type="text" name="description" value={this.state.description} placeholder={''} onChange={this.handleChange}></input><br></br><br></br>
-                    <button type="submit" onClick={this.addCandidate}>Submit!</button>
+                    <button type="submit">{language.fillFormButton[this.context.language]}</button>
                 </form>
             </div>
         )

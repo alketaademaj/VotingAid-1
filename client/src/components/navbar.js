@@ -1,11 +1,5 @@
-import React, { Component, useContext } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, NavLink, Redirect } from 'react-router-dom';
-import { BiHome } from "react-icons/bi";
-import { BsLock } from "react-icons/bs";
-import { HiOutlineUserAdd } from "react-icons/hi";
-import { CgProfile } from "react-icons/cg";
-import swal from 'sweetalert2';
-
 
 //Components
 import Form from './form.js';
@@ -81,7 +75,7 @@ const Navigation = () => {
           <PrivateRoute path="/addCandidates" component={AddCandidates} />
           <PrivateRoute path="/addOneCandidate" component={AddOneCandidate} />
           <PrivateRoute path="/Candidates" component={Candidates} />
-          <PrivateRoute path="/Questions" component={Questions} />
+          <Route path="/Questions" component={Questions} />
           <PrivateRoute path="/Profile" component={Profile} />
           <Route path="/suggestedCandidates" component={Suggestions} />
           <Route path="/Form" component={Form} />

@@ -27,7 +27,10 @@ class Content extends React.Component {
           {language.selectStudentAssociation[this.context.language]}
         </label>
         <select ref="campus" onChange={this.handleChange.bind(this)}>
-          <option value="-">Valitse opiskelijakuntasi</option>
+          <option value="-">
+            {" "}
+            {language.selectStudentAssociation[this.context.language]}
+          </option>
           <option value="ASK">ASK</option>
           <option value="Helga">Helga</option>
           <option value="HUMAKO">HUMAKO</option>

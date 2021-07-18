@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import Picture from './partials/picture';
+import language from "../properties/language";
+import { UserContext } from '../context/userContext';
+import CandidateTableLinkItem from './partials/candidateTableLinkItem'
 
 class Suggestions extends Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
       suggestions: [],
-      similarity: []
     };
   }
 
@@ -20,10 +23,8 @@ class Suggestions extends Component {
     axios.post('http://localhost:5000/suggested', { data: data })
       .then(res => {
         this.setState({ suggestions: res.data });
-        this.setState({ similarity: res.data[0].filledForm });
-        console.log(this.similarity) // yhden kandidaatin formivastaukset, seuraava vaihe on laskea ne yhteen ja verrata ne omaan yhteenlaskettuun summaan
+        console.log(res.data[0].similarity)
       });
-    console.log(this.similarity)
     //JOS HALUTAAN PROSENTUAALISTA VERTAILUA if(userSum >= (candSum * 0.75))
   }
 
@@ -31,12 +32,13 @@ class Suggestions extends Component {
     if (this.state.suggestions.length > 0) {
       return (
         <div className="candidateSuggestions">
-          <h1>Candidates With Matching Values:</h1>
+          <h1>{language.matchingCandidates[this.context.language]}</h1>
           {this.state.suggestions.map((candidate, index) => {
             return (
               console.log(this.state.suggestions),
               <div className="candidateSuggestionCenter">
-                <h2> {<Picture className="pic" source={process.env.PUBLIC_URL + candidate.image}></Picture>} {candidate.name} {candidate.surname}</h2>
+                <h2> {<Picture className="pic" source={process.env.PUBLIC_URL + candidate.image}></Picture>} {candidate.name} {candidate.surname} {(candidate.similarity).toFixed() + '%'}</h2>
+                <CandidateTableLinkItem textOne={this.props.textOne} textTwo={this.props.textTwo} pathname={'/Profile'} data={this.props.data} />
               </div>
             );
           }

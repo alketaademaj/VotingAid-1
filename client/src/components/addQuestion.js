@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import Swal from 'sweetalert2';
 import language from "../properties/language";
+import { UserContext } from '../context/userContext';
 
 class Registration extends React.Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
 
@@ -52,7 +54,7 @@ class Registration extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input type="question" name="question" placeholder={''} value={this.state.question} onChange={this.handleChange} required />
           <select ref="area" onChange={this.handleArea.bind(this)}>
-            <option value="-">Oppilaskunta / universaali</option>
+            {/* <option value="-">Oppilaskunta / universaali</option> */}
             <option value="Undefined">Undefined</option>
             <option value="ASK">ASK</option>
             <option value="Helga">Helga</option>
@@ -63,7 +65,8 @@ class Registration extends React.Component {
             <option value="O'Diako">O'Diako</option>
             <option value="TUO">TUO</option>
           </select>
-          <button type="submit" onClick={this.onSubmit}>Add Question</button>
+          <br></br>
+          <button type="submit" onClick={this.onSubmit}>{language.addQuestionButton[this.context.language]}</button>
         </form>
       </div>
     );

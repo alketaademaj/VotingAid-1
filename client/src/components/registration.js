@@ -60,9 +60,9 @@ class Registration extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="email" name="email" placeholder={language.emailPlaceHolder[this.context.language]}  value={this.state.email} onChange={this.handleChange} required />
-          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required />
-          <input type="password" name="password_confirmation" placeholder="Password confirmation" value={this.state.password_confirmation} onChange={this.handleChange} required />
+          <input type="email" name="email" placeholder={language.emailPlaceHolder[this.context.language]} value={this.state.email} onChange={this.handleChange} required />
+          <input type="password" name="password" placeholder={language.passwordPlaceHolder[this.context.language]} value={this.state.password} onChange={this.handleChange} required />
+          <input type="password" name="password_confirmation" placeholder={language.passwordConfirmationPlaceHolder[this.context.language]} value={this.state.password_confirmation} onChange={this.handleChange} required />
           <button type="submit"> {language.registerButton[this.context.language]} </button>
           <Link
             to={{

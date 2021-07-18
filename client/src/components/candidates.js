@@ -3,8 +3,11 @@ import { SetCandidateTable, FilterCandidateTable } from '../functions/dbCalls';
 import { QuestionAreaList } from './partials/selectMenuLists'
 import SelectMenu from './partials/selectMenu.js';
 import CandidateTable from './partials/candidateTable';
+import language from "../properties/language";
+import { UserContext } from '../context/userContext';
 
 class Candidates extends Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +40,7 @@ class Candidates extends Component {
   render() {
     return (
       <div style={{ width: '50%', marginLeft: '25%', marginTop: '5%' }}>
-        <label htmlFor="school" className="filterCandidateLabel">Filter by School</label>
+        <label htmlFor="school" className="filterCandidateLabel">{language.filterCandidateLabel[this.context.language]}</label>
         <SelectMenu
           className={'studentAssociationList'}
           selectMenuList={QuestionAreaList}

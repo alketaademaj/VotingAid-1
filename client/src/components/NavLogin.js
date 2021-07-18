@@ -38,6 +38,7 @@ class NavLogin extends Component {
                         'navLoginWrapper': true,
                         'navLoginWrapperLight': !this.isDark(theme.mode),
                         'navLoginWrapperDark': this.isDark(theme.mode),
+
                     })}>
                         <div className={classNames({
                             'container': true,
@@ -66,6 +67,7 @@ class NavLogin extends Component {
                                         {language.navigationProfile[this.context.language]}
                                     </span>
                                 </NavLink>
+                                {/* <NavLink style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }} to="/Candidates"> {language.browseCandidates[this.context.language]} </NavLink> */}
                             </>
                                 : <>
                                     <NavLink to="/Login">
@@ -90,7 +92,6 @@ class NavLogin extends Component {
                                     <img style={{ width: 30 }} src={UK} alt="United Kingdom of Great Britain Flag" />
                                 </span>
                             </div>
-
                         </div>
                     </div>
                 )}</ThemeContext.Consumer>

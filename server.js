@@ -37,6 +37,7 @@ app.use(session({
 //module for handling form data
 var bp = require('body-parser');
 const { default: Axios } = require('axios');
+const user = require('./models/user');
 app.use(bp.json());       // to support JSON-encoded bodies
 app.use(bp.urlencoded({     // to support URL-encoded bodies
   extended: true
@@ -50,7 +51,7 @@ app.get('/', (req, res) => { //Shows all the candidates
 
 app.post('/forms', (req, res) => { //Shows all the forms
   var filter = req.body.data;
-  console.log('||' + filter + '||');
+  //console.log('||' + filter + '||');
   Candidate.find({ school: { $eq: filter } }, function (err, results) {
     res.send(results);
   });
@@ -59,24 +60,24 @@ app.post('/forms', (req, res) => { //Shows all the forms
 app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
   var filter = req.body.data.studentAssociation;
-  console.log(req.body)
-  console.log('USERANSWER')
-  console.log(userAnswer)
-  console.log('FILTER')
-  console.log(filter)
+  //console.log(req.body)
+  //console.log('USERANSWER')
+  //console.log(userAnswer)
+  //console.log('FILTER')
+  //console.log(filter)
   Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
     var filteredResult = [];
-    //console.log(results[0])
-    //console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
-    //console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
+    ////console.log(results[0])
+    ////console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
+    ////console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
     //res.send(results);
 
     var finalResults = [];
-    console.log('RESULTS')
-    console.log(results)
+    //console.log('RESULTS')
+    //console.log(results)
 
     for (var i = 0; i < results.length; i++) {
-      var similarity = 1;
+      var similarity = 0;
       var danger = 1;
       var candidateArray = [];
 
@@ -84,6 +85,8 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
 
         if (userAnswer[j] === results[i].filledForm['question' + j]) { //Check for similarity
           similarity += 1;
+          //console.log('TÄMÄ ON similarity testausta')
+          //console.log(similarity)
         }
 
         candidateArray.push(results[i].filledForm['question' + j]); //Creating an array from filledForm integers
@@ -96,24 +99,23 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
       let candSum = candidateArray.reduce((result, number) => result + number);
 
       if ((userSum >= (candSum * 0.50) || danger <= 0.25 * userAnswer.length) && similarity >= (0.30 * userAnswer.length)) {
-        console.log((similarity / userAnswer.length) + '%')
+        //console.log((similarity / userAnswer.length) + '%')
         let copy = { ...results[i]._doc };
         copy["similarity"] = (similarity / userAnswer.length) * 100;
         finalResults.push(copy);
-        console.log('TÄMÄ ON KOPIOOOOO')
-        console.log(copy)
+        //console.log('TÄMÄ ON KOPIOOOOO')
+        //console.log(copy)
       }
     }
     let unique = [...new Set(finalResults)];
-    console.log(unique);
+    //console.log(unique);
     res.send(unique);
   });
 });
 
 app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
   const filter = req.body.data;
-  console.log('FILTTERI')
-  console.log(filter)
+  //console.log(filter)
   Candidate.find({ studentAssociation: filter }, function (err, results) {
     res.send(results);
   });
@@ -122,7 +124,7 @@ app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
 app.post('/Profile', (req, res) => {
   const email = req.body.email;
   Candidate.findOne({ email: email }, function (err, results) {
-    console.log(email)
+    //console.log(email)
     if (err) {
       return res.status(500).send();
     }
@@ -137,24 +139,37 @@ app.post('/Profile', (req, res) => {
 
 app.post('/questions', (req, res) => { //Form question and parse call
   const area = req.body.data;
-  console.log('PALVELIMEN PUOLEN KOODI')
-  console.log(area)
+  //console.log('PALVELIMEN PUOLEN KOODI')
+  //console.log(area)
   Question.find({ area: { $in: [area, 'Undefined'] } }, function (err, results) {
     res.send(results);
   });
 });
 
-app.get('/allQuestions', (req, res) => { //Shows all the questions
+//show all the questions
+app.get('/allQuestions', (req, res) => {
+  // //console.log('response')
+  // //console.log(res.body)
   Question.find({}, function (err, results) {
+    res.send(results);
+  });
+});
+
+//show only filtered questions
+app.post('/filteredQuestions', (req, res) => { //Shows filtered questions
+  const filter = req.body.data;
+  //console.log('KYSYMYS FILTTERI')
+  //console.log(filter)
+  Question.find({ area: filter }, function (err, results) {
     res.send(results);
   });
 });
 
 app.post('/submitQhuahoo', function (req, res) { //EDIT ONE EXISTING submitQhuahoo
   var defaultData = req.body.data.default;
-  var changedData = req.body.data.changed;
-  Question.findOneAndUpdate({ question: defaultData }, { $set: { question: changedData } }, { useFindAndModify: false }, function (err, doc) {
-    console.log(doc);
+  var id = req.body.data.id;
+  Question.findOneAndUpdate({ _id: id }, { $set: { question: defaultData } }, { useFindAndModify: false }, function (err, doc) {
+    res.send(doc)
   });
 });
 
@@ -182,15 +197,15 @@ app.post('/editInformation', function (req, res) {
       }
     },
     { useFindAndModify: false }, function (err, doc) {
-      console.log('lol')
-      console.log(doc);
+      //console.log('lol')
+      //console.log(doc);
     });
 })
 
 app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
-  var deletedQuestion = req.body.deletion;
-  Question.deleteOne({ question: deletedQuestion }, function (err, doc) {
-    console.log(doc);
+  var id = req.body.id;
+  Question.deleteOne({ _id: id }, function (err, doc) {
+    res.send(doc)
   });
 
 });
@@ -199,7 +214,7 @@ app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
 app.post('/fillForm', (req, res) => {
   var email = req.body.data;
   Candidate.findOne({ email: email }, function (err, results) {
-    console.log(results.filledForm);
+    //console.log(results.filledForm);
     res.send(results);
   });
 });
@@ -221,7 +236,7 @@ app.post('/registration', (req, res) => {
         User.countDocuments({ email: req.body.email }, function (err, count) {
           if (count == 0) {
             user.save(function (err, user) {
-              if (err) return console.log(err);
+              if (err) return //console.log(err);
               res.send("Succesfully added user to database!");
             });
           }
@@ -249,8 +264,8 @@ app.post('/login', (req, res) => {
       bcrypt.compare(pass, user.password).then(function (result) {
         if (result) {
           req.session.user = user;
-          console.log("Logged in");
-          console.log(req.session.user);
+          //console.log("Logged in");
+          //console.log(req.session.user);
           res.send(user);
         }
         else {
@@ -279,18 +294,18 @@ app.get('/logout', function (req, res) {
 app.post('/send', function (req, res) {
   var length = req.body.ans.length + req.body.desc.length;
   var email = req.body.email;
-  console.log(email);
+  //console.log(email);
   for (var i = 0; i < req.body.ans.length; i++) {
     var nestedOpt = 'filledForm.question' + i;
     var nestedDesc = 'filledForm.questiondesc' + i;
     Candidate.findOneAndUpdate({ email: email }, { $set: { [nestedOpt]: req.body.ans[i], [nestedDesc]: req.body.desc[i] } }, { useFindAndModify: false }, function (err, doc) {
-      console.log(doc);
+      //console.log(doc);
     });
   }
 });
 
 app.post('/addCandidates', (req, res) => {
-  console.log(req)
+  //console.log(req)
   for (var i = 0; i < req.body.candidate.length - 1; i++) {
     var data = req.body.candidate[i].data;
     addOneCandidate(data);
@@ -298,7 +313,7 @@ app.post('/addCandidates', (req, res) => {
 });
 
 app.post('/addQuestion', (req, res) => {
-  console.log(req.body.question);
+  //console.log(req.body.question);
 
   var question = new Question({
     question: req.body.question,
@@ -308,12 +323,12 @@ app.post('/addQuestion', (req, res) => {
   Question.countDocuments({ question: req.body.question }, function (err, count) {
     if (count == 0) {
       question.save(function (err, user) {
-        if (err) return console.log(err);
-        console.log("Succesfully added question to database!");
+        if (err) return //console.log(err);
+        //console.log("Succesfully added question to database!");
       });
     }
     else {
-      console.log("question already exists!");
+      //console.log("question already exists!");
     }
   });
 });
@@ -326,7 +341,7 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log('App is listening on port ' + port);
+//console.log('App is listening on port ' + port);
 
 //Functions --------------------------------------------------------------------
 
@@ -352,12 +367,13 @@ function addOneCandidate(data) {
   Candidate.countDocuments({ email: data.email }, function (err, count) {
     if (count == 0) {
       candidate.save(function (err, user) {
-        if (err) return console.log(err);
-        if (user) { console.log(user) }
+        if (err) return //console.log(err);
+        if (user) { //console.log(user)
+        }
         console.log("Succesfully added candidate to database!");
       });
     } else {
-      console.log("Email with this address already exists as a candidate!");
+      //console.log("Email with this address already exists as a candidate!");
     }
   });
 }
@@ -385,7 +401,7 @@ app.get('/randomFill', function (req, res) {
     })
   });
   res.send("The answers were updated!")
-  console.log('ok');
+  //console.log('ok');
 });
 //-----------------------------------------------------------------------
 //ADDING THE PICTURE 
@@ -447,7 +463,12 @@ app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candida
     if (err) {
       return res.status(400).end()
     }
-
+    res.status(200).end()
+  });
+  User.deleteOne({ email: deleteCandidate }, function (err, doc) {
+    if (err) {
+      return res.status(400).end()
+    }
     res.status(200).end()
   });
 });
@@ -458,12 +479,17 @@ app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candida
 //----------------------------------- add only one candidate
 app.post('/addOneCandidate', (req, res) => {
   let data = req.body;
-  console.log(res.status)
-  console.log(data)
-  addOneCandidate(data);
-  // if (err) {
+  //console.log(res.status)
+  //console.log(data)
 
-  // }
-  // res.status(400).end()
-  res.status(200).end()
+  Candidate.countDocuments({ email: req.body.email }, function (err, count) {
+    if (count === 0) {
+      addOneCandidate(data)
+      res.send("Succesfully added user to database!");
+    }
+    else {
+      res.send("Email with this address already exists as a user!");
+    }
+  })
+
 });
