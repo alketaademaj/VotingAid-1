@@ -8,6 +8,7 @@ export const endpoint = {
     questions: 'questions/',
     addQuestion: 'addQuestion/',
     allQuestions: 'allQuestions/',
+    filteredQuestions: 'filteredQuestions/',
 
     deleteQhuahoo: 'deleteQhuahoo/',
     submitQhuahoo: 'submitQhuahoo/',
@@ -19,7 +20,7 @@ export const endpoint = {
 
     newPassword: 'newPassword/',
     login: 'login/',
-    Profile: 'profile/',
+    profile: 'profile/',
     editInformation: 'editInformation/', // TODO: editProfileData i think.
     register: 'registration', // TODO: register
 }

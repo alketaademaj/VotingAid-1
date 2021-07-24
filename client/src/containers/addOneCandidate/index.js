@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Swal from 'sweetalert2';
 import axios from "axios";
-import language from "../properties/language";
-import { UserContext } from '../context/userContext';
+import language from "../../properties/language";
+import { UserContext } from '../../context/userContext';
+import { endpoint, url } from '../../api';
 
 export class addOneCandidate extends Component {
     static contextType = UserContext;
@@ -46,7 +47,7 @@ export class addOneCandidate extends Component {
             electoralAlliance: this.state.electoralAlliance,
             description: this.state.description,
         }
-        axios.post('http://localhost:5000/addOneCandidate', oneCandidate)
+        axios.post(url + endpoint.addOneCandidate, oneCandidate)
             .then(res => {
                 console.log(res.data);
                 Swal.fire({
@@ -58,7 +59,16 @@ export class addOneCandidate extends Component {
 
     render() {
         return (
-            <div>
+            <div
+                style={{
+                    marginTop: 20,
+                    maxWidth: 500,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    backgroundColor: "#FFFFFF",
+                    padding: 15,
+                }}
+            >
                 <form onSubmit={this.handleSubmit}>
                     <p>{language.oneCandidate[this.context.language]}</p>
                     <label>{language.firstName[this.context.language]}</label>
@@ -80,6 +90,7 @@ export class addOneCandidate extends Component {
                         <option value="O'Diako">O'Diako</option>
                         <option value="TUO">TUO</option>
                     </select>
+                    <br></br>
                     <label>{language.campus[this.context.language]}</label>
                     <input type="text" name="campus" value={this.state.campus} placeholder={''} onChange={this.handleChange}></input>
                     <label>{language.electoralDistrict[this.context.language]}</label>
@@ -88,7 +99,16 @@ export class addOneCandidate extends Component {
                     <input type="text" name="electoralAlliance" value={this.state.electoralAlliance} placeholder={''} onChange={this.handleChange}></input>
                     <label>{language.description[this.context.language]}</label>
                     <input type="text" name="description" value={this.state.description} placeholder={''} onChange={this.handleChange}></input><br></br><br></br>
-                    <button type="submit">{language.fillFormButton[this.context.language]}</button>
+                    <button type="submit"
+                        style={{
+                            textAlign: "center",
+                            display: "flex",
+                            justifyContent: "center",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}
+                    >
+                        {language.fillFormButton[this.context.language]}</button>
                 </form>
             </div>
         )

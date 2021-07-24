@@ -28,6 +28,7 @@ const language = {
     browseButton: { fin: 'Selaa', eng: 'Browse file' },
     matchingCandidates: { fin: 'Saman näkemyksen omaavat kandit:', eng: 'Candidates with matching values:' },
     oneCandidate: { fin: 'Täytä alla olevat tiedot lisätäksesi yhden kandidaatin:', eng: 'Fill in the information below to add one candidate:' },
+    manyCandidates: { fin: 'Voit lisätä useamman kandidaatin alla olevan linkin kautta. Vain CSV tiedostot käyvät. ', eng: 'You can add candidates by the link below. Only CSV files are acceptable.' },
     firstName: { fin: 'Etunimi:', eng: 'First name:' },
     surName: { fin: 'Sukunimi:', eng: 'Surname:' },
     school: { fin: 'Koulu:', eng: 'School:' },
@@ -43,6 +44,9 @@ const language = {
     updateButton: { fin: 'Päivitä tiedot', eng: 'Update your information' },
     formLink: { fin: 'Linkki täytettyyn kyselyyn', eng: 'Link to your filled form' },
     uploadPicture: { fin: 'Lataa profiilikuva', eng: 'Upload a profile picture' },
+    candidateHolder: { fin: 'Kandidaatti', eng: 'Candidate' },
+    studentAssociationHolder: { fin: 'Opiskelijakunta', eng: 'Student Association' },
+    deleteHolder: { fin: 'Poista', eng: 'Delete' },
 }
 
 export default language;

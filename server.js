@@ -6,6 +6,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('client-sessions');
 const async = require('async')
+var nodemailer = require('nodemailer');
 
 const saltRounds = 10;
 const mongoose = require('mongoose');
@@ -51,7 +52,7 @@ app.get('/', (req, res) => { //Shows all the candidates
 
 app.post('/forms', (req, res) => { //Shows all the forms
   var filter = req.body.data;
-  //console.log('||' + filter + '||');
+  console.log('||' + filter + '||');
   Candidate.find({ school: { $eq: filter } }, function (err, results) {
     res.send(results);
   });
@@ -61,12 +62,12 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
   var filter = req.body.data.studentAssociation;
   //console.log(req.body)
-  //console.log('USERANSWER')
-  //console.log(userAnswer)
-  //console.log('FILTER')
-  //console.log(filter)
+  // console.log('USERANSWER')
+  // console.log(userAnswer)
+  // console.log('FILTER')
+  // console.log(req.body.data)
   Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
-    var filteredResult = [];
+    // var filteredResult = [];
     ////console.log(results[0])
     ////console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
     ////console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
@@ -85,8 +86,6 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
 
         if (userAnswer[j] === results[i].filledForm['question' + j]) { //Check for similarity
           similarity += 1;
-          //console.log('TÄMÄ ON similarity testausta')
-          //console.log(similarity)
         }
 
         candidateArray.push(results[i].filledForm['question' + j]); //Creating an array from filledForm integers
@@ -139,8 +138,8 @@ app.post('/Profile', (req, res) => {
 
 app.post('/questions', (req, res) => { //Form question and parse call
   const area = req.body.data;
-  //console.log('PALVELIMEN PUOLEN KOODI')
-  //console.log(area)
+  // console.log('PALVELIMEN PUOLEN KOODI')
+  // console.log(area)
   Question.find({ area: { $in: [area, 'Undefined'] } }, function (err, results) {
     res.send(results);
   });
@@ -149,7 +148,8 @@ app.post('/questions', (req, res) => { //Form question and parse call
 //show all the questions
 app.get('/allQuestions', (req, res) => {
   // //console.log('response')
-  // //console.log(res.body)
+  // console.log('ALL QUESTIONS')
+  // console.log(res.body)
   Question.find({}, function (err, results) {
     res.send(results);
   });
@@ -166,9 +166,10 @@ app.post('/filteredQuestions', (req, res) => { //Shows filtered questions
 });
 
 app.post('/submitQhuahoo', function (req, res) { //EDIT ONE EXISTING submitQhuahoo
-  var defaultData = req.body.data.default;
+  var question = req.body.data.question;
+  var questionFin = req.body.data.questionFin;
   var id = req.body.data.id;
-  Question.findOneAndUpdate({ _id: id }, { $set: { question: defaultData } }, { useFindAndModify: false }, function (err, doc) {
+  Question.findOneAndUpdate({ _id: id }, { $set: { question: question, questionFin: questionFin } }, { useFindAndModify: false }, function (err, doc) {
     res.send(doc)
   });
 });
@@ -292,38 +293,73 @@ app.get('/logout', function (req, res) {
 });
 
 app.post('/send', function (req, res) {
-  var length = req.body.ans.length + req.body.desc.length;
   var email = req.body.email;
-  //console.log(email);
+  console.log(email);
   for (var i = 0; i < req.body.ans.length; i++) {
     var nestedOpt = 'filledForm.question' + i;
     var nestedDesc = 'filledForm.questiondesc' + i;
     Candidate.findOneAndUpdate({ email: email }, { $set: { [nestedOpt]: req.body.ans[i], [nestedDesc]: req.body.desc[i] } }, { useFindAndModify: false }, function (err, doc) {
-      //console.log(doc);
+      console.log(doc);
     });
   }
+  res.send('Everything is created succesfully')
 });
 
 app.post('/addCandidates', (req, res) => {
   //console.log(req)
+  let emailArray = '';
   for (var i = 0; i < req.body.candidate.length - 1; i++) {
     var data = req.body.candidate[i].data;
+    emailArray = req.body.candidate[i].data.email;
     addOneCandidate(data);
+    console.log(emailArray);
   }
+  // try {
+  //   var transporter = nodemailer.createTransport({
+  //     service: 'outlook365',
+  //     port: 465,
+  //     secure: true, // true for 465, false for other ports
+  //     logger: true,
+  //     debug: true,
+  //     secureConnection: false,
+  //     auth: {
+  //       user: 'vaalikone.alerts@outlook.com', // generated ethereal user
+  //       pass: 'PuuPalikka7750', // generated ethereal password
+  //     },
+  //     tls: {
+  //       rejectUnAuthorized: true
+  //     }
+  //   })
+  //   var info = transporter.sendMail({
+  //     from: 'vaalikone.alerts@outlook.com', // sender address
+  //     to: emailArray, // list of receivers
+  //     subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
+  //     text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
+  //   });
+  // }
+  // catch (error) {
+  //   throw error;
+  // }
 });
 
 app.post('/addQuestion', (req, res) => {
-  //console.log(req.body.question);
-
+  console.log(req.body);
   var question = new Question({
     question: req.body.question,
+    questionFin: req.body.questionFin,
     area: req.body.area,
   });
 
   Question.countDocuments({ question: req.body.question }, function (err, count) {
     if (count == 0) {
       question.save(function (err, user) {
-        if (err) return //console.log(err);
+        if (err) {
+          console.log(err)
+        }
+        res.send("Question saved");
+        if (user) {
+          console.log(user)
+        }
         //console.log("Succesfully added question to database!");
       });
     }
@@ -368,9 +404,38 @@ function addOneCandidate(data) {
     if (count == 0) {
       candidate.save(function (err, user) {
         if (err) return //console.log(err);
-        if (user) { //console.log(user)
+        if (user) {
+          // console.log(user.email)
         }
         console.log("Succesfully added candidate to database!");
+        // enable this, when vaalikonealerts is not blocked
+        // try {
+        //   var transporter = nodemailer.createTransport({
+        //     service: 'outlook365',
+        //     port: 465,
+        //     secure: true, // true for 465, false for other ports
+        //     logger: true,
+        //     debug: true,
+        //     secureConnection: false,
+        //     auth: {
+        //       user: 'vaalikone.alerts@outlook.com', // generated ethereal user
+        //       pass: 'PuuPalikka7750', // generated ethereal password
+        //     },
+        //     tls: {
+        //       rejectUnAuthorized: true
+        //     }
+        //   })
+
+        //   var info = transporter.sendMail({
+        //     from: 'vaalikone.alerts@outlook.com', // sender address
+        //     to: user.email,
+        //     subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
+        //     text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
+        //   });
+        // }
+        // catch (error) {
+        //   console.log(error)
+        // }
       });
     } else {
       //console.log("Email with this address already exists as a candidate!");
@@ -481,15 +546,43 @@ app.post('/addOneCandidate', (req, res) => {
   let data = req.body;
   //console.log(res.status)
   //console.log(data)
+  let email = req.body.email;
 
   Candidate.countDocuments({ email: req.body.email }, function (err, count) {
     if (count === 0) {
       addOneCandidate(data)
       res.send("Succesfully added user to database!");
+      // try {
+      //   var transporter = nodemailer.createTransport({
+      //     service: 'outlook365',
+      //     port: 465,
+      //     secure: true, // true for 465, false for other ports
+      //     logger: true,
+      //     debug: true,
+      //     secureConnection: false,
+      //     auth: {
+      //       user: 'vaalikone.alerts@outlook.com', // generated ethereal user
+      //       pass: 'PuuPalikka7750', // generated ethereal password
+      //     },
+      //     tls: {
+      //       rejectUnAuthorized: true
+      //     }
+      //   })
+
+      //   var info = transporter.sendMail({
+      //     from: 'vaalikone.alerts@outlook.com', // sender address
+      //     to: email,
+      //     subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
+      //     text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
+      //   });
+      // }
+      // catch (error) {
+      //   console.log(error)
+      // }
     }
     else {
       res.send("Email with this address already exists as a user!");
     }
   })
-
 });
+

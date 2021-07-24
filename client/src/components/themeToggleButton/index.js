@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ThemeContext } from "../context/ThemeProvider";
+import React, { useContext, useState } from 'react';
+import { ThemeContext } from "../../context/ThemeProvider";
 import { IoMdMoon, } from "react-icons/io";
 import { FiSun } from "react-icons/fi";
 

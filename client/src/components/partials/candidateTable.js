@@ -1,15 +1,19 @@
 import CandidateTableItemRow from './candidateTableRow'
 import CandidateTableHeader from './candidateTableHeader'
 import Table from 'react-bootstrap/Table';
+import { UserContext } from "../../context/userContext";
+import language from "../../properties/language";
+import React, { useContext } from 'react';
 
 const CandidateTable = ({ stateArray, counter, candidateDeleted }) => {
+    const context = useContext(UserContext);
     return (
         <Table striped bordered hover variant="light">
             <thead>
                 <tr>
-                    <CandidateTableHeader header={'Candidate'} />
-                    <CandidateTableHeader header={'Student Association'} />
-                    <CandidateTableHeader header={'delete'} />
+                    <CandidateTableHeader header={language.candidateHolder[context.language]} />
+                    <CandidateTableHeader header={language.studentAssociationHolder[context.language]} />
+                    <CandidateTableHeader header={language.deleteHolder[context.language]} />
                 </tr>
             </thead>
             <tbody>

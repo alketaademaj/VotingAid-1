@@ -1,13 +1,13 @@
 import CandidateTableLinkItem from './candidateTableLinkItem'
 import CandidateTableItem from './candidateTableItem'
 import axios from "axios";
-// import language from "../component/properties/language";
-// import { UserContext } from './context/userContext';
-// import { useHistory } from 'react-router-dom';
+import { UserContext } from "../../context/userContext";
+import language from "../../properties/language";
+import React, { useContext } from 'react';
 
 
 const CandidateTableItemRow = ({ text, textOne, textTwo, data, candidateDeleted, button }) => {
-    // let history = useHistory();
+    const context = useContext(UserContext);
 
     const confirmDelete = (email) => {
         // console.log(data)
@@ -23,7 +23,7 @@ const CandidateTableItemRow = ({ text, textOne, textTwo, data, candidateDeleted,
         <tr id="candidate" >
             <CandidateTableLinkItem textOne={textOne} textTwo={textTwo} pathname={'/Profile'} data={data} />
             <CandidateTableItem text={text} />
-            <button onClick={() => confirmDelete(data)}>Delete</button>
+            <button onClick={() => confirmDelete(data)}>{language.deleteHolder[context.language]}</button>
         </tr >
     );
 }

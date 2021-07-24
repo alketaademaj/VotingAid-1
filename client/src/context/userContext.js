@@ -1,5 +1,4 @@
 import React, { createContext, Component } from 'react';
-import language from "../properties/language";
 
 export const UserContext = createContext();
 class UserContextProvider extends Component {

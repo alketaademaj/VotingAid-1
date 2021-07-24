@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import axios from "axios"
 import swal from "sweetalert2"
 import { CSVReader } from 'react-papaparse'
-import { UserContext } from "../context/userContext";
-import language from "../properties/language";
+import { UserContext } from "../../context/userContext";
+import language from "../../properties/language";
+import { endpoint, url } from '../../api';
 
 const buttonRef = React.createRef()
 class AddCandidates extends Component {
@@ -79,7 +80,7 @@ class AddCandidates extends Component {
 
   handeSubmit() {
     if (this.state.filename.includes('.csv')) {
-      axios.post('http://localhost:5000/addCandidates', { candidate: this.state.candidates })
+      axios.post(url + endpoint.addCandidates, { candidate: this.state.candidates })
         .then(res => {
           console.log('YEET');
         });
@@ -91,7 +92,17 @@ class AddCandidates extends Component {
 
   render() {
     return (
-      <div className="addCan">
+      <div className="addCan"
+        style={{
+          marginTop: 20,
+          maxWidth: 500,
+          marginLeft: "auto",
+          marginRight: "auto",
+          backgroundColor: "#FFFFFF",
+          padding: 15,
+        }}
+      >
+        <p> {language.manyCandidates[this.context.language]}</p>
         <CSVReader
           ref={buttonRef}
           onFileLoad={this.handleOnFileLoad}
@@ -119,7 +130,7 @@ class AddCandidates extends Component {
                   marginRight: 0,
                   width: '30%',
                   paddingLeft: 0,
-                  paddingRight: 0
+                  paddingRight: 0,
                 }}
               >
                 {language.browseButton[this.context.language]}
@@ -146,7 +157,9 @@ class AddCandidates extends Component {
                   marginLeft: 0,
                   marginRight: 0,
                   paddingLeft: 20,
-                  paddingRight: 20
+                  paddingRight: 20,
+                  display: 'flex',
+                  justifyContent: 'center',
                 }}
                 onClick={this.handleRemoveFile}
               >
@@ -155,8 +168,16 @@ class AddCandidates extends Component {
             </aside>
           )}
         </CSVReader>
-        <button onClick={this.confirmSubmit.bind(this)}>{language.fillFormButton[this.context.language]}</button>
-      </div>
+        <button onClick={this.confirmSubmit.bind(this)}
+          style={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >{language.fillFormButton[this.context.language]}</button>
+      </div >
     )
   }
 }

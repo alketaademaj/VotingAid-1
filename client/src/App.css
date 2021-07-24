@@ -26,16 +26,13 @@ body {
 
 .homeScreen {
   border: 2px rgba(255, 255, 255, 0.829) solid;
-  padding-bottom: 7px;
-  width: 50%;
-  margin-top: 100px;
-  display: inline-block;
+  padding: 10px;
+  margin-top: 20px;
   background-color: rgba(255, 255, 255, 0.829);
-  border-radius: 1%;
+  border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .App {
-  text-align: center;
   min-height: 100vh;
   flex-direction: column;
   align-items: center;
@@ -48,11 +45,8 @@ body {
   width: 100%;
 }
 
-.container {
-  display: inline;
+.boxContainer {
   position: relative;
-  padding-left: 35px;
-  margin: 15px;
   cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
@@ -62,7 +56,7 @@ body {
 }
 
 /* Hide the browser's default radio button */
-.container input {
+.boxContainer input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -70,9 +64,8 @@ body {
 
 /* Create a custom radio button */
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  display: block;
   height: 20px;
   width: 50px;
   background-color: #eee;
@@ -80,47 +73,53 @@ body {
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.boxContainer:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
 /* When the radio button is checked, add a gray background */
-.container input:checked ~ .checkmark {
-  background-color: rgb(118, 120, 122);
+.boxContainer input:checked ~ .checkmark {
+  background-color: rgb(118, 120, 122) !important;
 }
 
 /* Show the indicator (dot/circle) when checked */
-.container input:checked ~ .checkmark:after {
+.boxContainer input:checked ~ .checkmark:after {
+  content: "";
+  position: absolute;
   display: block;
-}
-
-label {
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 1%;
+  inset: 0;
 }
 
 .filterCandidateLabel {
-  display: inline-block;
-  width: 30%;
-  text-align: center;
-  margin-bottom: 1%;
-  background-color: rgba(192, 192, 192, 0.5);
+  min-width: max-content;
 }
 
-form {
-  border-radius: 1%;
-  background-color: rgba(255, 255, 255, 0.829);
-  display: inline-block;
+.addOneCandidate {
+  margin-top: 20px;
   width: 50%;
-  height: auto;
+  display: flex;
   justify-content: center;
-  margin-top: 100px;
+  align-items: center;
+  /* border-radius: 5px; */
+  background-color: rgba(255, 255, 255, 0.829);
   border: 2px white solid;
-  padding-top: 1%;
+  padding: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.formQuestions {
+  margin-top: 20px;
+  /* border-radius: 5px; */
+  background-color: rgba(255, 255, 255, 0.829);
+  border: 2px white solid;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.questionsSelectBox {
+  width: 100%;
+  margin-left: 10px;
+}
+
 small {
   font-size: 50%;
 }
@@ -164,20 +163,28 @@ input[type="password"],
 input[type="text"] {
   width: 100%;
   padding: 5px 20px;
-  margin: 6px 0;
+  margin-bottom: 6px;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+.addCandidates {
+  border: 2px rgba(255, 255, 255, 0.829) solid;
+  width: 40%;
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.829);
+  border-radius: 1%;
+}
 .questionSet {
-  width: 90%;
-  margin-top: 5px;
-  padding-top: 3%;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.829);
   display: inline-block;
   position: relative;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ccc;
 }
 .ans-button {
   width: 30%;
@@ -187,29 +194,23 @@ input[type="text"] {
   background-color: white;
 }
 .Form-button {
-  border: rgb(118, 120, 122) 2px solid;
+  border: 1px solid #43571a;
   transition: 0.5s;
-  text-decoration: none !important;
-  background-color: rgb(148, 150, 151);
-  border-radius: 5%;
-  width: 10%;
-  padding-left: 15px;
-  padding-right: 15px;
+  background-color: #80ae35;
+  width: 100%;
+  margin: 5px 0;
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px 0;
+  font-weight: 600;
 }
 .Form-button:hover {
-  background-color: rgb(88, 87, 87);
+  background-color: #43571a;
+  border: 1px solid #80ae35;
   color: white;
 }
-.addCan {
-  border: 2px rgba(255, 255, 255, 0.829) solid;
-  padding-bottom: 7px;
-  margin-top: 50px;
-  width: 40%;
-  display: inline-block;
-  background-color: rgba(255, 255, 255, 0.829);
-  border-radius: 1%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+
 .filled-form {
   width: auto;
   display: inline-block;
@@ -243,8 +244,7 @@ input[type="text"] {
   border: 2px rgba(255, 255, 255, 0.829) solid;
   padding-bottom: 7px;
   width: 50%;
-  margin-top: 100px;
-  display: inline-block;
+  margin-top: 25px;
   background-color: rgba(255, 255, 255, 0.829);
   border-radius: 1%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -275,4 +275,13 @@ input[type="text"] {
   border: 2px white solid;
   padding-top: 1%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profileInput {
+  border: none;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px 0;
 }

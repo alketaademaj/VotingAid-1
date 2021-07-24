@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import './AppMini.css';
-import Navigation from './components/navbar.js'
+import Navigation from './navigation'
 import UserContextProvider from './context/userContext';
 import { ThemeContext } from "./context/ThemeProvider";
 import classNames from 'classnames';
