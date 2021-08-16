@@ -11,7 +11,7 @@ class DefaultInput extends PureComponent {
           type={this.props.type}
           name={this.props.name}
           placeholder={this.props.placeholder}
-          value={this.props.value}
+          defaultValue={this.props.value}
           onChange={this.props.onChange}
           required={this.props.required ? this.props.required : false}
           id={this.props.id}

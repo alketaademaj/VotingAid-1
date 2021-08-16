@@ -35,7 +35,7 @@ class Login extends Component {
     };
 
     axios.post(url + endpoint.login, user).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res) {
         const { changeUser } = this.context;
         changeUser(

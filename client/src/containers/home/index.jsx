@@ -3,20 +3,38 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import language from "../../properties/language";
 
+import axios from "axios";
+import { url, endpoint } from "../../api";
+
 class Home extends Component {
   static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
-      studentAssociation: "-",
+      studentAssociation: "",
+      userStudentAssociation: "",
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange() {
-    this.setState({ studentAssociation: this.refs.campus.value });
-    console.log(this.state.studentAssociation);
+  componentDidMount() {
+    if (this.context.email) {
+      axios
+        .post(url + endpoint.profile, { email: this.context.email })
+        .then((res) => {
+          this.setState({
+            userStudentAssociation: res.data.studentAssociation,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
+
+  handleChange = (e) => {
+    this.setState({ studentAssociation: e.target.value });
+    // console.log(this.state.studentAssociation);
+  };
 
   render() {
     return (
@@ -41,22 +59,33 @@ class Home extends Component {
           {language.selectStudentAssociation[this.context.language]}
         </label> */}
         <select
-          ref="campus"
           onChange={this.handleChange.bind(this)}
           style={{ marginBottom: 5 }}
         >
-          <option value="-">
-            {" "}
-            {language.selectStudentAssociation[this.context.language]}
-          </option>
-          <option value="ASK">ASK</option>
-          <option value="Helga">Helga</option>
-          <option value="HUMAKO">HUMAKO</option>
-          <option value="JAMKO">JAMKO</option>
-          <option value="Laureamko">Laureamko</option>
-          <option value="METKA">METKA</option>
-          <option value="O'Diako">O'Diako</option>
-          <option value="TUO">TUO</option>
+          {this.context.loggedIn ? (
+            <>
+              <option value="">
+                {language.selectStudentAssociation[this.context.language]}
+              </option>
+              <option value={this.state.userStudentAssociation}>
+                {this.state.userStudentAssociation}
+              </option>
+            </>
+          ) : (
+            <>
+              <option value="">
+                {language.selectStudentAssociation[this.context.language]}
+              </option>
+              <option value="ASK">ASK</option>
+              <option value="Helga">Helga</option>
+              <option value="HUMAKO">HUMAKO</option>
+              <option value="JAMKO">JAMKO</option>
+              <option value="Laureamko">Laureamko</option>
+              <option value="METKA">METKA</option>
+              <option value="O'Diako">O'Diako</option>
+              <option value="TUO">TUO</option>
+            </>
+          )}
         </select>
 
         {this.state.studentAssociation != "-" && (

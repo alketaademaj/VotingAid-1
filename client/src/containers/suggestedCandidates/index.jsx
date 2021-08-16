@@ -3,7 +3,6 @@ import axios from "axios";
 import Picture from "../../components/partials/picture";
 import language from "../../properties/language";
 import { UserContext } from "../../context/userContext";
-// import CandidateTableLinkItem from "../../components/partials/candidateTableLinkItem";
 import { endpoint, url } from "../../api";
 import CandidateAnswers from "../candidateAnswers";
 import { Link } from "react-router-dom";
@@ -14,24 +13,34 @@ class Suggestions extends Component {
     super(props);
     this.state = {
       suggestions: [],
+      showCandidateAnswers: false,
     };
   }
 
+  hideComponent = (name) => {
+    console.log(name);
+    switch (name) {
+      case "showCandidateAnswers":
+        this.setState({
+          showCandidateAnswers: !this.state.showCandidateAnswers,
+        });
+        break;
+    }
+  };
+
   componentDidMount() {
-    var userAnswers = this.props.location.data.answers;
-    console.log(userAnswers);
     var data = {
       answers: this.props.location.data.answers,
       studentAssociation: this.props.location.data.studentAssociation,
     };
     axios.post(url + endpoint.suggested, { data: data }).then((res) => {
       this.setState({ suggestions: res.data });
-      // console.log(res.data);
+      console.log(this.state.suggestions);
     });
-    //JOS HALUTAAN PROSENTUAALISTA VERTAILUA if(userSum >= (candSum * 0.75))
   }
 
   render() {
+    const { showCandidateAnswers } = this.state;
     if (this.state.suggestions.length > 0) {
       return (
         <div
@@ -76,19 +85,25 @@ class Suggestions extends Component {
                     }{" "}
                     {candidate.name} {candidate.surname}{" "}
                     {candidate.similarity.toFixed() + "%"}
-                    <Link
-                      to={{
-                        pathname: "/candidateAnswers",
-                        data: {
-                          suggenstions: this.suggestions,
-                          // studentAssociation: profile.studentAssociation,
-                        },
+                  </h2>{" "}
+                  <div>
+                    {showCandidateAnswers && <CandidateAnswers />}
+                    <button
+                      style={{
+                        display: "!flex",
+                        justifyContent: "!center",
+                        alignItems: "!center",
+                        flexDirection: "!row",
                       }}
+                      onClick={() => this.hideComponent("showCandidateAnswers")}
                     >
-                      Candidate Answers
-                    </Link>
-                  </h2>
-                  {/* <CandidateTableLinkItem textOne={this.props.textOne} textTwo={this.props.textTwo} pathname={'/Profile'} data={this.props.data} /> */}
+                      {showCandidateAnswers ? (
+                        <p>Show less</p>
+                      ) : (
+                        <p>Show more</p>
+                      )}
+                    </button>
+                  </div>
                 </div>
               )
             );

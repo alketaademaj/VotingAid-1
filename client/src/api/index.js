@@ -15,12 +15,12 @@ export const endpoint = {
 
     fillForm: 'fillForm/',
 
-    send: 'send/', // TODO: change name why are you sending??
-    suggested: 'suggested/', // TODO: change the name because it's bad way of naming.
+    send: 'send/',
+    suggested: 'suggested/',
 
     newPassword: 'newPassword/',
     login: 'login/',
     profile: 'profile/',
-    editInformation: 'editInformation/', // TODO: editProfileData i think.
-    register: 'registration', // TODO: register
+    editInformation: 'editInformation/',
+    register: 'registration',
 }

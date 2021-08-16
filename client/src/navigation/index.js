@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { CandidateRoute, AdminRoute, PublicRoute } from './routeValidation.js';
+import { CandidateRoute, PublicRoute } from './routeValidation.js';
 
 //Components
 import Form from '../containers/form';

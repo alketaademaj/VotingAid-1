@@ -101,9 +101,7 @@ class AddQuestion extends Component {
               value={this.state.selectValue}
               onChange={this.selectBoxChanged}
             >
-              <option selected value="Undefined">
-                Undefined
-              </option>
+              <option value="Undefined">Undefined</option>
               <option value="ASK">ASK</option>
               <option value="Helga">Helga</option>
               <option value="HUMAKO">HUMAKO</option>

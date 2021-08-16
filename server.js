@@ -7,16 +7,18 @@ const bcrypt = require('bcrypt');
 const session = require('client-sessions');
 const async = require('async')
 var nodemailer = require('nodemailer');
-
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+require('dotenv').config();
 const saltRounds = 10;
 const mongoose = require('mongoose');
-var uri = "mongodb+srv://AdminAlketa:PuuPalikka7750@cluster0-6p6dl.mongodb.net/ElectionCandidates?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 require("./models/candidate");
 require("./models/question");
 require("./models/user");
+require('dotenv').config({ path: 'ENV_FILENAME' });
 
 var Candidate = mongoose.model('candidate');
 var Question = mongoose.model('question');
@@ -61,22 +63,9 @@ app.post('/forms', (req, res) => { //Shows all the forms
 app.post('/suggested', (req, res) => { //Shows all the suggested candidates
   var userAnswer = req.body.data.answers;
   var filter = req.body.data.studentAssociation;
-  //console.log(req.body)
-  // console.log('USERANSWER')
-  // console.log(userAnswer)
-  // console.log('FILTER')
-  // console.log(req.body.data)
+
   Candidate.find({ studentAssociation: { $eq: filter } }, function (err, results) {
-    // var filteredResult = [];
-    ////console.log(results[0])
-    ////console.log(Object.keys(results[0].filledForm).length / 2); // KANDIDAATIN VASTATUN FORMIN PITUUS
-    ////console.log(results.length); // KANDIDAATTEN MÄÄRÄ TIETYSSÄ KOULUSSA
-    //res.send(results);
-
     var finalResults = [];
-    //console.log('RESULTS')
-    //console.log(results)
-
     for (var i = 0; i < results.length; i++) {
       var similarity = 0;
       var danger = 1;
@@ -107,7 +96,6 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
       }
     }
     let unique = [...new Set(finalResults)];
-    //console.log(unique);
     res.send(unique);
   });
 });
@@ -314,32 +302,7 @@ app.post('/addCandidates', (req, res) => {
     addOneCandidate(data);
     console.log(emailArray);
   }
-  // try {
-  //   var transporter = nodemailer.createTransport({
-  //     service: 'outlook365',
-  //     port: 465,
-  //     secure: true, // true for 465, false for other ports
-  //     logger: true,
-  //     debug: true,
-  //     secureConnection: false,
-  //     auth: {
-  //       user: 'vaalikone.alerts@outlook.com', // generated ethereal user
-  //       pass: 'PuuPalikka7750', // generated ethereal password
-  //     },
-  //     tls: {
-  //       rejectUnAuthorized: true
-  //     }
-  //   })
-  //   var info = transporter.sendMail({
-  //     from: 'vaalikone.alerts@outlook.com', // sender address
-  //     to: emailArray, // list of receivers
-  //     subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
-  //     text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
-  //   });
-  // }
-  // catch (error) {
-  //   throw error;
-  // }
+  res.send(200);
 });
 
 app.post('/addQuestion', (req, res) => {
@@ -403,42 +366,43 @@ function addOneCandidate(data) {
   Candidate.countDocuments({ email: data.email }, function (err, count) {
     if (count == 0) {
       candidate.save(function (err, user) {
-        if (err) return //console.log(err);
+        if (err) return err;
         if (user) {
-          // console.log(user.email)
+          console.log(user)
         }
         console.log("Succesfully added candidate to database!");
         // enable this, when vaalikonealerts is not blocked
-        // try {
-        //   var transporter = nodemailer.createTransport({
-        //     service: 'outlook365',
-        //     port: 465,
-        //     secure: true, // true for 465, false for other ports
-        //     logger: true,
-        //     debug: true,
-        //     secureConnection: false,
-        //     auth: {
-        //       user: 'vaalikone.alerts@outlook.com', // generated ethereal user
-        //       pass: 'PuuPalikka7750', // generated ethereal password
-        //     },
-        //     tls: {
-        //       rejectUnAuthorized: true
-        //     }
-        //   })
+        // sending candidates or a candidate an email, when they are added to the database
+        try {
+          var transporter = nodemailer.createTransport({
+            service: 'outlook365',
+            port: 465,
+            secure: true, // true for 465, false for other ports
+            logger: true,
+            debug: true,
+            secureConnection: false,
+            auth: {
+              user: process.env.ADDRESS, // generated ethereal user
+              pass: process.env.PASSWORD, // generated ethereal password 
+            },
+            tls: {
+              rejectUnAuthorized: true
+            }
+          })
 
-        //   var info = transporter.sendMail({
-        //     from: 'vaalikone.alerts@outlook.com', // sender address
-        //     to: user.email,
-        //     subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
-        //     text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
-        //   });
-        // }
-        // catch (error) {
-        //   console.log(error)
-        // }
+          var info = transporter.sendMail({
+            from: 'vaalikone.alerts@outlook.com', // sender address
+            to: user.email,
+            subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
+            text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
+          });
+        }
+        catch (error) {
+          console.log(error)
+        }
       });
     } else {
-      //console.log("Email with this address already exists as a candidate!");
+      console.log("Email with this address already exists as a candidate!");
     }
   });
 }
@@ -552,37 +516,13 @@ app.post('/addOneCandidate', (req, res) => {
     if (count === 0) {
       addOneCandidate(data)
       res.send("Succesfully added user to database!");
-      // try {
-      //   var transporter = nodemailer.createTransport({
-      //     service: 'outlook365',
-      //     port: 465,
-      //     secure: true, // true for 465, false for other ports
-      //     logger: true,
-      //     debug: true,
-      //     secureConnection: false,
-      //     auth: {
-      //       user: 'vaalikone.alerts@outlook.com', // generated ethereal user
-      //       pass: 'PuuPalikka7750', // generated ethereal password
-      //     },
-      //     tls: {
-      //       rejectUnAuthorized: true
-      //     }
-      //   })
-
-      //   var info = transporter.sendMail({
-      //     from: 'vaalikone.alerts@outlook.com', // sender address
-      //     to: email,
-      //     subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
-      //     text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
-      //   });
-      // }
-      // catch (error) {
-      //   console.log(error)
-      // }
     }
     else {
       res.send("Email with this address already exists as a user!");
     }
   })
 });
+
+// Authentication token  ------------------------------------
+
 

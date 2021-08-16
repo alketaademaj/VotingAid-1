@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import swal from "sweetalert2";
 import { NavLink } from "react-router-dom";
 import { BiHome } from "react-icons/bi";
 import language from "../../properties/language";
@@ -61,13 +60,17 @@ class Navbar extends Component {
                     {language.navigationLogOut[this.context.language]}
                   </span>
                 </NavLink>
-                <NavLink to="/Profile">
-                  <CgProfile style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }} />
-                  <span style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }}>
-                    {language.navigationProfile[this.context.language]}
-                  </span>
-                </NavLink>
-                {/* <NavLink style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }} to="/Candidates"> {language.browseCandidates[this.context.language]} </NavLink> */}
+                {this.context.user !== "Admin" ? (
+                  <NavLink to="/Profile">
+                    <CgProfile style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }} />
+                    <span style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }}>
+                      {language.navigationProfile[this.context.language]}
+                    </span>
+                  </NavLink>
+                ) :
+                  (
+                    console.log('admin')
+                  )}
               </>
                 : <>
                   <NavLink to="/Login">
