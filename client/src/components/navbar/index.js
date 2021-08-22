@@ -60,17 +60,12 @@ class Navbar extends Component {
                     {language.navigationLogOut[this.context.language]}
                   </span>
                 </NavLink>
-                {this.context.user !== "Admin" ? (
-                  <NavLink to="/Profile">
-                    <CgProfile style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }} />
-                    <span style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }}>
-                      {language.navigationProfile[this.context.language]}
-                    </span>
-                  </NavLink>
-                ) :
-                  (
-                    console.log('admin')
-                  )}
+                <NavLink to="/Profile">
+                  <CgProfile style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }} />
+                  <span style={{ color: this.isDark(theme.mode) ? '#FFFFFF' : '#000000' }}>
+                    {language.navigationProfile[this.context.language]}
+                  </span>
+                </NavLink>
               </>
                 : <>
                   <NavLink to="/Login">

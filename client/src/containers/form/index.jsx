@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import language from "../../properties/language";
 import axios from "axios";
 import { url, endpoint } from "../../api";
 import { UserContext } from "../../context/userContext";
@@ -63,24 +64,22 @@ class Form extends Component {
       area: "",
       path: this.props.location.pathname.split("/")[2],
       loader: true,
-      userAnswerState: "",
-      studentAssociationState: "",
     };
   }
 
   componentDidMount() {
-    let email =
-      this.context.user === "Admin"
-        ? this.props.location.data.email
-        : this.context.email;
+    console.log(this.state.path);
+    var email = this.props.location.email;
     if (this.context.loggedIn) {
       axios
         .post(url + endpoint.questions, { data: this.state.path })
         .then((res) => {
+          console.log(res);
           this.setState({ questions: res.data });
           axios
             .post(url + endpoint.fillForm, { data: email })
             .then((response) => {
+              console.log(response);
               let oldQuestions = res.data;
               let questionDesc = [];
               let questionNumber = [];
@@ -148,18 +147,15 @@ class Form extends Component {
         .post(url + endpoint.send, {
           ans: this.state.answers,
           desc: this.state.answersDesc,
-          email:
-            this.context.user === "Admin"
-              ? this.props.location.data.email
-              : this.context.email,
+          email: this.context.email,
           studentAssociation: this.context.path,
         })
         .then((res) => {
           console.log(res);
           Swal.fire({
-            title: "You have succesfully filled the form!",
+            title: language.filledFormAlert[this.context.language],
             icon: "success",
-            confirmButtonText: "Confirm",
+            confirmButtonText: language.continueHolder[this.context.language],
           });
         });
     } else {
@@ -208,7 +204,9 @@ class Form extends Component {
                   <>
                     <div className="questionSet">
                       <label style={{ fontSize: 16 }}>
-                        <strong>Question:</strong>
+                        <strong>
+                          {language.questionHolder[this.context.language]}
+                        </strong>
                         {this.context.language === "fin"
                           ? question.questionFin
                           : question.question}
@@ -221,8 +219,12 @@ class Form extends Component {
                           fontSize: 14,
                         }}
                       >
-                        <span>Disagree</span>
-                        <span className="agg">Agree</span>
+                        <span>
+                          {language.disagreeButton[this.context.language]}
+                        </span>
+                        <span className="agg">
+                          {language.agreeButton[this.context.language]}
+                        </span>
                       </div>
 
                       {this.state.answers && (
@@ -256,7 +258,7 @@ class Form extends Component {
               borderColor={DARK_GREEN}
               backgroundColor={GREEN}
               textColor={WHITE}
-              text={"Fill ur form"}
+              text={language.fillFormButton[this.context.language]}
             />
           </form>
         )}

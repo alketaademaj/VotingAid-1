@@ -25,28 +25,17 @@ class AddCandidates extends Component {
 
   handleOnFileLoad = (data, file) => {
     this.setState({ filename: file.name })
-    console.log('---------------------------')
-    console.log(data)
-    console.log('---------------------------')
-    console.log(this.state.filename);
     if (file.name.includes('.csv')) {
       this.setState({ candidates: null }); //Reset the state
       this.setState({ candidates: data });
-      console.log(this.state.candidates);
     }
     else {
-      console.log('THE FILE YOU UPLOADED IS NOT CSV KNOB');
+      console.log('NOT CSV');
     }
   }
 
   handleOnError = (err, file, inputElem, reason) => {
     console.log(err)
-  }
-
-  handleOnRemoveFile = (data) => {
-    console.log('---------------------------')
-    console.log(data)
-    console.log('---------------------------')
   }
 
   handleRemoveFile = (e) => {
@@ -61,18 +50,17 @@ class AddCandidates extends Component {
   confirmSubmit() {
     swal.fire({
       title: 'Caution!',
-      text: "This will add all the candidates, which are not present in the database",
+      text: language.addCandidatesCautionHolder[this.context.language],
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Procceed'
+      confirmButtonText: language.continueHolder[this.context.language]
     }).then((result) => {
       if (result.isConfirmed) {
         this.handeSubmit();
         swal.fire(
-          'Candidates have been added into the database', // TODO:  ALERT THAT SHOWCASES HOW MANY CANDIDATES WERE ADDED, AND HOW MANY WERE IGNORED DUE TO DUPLICATE RULE
-          'success'
+          language.addedCandidatesToDatabaseAlert[this.context.language]
         )
       }
     })

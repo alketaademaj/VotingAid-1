@@ -19,10 +19,18 @@ require("./models/candidate");
 require("./models/question");
 require("./models/user");
 require('dotenv').config({ path: 'ENV_FILENAME' });
+require('crypto').randomBytes(64).toString('hex');
+
+// get config vars
+dotenv.config();
+
+// // access config var
+// process.env.TOKEN_SECRET;
 
 var Candidate = mongoose.model('candidate');
 var Question = mongoose.model('question');
 var User = mongoose.model('user');
+
 
 const app = express();
 
@@ -119,7 +127,6 @@ app.post('/Profile', (req, res) => {
     if (!results) {
       return res.status(404).send();
     }
-
     res.send(results);
   });
 });
@@ -186,9 +193,8 @@ app.post('/editInformation', function (req, res) {
       }
     },
     { useFindAndModify: false }, function (err, doc) {
-      //console.log('lol')
-      //console.log(doc);
     });
+  res.sendStatus(200)
 })
 
 app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
@@ -253,9 +259,16 @@ app.post('/login', (req, res) => {
       bcrypt.compare(pass, user.password).then(function (result) {
         if (result) {
           req.session.user = user;
-          //console.log("Logged in");
-          //console.log(req.session.user);
-          res.send(user);
+          // console.log(req.session.user);
+
+          // const userForToken = {
+          //   user: user.email,
+          //   id: user._id,
+          // }
+
+          // const token = jwt.sign(userForToken, process.env.TOKEN_SECRET)
+
+          res.status(200).send(user)
         }
         else {
           res.send("Invalid login");
@@ -302,7 +315,7 @@ app.post('/addCandidates', (req, res) => {
     addOneCandidate(data);
     console.log(emailArray);
   }
-  res.send(200);
+  res.sendStatus(200);
 });
 
 app.post('/addQuestion', (req, res) => {
@@ -394,7 +407,7 @@ function addOneCandidate(data) {
             from: 'vaalikone.alerts@outlook.com', // sender address
             to: user.email,
             subject: 'Tervetuloa käyttämään vaalikonetta', // Subject line 
-            text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä ja täyttämässä vaalikoneen alla olevan linkin kautta.' // plain text body
+            text: 'Sinut on lisätty nyt vaalikoneen tietokantaan. Voit käydä rekisteröitymässä.' // plain text body
           });
         }
         catch (error) {

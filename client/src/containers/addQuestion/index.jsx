@@ -39,9 +39,9 @@ class AddQuestion extends Component {
       .post(url + endpoint.addQuestion, question)
       .then((res) => {
         Swal.fire({
-          title: "You have succesfully submitted a question!",
+          title: language.successQuestionAddedHolder[this.context.language],
           icon: "success",
-          confirmButtonText: "Confirm",
+          confirmButtonText: language.continueHolder[this.context.language],
         });
       })
       .catch((error) => {

@@ -18,7 +18,6 @@ export const endpoint = {
     send: 'send/',
     suggested: 'suggested/',
 
-    newPassword: 'newPassword/',
     login: 'login/',
     profile: 'profile/',
     editInformation: 'editInformation/',

@@ -35,12 +35,12 @@ class Suggestions extends Component {
     };
     axios.post(url + endpoint.suggested, { data: data }).then((res) => {
       this.setState({ suggestions: res.data });
-      console.log(this.state.suggestions);
     });
   }
 
   render() {
     const { showCandidateAnswers } = this.state;
+    const myData = [].concat(this.state.suggestions);
     if (this.state.suggestions.length > 0) {
       return (
         <div
@@ -63,10 +63,10 @@ class Suggestions extends Component {
           >
             {language.matchingCandidates[this.context.language]}
           </h1>
-          {this.state.suggestions.map((candidate) => {
-            return (
-              console.log(this.state.suggestions),
-              (
+          {myData
+            .sort((a, b) => (a.similarity < b.similarity ? 1 : -1))
+            .map((candidate) => {
+              return (
                 <div className="candidateSuggestionCenter">
                   <h2
                     style={{
@@ -86,44 +86,42 @@ class Suggestions extends Component {
                     {candidate.name} {candidate.surname}{" "}
                     {candidate.similarity.toFixed() + "%"}
                   </h2>{" "}
-                  <div>
-                    {showCandidateAnswers && <CandidateAnswers />}
-                    <button
-                      style={{
-                        display: "!flex",
-                        justifyContent: "!center",
-                        alignItems: "!center",
-                        flexDirection: "!row",
-                      }}
-                      onClick={() => this.hideComponent("showCandidateAnswers")}
-                    >
-                      {showCandidateAnswers ? (
-                        <p>Show less</p>
-                      ) : (
-                        <p>Show more</p>
-                      )}
-                    </button>
-                  </div>
+                  {showCandidateAnswers && (
+                    <CandidateAnswers candidateInfo={candidate} />
+                  )}
+                  <button
+                    onClick={() => this.hideComponent("showCandidateAnswers")}
+                  >
+                    {showCandidateAnswers ? <p>Show less</p> : <p>Show more</p>}
+                  </button>
                 </div>
-              )
-            );
-          })}
+              );
+            })}
         </div>
       );
     } else {
       return (
-        <h2
+        <div
           className="candidateSuggestions"
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "row",
+            flexDirection: "column",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
-          {" "}
-          Unfortunately no one related with your answers{" "}
-        </h2>
+          <h2
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            {language.noSimilarCandidates[this.context.language]}
+          </h2>
+        </div>
       );
     }
   }

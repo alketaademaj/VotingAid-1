@@ -3,7 +3,6 @@ import axios from "axios";
 import { UserContext } from "../../context/userContext";
 import language from "../../properties/language";
 import { Link } from "react-router-dom";
-
 import Swal from "sweetalert2";
 import { endpoint, url } from "../../api";
 import DefaultInput from "../../components/defaultInput";
@@ -45,17 +44,15 @@ class Login extends Component {
           this.context.language
         );
         if (!this.context.user || !this.context.email) {
-          // TODO: COME UP WITH SOMETHING BETTER MAYBE
           changeUser("Quest", "", false, this.context.language);
           Swal.fire({
             icon: "error",
             title: "ERROR",
-            text: "Invalid Username Or Password",
+            text: language.wrongPasswordHolder[this.context.language],
           });
         } else {
           Swal.fire({
-            title: "You've Succesfully Logged In",
-            text: "You may now enter",
+            title: language.loginHolder[this.context.language],
             icon: "success",
             confirmButtonText: "Confirm",
           });

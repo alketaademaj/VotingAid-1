@@ -19,7 +19,6 @@ class Profile extends Component {
       profile: {},
       filename: null,
     };
-    this.fetchData = this.fetchData.bind(this);
   }
 
   fetchData = async () => {
@@ -30,9 +29,9 @@ class Profile extends Component {
     await axios
       .post(url + endpoint.profile, { email: email })
       .then((res) => {
-        console.log(res.data);
         this.setState({ profile: res.data });
-        console.log(res.data);
+        // console.log("is this the correct email");
+        // console.log(res.data.email);
       })
       .catch((err) => {
         console.log(err);
@@ -49,46 +48,46 @@ class Profile extends Component {
     }));
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.fetchData();
-  }
+  };
 
-  submitData = async (e) => {
-    e.preventDefault();
+  submitData = async () => {
     await axios
       .post(url + endpoint.editInformation, { data: this.state.profile })
       .then((res) => {
-        console.log(res.data);
-        this.setState({ profile: res.data });
         Swal.fire({
-          title: "You've Succesfully changed profile data",
-          text: "You may now enter",
+          title: language.changeProfileDataAlert[this.context.language],
           icon: "success",
-          confirmButtonText: "Confirm",
         });
+        this.setState({ profile: res.data });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  onChange = (e) => {
-    let target = e.target;
-    this.setState((prevState) => {
-      let profile = { ...prevState.profile };
-      profile[target.id] = target.value;
-      return { profile };
-    });
+  componentDidUpdate = () => {
+    this.onChange = (e) => {
+      let target = e.target;
+      this.setState((prevState) => {
+        let profile = { ...prevState.profile };
+        profile[target.id] = target.value;
+        return { profile };
+      });
+    };
   };
 
   render() {
     const { profile } = this.state;
+    console.log(profile.email);
     if (!profile) {
       return null;
     }
     let information = [
       {
         value: profile.name,
+        key: this.state.profile.name,
         id: "name",
         placeholder: language.firstName[this.context.language],
       },
@@ -105,7 +104,8 @@ class Profile extends Component {
       {
         value: profile.studentAssociation,
         id: "studentAssociation",
-        placeholder: language.selectStudentAssociation[this.context.language],
+        placeholder:
+          language.selectStudentAssociationList[this.context.language],
       },
       {
         value: profile.description,
@@ -181,31 +181,19 @@ class Profile extends Component {
             borderColor={DARK_GREEN}
             backgroundColor={GREEN}
             textColor={WHITE}
-            // onClick={this.submitData}
             text={language.updateButton[this.context.language]}
           />
           <hr />
-          {/*fix this because right now this part only shows undefined questions*/}
-          {/* {console.log(profile.email, profile.studentAssociation)} */}
           <Link
             to={{
               pathname: "/Form/" + profile.studentAssociation,
-              data: {
-                email: profile.email,
-              },
+              email: profile.email,
             }}
           >
-            {" "}
             {language.formLink[this.context.language]}
           </Link>
           <br />
         </form>
-        {/*<SingleInputField action={this.handler} id={'name'} defaultValue={this.state.profile.name}/> <br/>
-            <SingleInputField action={this.handler} id={'surname'} defaultValue={this.state.profile.surname}/> <br/>
-            <SingleInputField action={this.handler} id={'school'} defaultValue={this.state.profile.school}/> <br/>
-            <SingleInputField action={this.handler} id={'studentAssociation'} defaultValue={this.state.profile.studentAssociation}/> <br/>
-            <SingleInputField action={this.handler} id={'description'} defaultValue={this.state.profile.description}/> <br/>
-            <SingleInputField action={this.handler} id={'campus'} defaultValue={this.state.profile.campus}/><br/>*/}
       </div>
     );
   }

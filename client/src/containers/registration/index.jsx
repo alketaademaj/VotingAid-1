@@ -10,6 +10,7 @@ import DefaultButton from "../../components/defaultButton";
 import { DARK_GREEN, GREEN, WHITE } from "../../helpers/constants";
 
 class Registration extends React.Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
 
@@ -44,7 +45,9 @@ class Registration extends React.Component {
         console.log(user.email);
         console.log(res.data);
         Swal.fire({
-          text: res.data,
+          text: res.data.includes("address")
+            ? language.registrationError[this.context.language]
+            : "success",
           icon: res.data.includes("address") ? "error" : "success",
         });
       });
@@ -52,12 +55,10 @@ class Registration extends React.Component {
       Swal.fire({
         icon: "error",
         title: "ERROR",
-        text: "Confirmation Password Must Match With Password",
+        text: language.passwordConfirmationError[this.context.language],
       });
     }
   };
-
-  static contextType = UserContext;
 
   render() {
     return (

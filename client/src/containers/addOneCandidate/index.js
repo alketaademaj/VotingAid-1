@@ -30,7 +30,6 @@ export class addOneCandidate extends Component {
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
         this.setState({ studentAssociation: this.refs.campus.value })
-        // console.log(event.target.name + '    ' + event.target.value)
     }
 
     handleSubmit = (event) => {
@@ -49,9 +48,8 @@ export class addOneCandidate extends Component {
         }
         axios.post(url + endpoint.addOneCandidate, oneCandidate)
             .then(res => {
-                console.log(res.data);
                 Swal.fire({
-                    text: res.data,
+                    text: res.data.includes('address') ? language.addingOneCandidateToDatabaseErrorAlert[this.context.language] : language.addingOneCandidateToDatabaseAlert[this.context.language],
                     icon: res.data.includes('address') ? 'error' : 'success'
                 })
             });
