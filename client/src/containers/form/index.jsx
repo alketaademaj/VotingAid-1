@@ -157,8 +157,8 @@ class Form extends Component {
         .then((res) => {
           console.log(res);
           Swal.fire({
-            title: language.filledFormAlert[this.context.language],
-            icon: "success",
+            title: res.data/*language.filledFormAlert[this.context.language]*/, //  TEXT AND ICON DEFINITION FROM SERVER ROW 308
+            icon: res.data.includes('Error') ? 'error' : 'success',
             confirmButtonText: language.continueHolder[this.context.language],
           });
         });

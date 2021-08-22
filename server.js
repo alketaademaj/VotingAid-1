@@ -272,7 +272,7 @@ app.post('/login', (req, res) => {
           //console.log(req.session.user);
 
           const tokenUser = {email: user.email, status: user.status}
-          const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET, {expiresIn: 60*60})
+          const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET, {expiresIn: 60*60}) // CHANGE TO 60 FOR TESTING PURPOSES
 
 
           res.status(200).send({token, tokenUser})
@@ -302,14 +302,18 @@ app.get('/logout', function (req, res) {
 app.post('/send', function (req, res) {
   var email = req.body.email;
   const token = getTokenFrom(req);
-  const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET)
-  console.log('token')
+  try {
+    jwt.verify(token, process.env.TOKEN_SECRET)
+  } catch {
+    res.send('Error!, TOKEN HAS EXPIRED OR IS INVALID')
+  }
+ /* console.log('token')
   console.log(token)
   console.log('decoded')
-  console.log(decodedToken)
-  if (!token /*|| !decodedToken.email*/) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
+  console.log(decodedToken)*/
+  /*if (!token || !decodedToken) {
+    res.send('INVALID TOKEN')
+  }*/
   console.log(email);
   for (var i = 0; i < req.body.ans.length; i++) {
     var nestedOpt = 'filledForm.question' + i;
