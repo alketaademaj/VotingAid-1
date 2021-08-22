@@ -6,14 +6,14 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('client-sessions');
 const async = require('async')
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 require('dotenv').config();
 const saltRounds = 10;
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
+//const db = mongoose.connection;
 
 require("./models/candidate");
 require("./models/question");
@@ -27,9 +27,9 @@ dotenv.config();
 // // access config var
 // process.env.TOKEN_SECRET;
 
-var Candidate = mongoose.model('candidate');
-var Question = mongoose.model('question');
-var User = mongoose.model('user');
+const Candidate = mongoose.model('candidate');
+const Question = mongoose.model('question');
+const User = mongoose.model('user');
 
 
 const app = express();
@@ -46,13 +46,23 @@ app.use(session({
 }));
 
 //module for handling form data
-var bp = require('body-parser');
+const bp = require('body-parser');
 const { default: Axios } = require('axios');
 const user = require('./models/user');
 app.use(bp.json());       // to support JSON-encoded bodies
 app.use(bp.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
+
+//Get the token from Request headers
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
+
 
 app.get('/', (req, res) => { //Shows all the candidates
   Candidate.find({}, function (err, results) {
@@ -227,9 +237,9 @@ app.post('/registration', (req, res) => {
       status: "Candidate",
     });
     Candidate.countDocuments({ email: req.body.email }, function (err, count) {
-      if (count != 0) {
+      if (count !== 0) {
         User.countDocuments({ email: req.body.email }, function (err, count) {
-          if (count == 0) {
+          if (count === 0) {
             user.save(function (err, user) {
               if (err) return //console.log(err);
               res.send("Succesfully added user to database!");
@@ -259,23 +269,19 @@ app.post('/login', (req, res) => {
       bcrypt.compare(pass, user.password).then(function (result) {
         if (result) {
           req.session.user = user;
-          // console.log(req.session.user);
+          //console.log(req.session.user);
 
-          // const userForToken = {
-          //   user: user.email,
-          //   id: user._id,
-          // }
+          const tokenUser = {email: user.email, status: user.status}
+          const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET, {expiresIn: 60*60})
 
-          // const token = jwt.sign(userForToken, process.env.TOKEN_SECRET)
 
-          res.status(200).send(user)
+          res.status(200).send({token, tokenUser})
         }
         else {
           res.send("Invalid login");
         }
       });
     }
-
   });
 });
 
@@ -295,6 +301,15 @@ app.get('/logout', function (req, res) {
 
 app.post('/send', function (req, res) {
   var email = req.body.email;
+  const token = getTokenFrom(req);
+  const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET)
+  console.log('token')
+  console.log(token)
+  console.log('decoded')
+  console.log(decodedToken)
+  if (!token /*|| !decodedToken.email*/) {
+    return res.status(401).json({ error: 'token missing or invalid' })
+  }
   console.log(email);
   for (var i = 0; i < req.body.ans.length; i++) {
     var nestedOpt = 'filledForm.question' + i;

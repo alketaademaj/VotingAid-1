@@ -149,6 +149,10 @@ class Form extends Component {
           desc: this.state.answersDesc,
           email: this.context.email,
           studentAssociation: this.context.path,
+        }, {
+            headers: {
+                'Authorization': `Bearer ${this.context.token}`
+            }
         })
         .then((res) => {
           console.log(res);

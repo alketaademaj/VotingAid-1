@@ -9,6 +9,7 @@ class UserContextProvider extends Component {
       email: '',
       loggedIn: false,
       language: 'fin',
+      token: '',
     }
   }
 
@@ -23,11 +24,12 @@ class UserContextProvider extends Component {
     sessionStorage.setItem('language', e);
   }
 
-  changeUser = (user, email, loggedIn, language) => {
+  changeUser = (user, email, loggedIn, token) => {
     this.setState({
       user: user,
       email: email,
       loggedIn: loggedIn,
+      token: token
     });
   }
 
@@ -35,24 +37,28 @@ class UserContextProvider extends Component {
     this.changeUser('Quest', '', false);
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('status');
+    sessionStorage.removeItem('token');
   }
 
   checkExistingLogin = () => {
     let email = sessionStorage.getItem('email');
     let status = sessionStorage.getItem('status');
+    let token = sessionStorage.getItem('token')
     if (email && status) {
-      this.changeUser(status, email, true);
+      this.changeUser(status, email, true, token);
     }
   }
 
   existingLogin() {
     let email = sessionStorage.getItem('email');
     let status = sessionStorage.getItem('status');
+    let token = sessionStorage.getItem('token')
     if (email && status) {
       return {
         user: status,
         email: email,
         loggedIn: true,
+        token: token,
       }
     }
   }

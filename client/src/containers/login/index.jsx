@@ -34,14 +34,14 @@ class Login extends Component {
     };
 
     axios.post(url + endpoint.login, user).then((res) => {
-      // console.log(res);
+       console.log(res);
       if (res) {
         const { changeUser } = this.context;
         changeUser(
-          res.data.status,
-          res.data.email,
+          res.data.tokenUser.status,
+          res.data.tokenUser.email,
           true,
-          this.context.language
+          res.data.token
         );
         if (!this.context.user || !this.context.email) {
           changeUser("Quest", "", false, this.context.language);
@@ -59,6 +59,7 @@ class Login extends Component {
           sessionStorage.setItem("email", this.context.email);
           sessionStorage.setItem("status", this.context.user);
           sessionStorage.setItem("language", this.context.language);
+          sessionStorage.setItem("token", this.context.token);
           this.props.history.push({
             pathname: "/",
           });
