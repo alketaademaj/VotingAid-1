@@ -271,11 +271,11 @@ app.post('/login', (req, res) => {
           req.session.user = user;
           //console.log(req.session.user);
 
-          const tokenUser = {email: user.email, status: user.status}
-          const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET, {expiresIn: 60*60}) // CHANGE TO 60 FOR TESTING PURPOSES
+          const tokenUser = { email: user.email, status: user.status }
+          const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 }) // CHANGE TO 60 FOR TESTING PURPOSES
 
 
-          res.status(200).send({token, tokenUser})
+          res.status(200).send({ token, tokenUser })
         }
         else {
           res.send("Invalid login");
@@ -307,10 +307,10 @@ app.post('/send', function (req, res) {
   } catch {
     res.send('Error!, TOKEN HAS EXPIRED OR IS INVALID')
   }
- /* console.log('token')
-  console.log(token)
-  console.log('decoded')
-  console.log(decodedToken)*/
+  /* console.log('token')
+   console.log(token)
+   console.log('decoded')
+   console.log(decodedToken)*/
   /*if (!token || !decodedToken) {
     res.send('INVALID TOKEN')
   }*/
@@ -366,8 +366,14 @@ app.post('/addQuestion', (req, res) => {
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
+
+app.get('/', function (req, res) {
+  res.send("works");
+})
+
+app.use('/client', express.static(dirname + '/client'))
 
 const port = process.env.PORT || 5000;
 app.listen(port);
