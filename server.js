@@ -373,7 +373,7 @@ app.get('/', function (req, res) {
   res.send("works");
 })
 
-app.use('/client', express.static(dirname + '/client'))
+// app.use('/client', express.static(dirname + '/client'))
 
 const port = process.env.PORT || 5000;
 app.listen(port);
