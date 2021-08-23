@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "serve": "nodemon index.js",
-    "dev": "nodemon --exec babel-node index.js"
+    "start": "node server.js",
+    "client": "npm run start --prefix client",
+    "serve": "nodemon server.js",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,8 @@
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.12",
     "react-icons": "^4.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1"
   }
 }

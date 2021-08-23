@@ -26,6 +26,7 @@
     "sweetalert": "^2.1.2",
     "sweetalert2": "^10.15.5"
   },
+  "type": "module",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
