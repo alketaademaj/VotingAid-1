@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import language from "../../properties/language";
 import axios from "axios";
-import { url, endpoint } from "../../api";
+import { endpoint } from "../../api";
 import { UserContext } from "../../context/userContext";
 import Swal from "sweetalert2";
 import DefaultInput from "../../components/defaultInput";
@@ -70,53 +70,47 @@ export class CandidateAnswers extends Component {
   componentDidMount() {
     var email = this.props.candidateInfo.email;
     if (this.context.loggedIn) {
-      axios
-        .post(url + endpoint.questions, { data: this.state.path })
-        .then((res) => {
-          console.log(res);
-          this.setState({ questions: res.data });
-          axios
-            .post(url + endpoint.fillForm, { data: email })
-            .then((response) => {
-              console.log(response);
-              let oldQuestions = res.data;
-              let questionDesc = [];
-              let questionNumber = [];
-              oldQuestions.map((question, idx) => {
-                Object.assign(oldQuestions[idx], {
-                  questionValue: Object.values(response.data.filledForm).filter(
-                    (item) => isNaN(item)
-                  )[idx],
-                  questionNumber: Object.values(
-                    response.data.filledForm
-                  ).filter((item) => !isNaN(item))[idx],
-                });
-                questionDesc.push(
-                  Object.values(response.data.filledForm).filter((item) =>
-                    isNaN(item)
-                  )[idx]
-                );
-                questionNumber.push(
-                  Object.values(response.data.filledForm).filter(
-                    (item) => !isNaN(item)
-                  )[idx]
-                );
-              });
-              this.setState({ questions: oldQuestions });
-              this.setState({
-                answersDesc: questionDesc,
-                answers: questionNumber,
-              });
-              this.setState({ loader: false });
+      axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
+        console.log(res);
+        this.setState({ questions: res.data });
+        axios.post(endpoint.fillForm, { data: email }).then((response) => {
+          console.log(response);
+          let oldQuestions = res.data;
+          let questionDesc = [];
+          let questionNumber = [];
+          oldQuestions.map((question, idx) => {
+            Object.assign(oldQuestions[idx], {
+              questionValue: Object.values(response.data.filledForm).filter(
+                (item) => isNaN(item)
+              )[idx],
+              questionNumber: Object.values(response.data.filledForm).filter(
+                (item) => !isNaN(item)
+              )[idx],
             });
-        });
-    } else {
-      axios
-        .post(url + endpoint.questions, { data: this.state.path })
-        .then((res) => {
+            questionDesc.push(
+              Object.values(response.data.filledForm).filter((item) =>
+                isNaN(item)
+              )[idx]
+            );
+            questionNumber.push(
+              Object.values(response.data.filledForm).filter(
+                (item) => !isNaN(item)
+              )[idx]
+            );
+          });
+          this.setState({ questions: oldQuestions });
+          this.setState({
+            answersDesc: questionDesc,
+            answers: questionNumber,
+          });
           this.setState({ loader: false });
-          this.setState({ questions: res.data });
         });
+      });
+    } else {
+      axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
+        this.setState({ loader: false });
+        this.setState({ questions: res.data });
+      });
     }
   }
 
@@ -143,7 +137,7 @@ export class CandidateAnswers extends Component {
     e.preventDefault();
     if (this.context.user !== "Quest") {
       axios
-        .post(url + endpoint.send, {
+        .post(endpoint.send, {
           ans: this.state.answers,
           desc: this.state.answersDesc,
           email: this.context.email,

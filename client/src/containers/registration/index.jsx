@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import language from "../../properties/language";
 import { UserContext } from "../../context/userContext";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 import DefaultInput from "../../components/defaultInput";
 import DefaultButton from "../../components/defaultButton";
 import { DARK_GREEN, GREEN, WHITE } from "../../helpers/constants";
@@ -41,7 +41,7 @@ class Registration extends React.Component {
       status: "Candidate",
     };
     if (this.state.password == this.state.password_confirmation) {
-      axios.post(url + endpoint.register, user).then((res) => {
+      axios.post(endpoint.register, user).then((res) => {
         console.log(user.email);
         console.log(res.data);
         Swal.fire({

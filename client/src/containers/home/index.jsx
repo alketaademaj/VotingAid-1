@@ -4,7 +4,7 @@ import { UserContext } from "../../context/userContext";
 import language from "../../properties/language";
 
 import axios from "axios";
-import { url, endpoint } from "../../api";
+import { endpoint } from "../../api";
 
 class Home extends Component {
   static contextType = UserContext;
@@ -19,7 +19,7 @@ class Home extends Component {
   componentDidMount() {
     if (this.context.email) {
       axios
-        .post(url + endpoint.profile, { email: this.context.email })
+        .post(endpoint.profile, { email: this.context.email })
         .then((res) => {
           this.setState({
             userStudentAssociation: res.data.studentAssociation,

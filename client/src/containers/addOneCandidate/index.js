@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import axios from "axios";
 import language from "../../properties/language";
 import { UserContext } from '../../context/userContext';
-import { endpoint, url } from '../../api';
+import { endpoint } from '../../api';
 
 export class addOneCandidate extends Component {
     static contextType = UserContext;
@@ -46,7 +46,7 @@ export class addOneCandidate extends Component {
             electoralAlliance: this.state.electoralAlliance,
             description: this.state.description,
         }
-        axios.post(url + endpoint.addOneCandidate, oneCandidate)
+        axios.post(endpoint.addOneCandidate, oneCandidate)
             .then(res => {
                 Swal.fire({
                     text: res.data.includes('address') ? language.addingOneCandidateToDatabaseErrorAlert[this.context.language] : language.addingOneCandidateToDatabaseAlert[this.context.language],

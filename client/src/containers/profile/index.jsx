@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import language from "../../properties/language";
 import DefaultButton from "../../components/defaultButton";
 import { DARK_GREEN, GREEN, WHITE } from "../../helpers/constants";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 import DefaultInput from "../../components/defaultInput";
 
 class Profile extends Component {
@@ -27,7 +27,7 @@ class Profile extends Component {
       email = this.props.location.data;
     }
     await axios
-      .post(url + endpoint.profile, { email: email })
+      .post(endpoint.profile, { email: email })
       .then((res) => {
         this.setState({ profile: res.data });
         // console.log("is this the correct email");
@@ -54,7 +54,7 @@ class Profile extends Component {
 
   submitData = async () => {
     await axios
-      .post(url + endpoint.editInformation, { data: this.state.profile })
+      .post(endpoint.editInformation, { data: this.state.profile })
       .then((res) => {
         Swal.fire({
           title: language.changeProfileDataAlert[this.context.language],

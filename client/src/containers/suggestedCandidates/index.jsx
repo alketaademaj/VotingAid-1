@@ -3,7 +3,7 @@ import axios from "axios";
 import Picture from "../../components/partials/picture";
 import language from "../../properties/language";
 import { UserContext } from "../../context/userContext";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 import CandidateAnswers from "../candidateAnswers";
 import { Link } from "react-router-dom";
 
@@ -33,7 +33,7 @@ class Suggestions extends Component {
       answers: this.props.location.data.answers,
       studentAssociation: this.props.location.data.studentAssociation,
     };
-    axios.post(url + endpoint.suggested, { data: data }).then((res) => {
+    axios.post(endpoint.suggested, { data: data }).then((res) => {
       this.setState({ suggestions: res.data });
     });
   }

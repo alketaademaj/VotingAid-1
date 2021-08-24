@@ -1,4 +1,4 @@
-export const url = 'https://votingaid.herokuapp.com/';
+// export const url = 'https://votingaid.herokuapp.com/';
 
 export const endpoint = {
     addCandidates: 'addCandidates/',

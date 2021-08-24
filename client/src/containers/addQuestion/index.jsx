@@ -5,7 +5,7 @@ import language from "../../properties/language";
 import { UserContext } from "../../context/userContext";
 import { DARK_GREEN, GREEN, WHITE } from "../../helpers/constants";
 import DefaultButton from "../../components/defaultButton";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 import DefaultInput from "../../components/defaultInput";
 
 class AddQuestion extends Component {
@@ -36,7 +36,7 @@ class AddQuestion extends Component {
       area: this.state.selectValue,
     };
     axios
-      .post(url + endpoint.addQuestion, question)
+      .post(endpoint.addQuestion, question)
       .then((res) => {
         Swal.fire({
           title: language.successQuestionAddedHolder[this.context.language],

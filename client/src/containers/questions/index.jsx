@@ -4,7 +4,7 @@ import language from "../../properties/language";
 import { UserContext } from "../../context/userContext";
 
 import QuestionsItem from "../../components/questionItem";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 
 class Questions extends Component {
   static contextType = UserContext;
@@ -33,7 +33,7 @@ class Questions extends Component {
   allQuestions = () => {
     console.log("inside");
     this.setState({ questions: [] });
-    axios.get(url + endpoint.allQuestions).then((res) => {
+    axios.get(endpoint.allQuestions).then((res) => {
       this.setState({ questions: res.data });
       let newFilters = [];
       res.data.map((filter) => newFilters.push(filter.area));
@@ -44,11 +44,9 @@ class Questions extends Component {
 
   FilterQuestions = (filter) => {
     this.setState({ questions: [] });
-    axios
-      .post(url + endpoint.filteredQuestions, { data: filter })
-      .then((res) => {
-        this.setState({ questions: res.data });
-      });
+    axios.post(endpoint.filteredQuestions, { data: filter }).then((res) => {
+      this.setState({ questions: res.data });
+    });
   };
 
   handleChange = (e) => {

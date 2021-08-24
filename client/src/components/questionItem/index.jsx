@@ -9,7 +9,7 @@ import {
 } from "../../helpers/constants";
 import DefaultButton from "../defaultButton";
 import DefaultInput from "../defaultInput";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 import language from "../../properties/language";
 import { UserContext } from "../../context/userContext";
 
@@ -43,7 +43,7 @@ class QuestionsItem extends Component {
     };
 
     axios
-      .post(url + endpoint.submitQhuahoo, { data })
+      .post(endpoint.submitQhuahoo, { data })
       .then((res) => {
         alert("We've changed you");
       })
@@ -55,7 +55,7 @@ class QuestionsItem extends Component {
   confirmDelete = (e) => {
     e.preventDefault();
     axios
-      .post(url + endpoint.deleteQhuahoo, { id: this.props.question._id })
+      .post(endpoint.deleteQhuahoo, { id: this.props.question._id })
       .then((res) => {
         alert("is removed");
         this.props.refreshQuestions();

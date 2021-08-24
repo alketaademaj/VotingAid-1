@@ -1,8 +1,8 @@
 import Axios from 'axios';
-import { endpoint, url } from '../api';
+import { endpoint } from '../api';
 
 const FilterCandidateTable = (setStateArray, filter) => {
-    Axios.post(url + endpoint.filteredCandidates, { data: filter })
+    Axios.post(endpoint.filteredCandidates, { data: filter })
         .then(res => {
             console.log(res)
             let q = [];
@@ -15,7 +15,7 @@ const FilterCandidateTable = (setStateArray, filter) => {
 }
 
 const SetCandidateTable = (setStateArray) => {
-    Axios.get(url)
+    Axios.get('/')
         .then(res => {
             let q = [];
             let s = [];

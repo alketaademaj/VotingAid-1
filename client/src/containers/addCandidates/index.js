@@ -4,7 +4,7 @@ import swal from "sweetalert2"
 import { CSVReader } from 'react-papaparse'
 import { UserContext } from "../../context/userContext";
 import language from "../../properties/language";
-import { endpoint, url } from '../../api';
+import { endpoint } from '../../api';
 
 const buttonRef = React.createRef()
 class AddCandidates extends Component {
@@ -68,7 +68,7 @@ class AddCandidates extends Component {
 
   handeSubmit() {
     if (this.state.filename.includes('.csv')) {
-      axios.post(url + endpoint.addCandidates, { candidate: this.state.candidates })
+      axios.post(endpoint.addCandidates, { candidate: this.state.candidates })
         .then(res => {
           console.log('YEET');
         });

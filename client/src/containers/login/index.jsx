@@ -4,7 +4,7 @@ import { UserContext } from "../../context/userContext";
 import language from "../../properties/language";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { endpoint, url } from "../../api";
+import { endpoint } from "../../api";
 import DefaultInput from "../../components/defaultInput";
 import DefaultButton from "../../components/defaultButton";
 import { DARK_GREEN, GREEN, WHITE } from "../../helpers/constants";
@@ -33,8 +33,8 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    axios.post(url + endpoint.login, user).then((res) => {
-       console.log(res);
+    axios.post(endpoint.login, user).then((res) => {
+      console.log(res);
       if (res) {
         const { changeUser } = this.context;
         changeUser(
