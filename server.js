@@ -35,7 +35,7 @@ const User = mongoose.model('user');
 const app = express();
 
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(fileUpload());
 app.use(cors());
 app.use(session({
@@ -366,7 +366,7 @@ app.post('/addQuestion', (req, res) => {
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + '/build/index.html'));
 });
 
 app.get('/', function (req, res) {
