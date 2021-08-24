@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { CandidateRoute, PublicRoute } from './routeValidation.js';
+import {AdminRoute, CandidateRoute, PublicRoute} from './routeValidation.js';
 
 //Components
 import Form from '../containers/form';
@@ -26,11 +26,11 @@ const Navigation = () => {
                 <AdminNavbar />
                 <Navbar />
                 <Switch>
-                    <CandidateRoute path="/addQuestion" component={AddQuestion} />
-                    <CandidateRoute path="/addCandidates" component={AddCandidates} />
-                    <CandidateRoute path="/addOneCandidate" component={AddOneCandidate} />
-                    <CandidateRoute path="/Candidates" component={Candidates} />
-                    <CandidateRoute path="/Questions" component={Questions} />
+                    <AdminRoute path="/addQuestion" component={AddQuestion} />
+                    <AdminRoute path="/addCandidates" component={AddCandidates} />
+                    <AdminRoute path="/addOneCandidate" component={AddOneCandidate} />
+                    <AdminRoute path="/Candidates" component={Candidates} />
+                    <AdminRoute path="/Questions" component={Questions} />
                     <CandidateRoute path="/Profile" component={Profile} />
                     <Route path="/suggestedCandidates" component={Suggestions} />
                     <Route path="/candidateAnswers" component={CandidateAnswers} />

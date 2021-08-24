@@ -51,7 +51,7 @@ const { default: Axios } = require('axios');
 const user = require('./models/user');
 app.use(bp.json());       // to support JSON-encoded bodies
 app.use(bp.urlencoded({     // to support URL-encoded bodies
-  extended: true
+  extended: false
 }));
 
 //Get the token from Request headers

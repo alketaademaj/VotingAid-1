@@ -6,7 +6,7 @@ export const endpoint = {
     filteredCandidates: 'filteredCandidates/',
     candidates: 'candidates/',
 
-    questions: 'questions/',
+    questions: '/questions/',
     addQuestion: 'addQuestion/',
     allQuestions: 'allQuestions/',
     filteredQuestions: 'filteredQuestions/',
@@ -14,9 +14,9 @@ export const endpoint = {
     deleteQhuahoo: 'deleteQhuahoo/',
     submitQhuahoo: 'submitQhuahoo/',
 
-    fillForm: 'fillForm/',
+    fillForm: '/fillForm/',
 
-    send: 'send/',
+    send: '/send/',
     suggested: 'suggested/',
 
     login: 'login/',

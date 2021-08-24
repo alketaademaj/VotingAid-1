@@ -69,9 +69,11 @@ class Form extends Component {
 
   componentDidMount() {
     console.log(this.state.path);
-    var email = this.props.location.email;
+    let email = this.props.location.email;
     if (this.context.loggedIn) {
-      axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
+      {
+        console.log(endpoint.questions)}
+      axios.post(endpoint.questions,{ data: this.state.path }).then((res) => {
         console.log(res);
         this.setState({ questions: res.data });
         axios.post(endpoint.fillForm, { data: email }).then((response) => {
@@ -108,7 +110,9 @@ class Form extends Component {
         });
       });
     } else {
-      axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
+      {
+        console.log(endpoint.questions)}
+      axios.post(endpoint.questions,{ data: this.state.path }).then((res) => {
         this.setState({ loader: false });
         this.setState({ questions: res.data });
       });
