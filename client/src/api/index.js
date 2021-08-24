@@ -1,4 +1,4 @@
-export const url = 'http://localhost:5000/';
+export const url = 'https://votingaid.herokuapp.com/';
 
 export const endpoint = {
     addCandidates: 'addCandidates/',
