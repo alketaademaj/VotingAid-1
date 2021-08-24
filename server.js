@@ -369,9 +369,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/build/index.html'));
 });
 
-app.get('/', function (req, res) {
-  res.send("works");
-})
+// app.get('/', function (req, res) {
+//   res.send("works");
+// })
 
 // app.use('/client', express.static(dirname + '/client'))
 
@@ -478,7 +478,7 @@ app.post('/upload', (req, res) => {
     // file.mv(`${__dirname}/client/public/uploads/194938.png`
   }
   const file = req.files.file;
-  file.mv(`${__dirname}/client/public/uploads/${file.name}`, async err => {
+  file.mv(`${__dirname}/build/uploads/${file.name}`, async err => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
@@ -488,7 +488,7 @@ app.post('/upload', (req, res) => {
 
     const candidate = await Candidate.findOne({ email: email });
     if (candidate.image !== '/auto.png') {
-      fs.unlink(`${__dirname}/client/public/${candidate.image}`, (err) => {
+      fs.unlink(`${__dirname}/build/${candidate.image}`, (err) => {
         if (err) {
           console.error(err)
         }
