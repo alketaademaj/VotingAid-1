@@ -15,7 +15,7 @@ const FilterCandidateTable = (setStateArray, filter) => {
 }
 
 const SetCandidateTable = (setStateArray) => {
-    Axios.get('/')
+    Axios.get(endpoint.candidates)
         .then(res => {
             let q = [];
             let s = [];

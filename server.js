@@ -64,7 +64,7 @@ const getTokenFrom = request => {
 }
 
 
-app.get('/', (req, res) => { //Shows all the candidates
+app.get('/candidates', (req, res) => { //Shows all the candidates
   Candidate.find({}, function (err, results) {
     res.send(results);
   });

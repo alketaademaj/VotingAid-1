@@ -1,3 +1,4 @@
+import jwt from "jwt-decode";
 import React, { createContext, Component } from 'react';
 
 export const UserContext = createContext();
@@ -35,30 +36,30 @@ class UserContextProvider extends Component {
 
   logOut = () => {
     this.changeUser('Quest', '', false);
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('status');
+    /*sessionStorage.removeItem('email');
+    sessionStorage.removeItem('status');*/
     sessionStorage.removeItem('token');
   }
 
   checkExistingLogin = () => {
-    let email = sessionStorage.getItem('email');
-    let status = sessionStorage.getItem('status');
-    let token = sessionStorage.getItem('token')
-    if (email && status) {
-      this.changeUser(status, email, true, token);
+    /*let email = sessionStorage.getItem('email');
+    let status = sessionStorage.getItem('status');*/
+    let storedToken = sessionStorage.getItem('token');
+    if (storedToken) {
+      let decodedToken = jwt(storedToken)
+      this.changeUser(decodedToken.status, decodedToken.email, true, storedToken);
     }
   }
 
   existingLogin() {
-    let email = sessionStorage.getItem('email');
-    let status = sessionStorage.getItem('status');
-    let token = sessionStorage.getItem('token')
-    if (email && status) {
+    let storedToken = sessionStorage.getItem('token')
+    if (storedToken) {
+      let decodedToken = jwt(storedToken)
       return {
-        user: status,
-        email: email,
+        user: decodedToken.status,
+        email: decodedToken.email,
         loggedIn: true,
-        token: token,
+        token: storedToken,
       }
     }
   }

@@ -4,6 +4,7 @@ export const endpoint = {
     addCandidates: 'addCandidates/',
     addOneCandidate: 'addOneCandidate/',
     filteredCandidates: 'filteredCandidates/',
+    candidates: 'candidates/',
 
     questions: 'questions/',
     addQuestion: 'addQuestion/',

@@ -56,8 +56,8 @@ class Login extends Component {
             icon: "success",
             confirmButtonText: "Confirm",
           });
-          sessionStorage.setItem("email", this.context.email);
-          sessionStorage.setItem("status", this.context.user);
+          /*sessionStorage.setItem("email", this.context.email);
+          sessionStorage.setItem("status", this.context.user);*/
           sessionStorage.setItem("language", this.context.language);
           sessionStorage.setItem("token", this.context.token);
           this.props.history.push({

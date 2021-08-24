@@ -77,7 +77,7 @@ class AddQuestion extends Component {
               name="question"
               value={this.state.question}
               onChange={this.handleChange}
-              required={true}
+              // required={true}
             />
 
             <DefaultInput
