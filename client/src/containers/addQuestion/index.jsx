@@ -15,6 +15,7 @@ class AddQuestion extends Component {
     this.state = {
       question: "",
       questionFin: "",
+      questionSwe: "",
       area: "",
       selectValue: "",
     };
@@ -33,6 +34,7 @@ class AddQuestion extends Component {
     const question = {
       question: this.state.question,
       questionFin: this.state.questionFin,
+      questionSwe: this.state.questionSwe,
       area: this.state.selectValue,
     };
     axios
@@ -49,6 +51,7 @@ class AddQuestion extends Component {
       });
     this.setState({ question: "" });
     this.setState({ questionFin: "" });
+    this.setState({ questionSwe: "" });
   };
 
   render() {
@@ -79,6 +82,14 @@ class AddQuestion extends Component {
               onChange={this.handleChange}
               // required={true}
             />
+            <DefaultInput
+              label="Frågan på svenska"
+              type="question"
+              name="questionSwe"
+              value={this.state.questionSwe}
+              onChange={this.handleChange}
+              // required={true}
+            />
 
             <DefaultInput
               label="Kysymys suomeksi"
@@ -101,7 +112,6 @@ class AddQuestion extends Component {
               value={this.state.selectValue}
               onChange={this.selectBoxChanged}
             >
-              <option value="Undefined">Undefined</option>
               <option value="ASK">ASK</option>
               <option value="Helga">Helga</option>
               <option value="HUMAKO">HUMAKO</option>

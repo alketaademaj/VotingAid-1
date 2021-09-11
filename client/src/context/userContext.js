@@ -8,6 +8,7 @@ class UserContextProvider extends Component {
     this.state = this.existingLogin() || {
       user: 'Quest',
       email: '',
+      school: '',
       loggedIn: false,
       language: 'fin',
       token: '',
@@ -25,17 +26,18 @@ class UserContextProvider extends Component {
     sessionStorage.setItem('language', e);
   }
 
-  changeUser = (user, email, loggedIn, token) => {
+  changeUser = (user, email, school, loggedIn, token) => {
     this.setState({
       user: user,
       email: email,
+      school: school,
       loggedIn: loggedIn,
-      token: token
+      token: token,
     });
   }
 
   logOut = () => {
-    this.changeUser('Quest', '', false);
+    this.changeUser('Quest', '', '', false, '');
     /*sessionStorage.removeItem('email');
     sessionStorage.removeItem('status');*/
     sessionStorage.removeItem('token');
@@ -47,7 +49,7 @@ class UserContextProvider extends Component {
     let storedToken = sessionStorage.getItem('token');
     if (storedToken) {
       let decodedToken = jwt(storedToken)
-      this.changeUser(decodedToken.status, decodedToken.email, true, storedToken);
+      this.changeUser(decodedToken.status, decodedToken.email, decodedToken.school, true, storedToken);
     }
   }
 
@@ -58,6 +60,7 @@ class UserContextProvider extends Component {
       return {
         user: decodedToken.status,
         email: decodedToken.email,
+        school: decodedToken.school,
         loggedIn: true,
         token: storedToken,
       }

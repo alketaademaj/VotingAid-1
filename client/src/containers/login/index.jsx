@@ -40,11 +40,12 @@ class Login extends Component {
         changeUser(
           res.data.tokenUser.status,
           res.data.tokenUser.email,
+          res.data.tokenUser.school,
           true,
           res.data.token
         );
         if (!this.context.user || !this.context.email) {
-          changeUser("Quest", "", false, this.context.language);
+          changeUser("Quest", "", "", false, this.context.language);
           Swal.fire({
             icon: "error",
             title: "ERROR",

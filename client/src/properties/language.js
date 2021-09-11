@@ -1,6 +1,6 @@
 const language = {
-    title: { fin: 'Vaalikone', eng: 'VotingAid' },
-    homePageDescription: { fin: 'Tervetuloa käyttämään vaalikonetta!', eng: 'Welcome to our voting aid application!' },
+    title: { fin: 'Vaalikone', eng: 'VotingAid', swe: 'Valkompass' },
+    homePageDescription: { fin: 'Tervetuloa käyttämään vaalikonetta!', eng: 'Welcome to our voting aid application!', swe: 'Välkommen att använda valkompassen' },
     selectStudentAssociation: { fin: 'Valitse opiskelijakuntasi', eng: 'Choose your student association' },
     navigationHome: { fin: 'Koti', eng: 'Home' },
     navigationLogin: { fin: 'Kirjaudu sisään', eng: 'Login' },

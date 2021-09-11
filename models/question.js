@@ -6,6 +6,7 @@ var questionSchema = new Schema(
   {
     question: { type: String, Required: 'Kysymys on lisättävä' },
     questionFin: { type: String, Required: 'Kysymys on lisättävä' },
+    questionSwe: { type: String, Required: 'Kysymys on lisättävä' },
     area: { type: String, Required: 'Oletuksena Undefined' },
   },
   {

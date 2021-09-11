@@ -20,6 +20,7 @@ class QuestionsItem extends Component {
     this.state = {
       inputFinnish: "",
       inputEnglish: "",
+      inputSwedish: "",
     };
   }
 
@@ -27,6 +28,7 @@ class QuestionsItem extends Component {
     this.setState({
       inputFinnish: this.props.question.questionFin,
       inputEnglish: this.props.question.question,
+      inputSwedish: this.props.question.questionSwe,
     });
   }
 
@@ -39,6 +41,7 @@ class QuestionsItem extends Component {
     var data = {
       question: this.state.inputEnglish,
       questionFin: this.state.inputFinnish,
+      questionSwe: this.state.inputSwedish,
       id: this.props.question._id,
     };
 
@@ -58,6 +61,7 @@ class QuestionsItem extends Component {
       .post(endpoint.deleteQhuahoo, { id: this.props.question._id })
       .then((res) => {
         alert("is removed");
+        console.log(res);
         this.props.refreshQuestions();
       });
   };
@@ -87,6 +91,14 @@ class QuestionsItem extends Component {
           type="text"
           name="inputEnglish"
           value={this.state.inputEnglish}
+          onChange={this.changeInputValue}
+        />
+
+        <DefaultInput
+          label="Frågan på svenska"
+          type="text"
+          name="inputSwedish"
+          value={this.state.inputSwedish}
           onChange={this.changeInputValue}
         />
 

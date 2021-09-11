@@ -12,6 +12,7 @@ class Questions extends Component {
     super(props);
     this.state = {
       questions: [],
+      filteredQuestions: [],
       schools: [],
       filtersData: [],
       selectBox: "allQuestion",
@@ -20,6 +21,8 @@ class Questions extends Component {
 
   componentDidMount() {
     this.allQuestions();
+    console.log(this.context.school);
+    this.FilterQuestions(this.context.school);
   }
 
   changeInputValue = (e, idx) => {
@@ -34,6 +37,7 @@ class Questions extends Component {
     console.log("inside");
     this.setState({ questions: [] });
     axios.get(endpoint.allQuestions).then((res) => {
+      console.log(res.data);
       this.setState({ questions: res.data });
       let newFilters = [];
       res.data.map((filter) => newFilters.push(filter.area));
@@ -43,23 +47,24 @@ class Questions extends Component {
   };
 
   FilterQuestions = (filter) => {
+    console.log(filter);
     this.setState({ questions: [] });
     axios.post(endpoint.filteredQuestions, { data: filter }).then((res) => {
-      this.setState({ questions: res.data });
+      this.setState({ filteredQuestions: res.data });
     });
   };
 
-  handleChange = (e) => {
-    if (e.target.value !== "Select filter") {
-      console.log("not select filter");
-      this.FilterQuestions(e.target.value);
-      this.setState({ selectBox: e.target.value });
-    } else {
-      console.log("select filter");
-      this.allQuestions();
-      this.setState({ selectBox: "allQuestion" });
-    }
-  };
+  // handleChange = (e) => {
+  //   if (e.target.value !== "Select filter") {
+  //     console.log("not select filter");
+  //     this.FilterQuestions(e.target.value);
+  //     this.setState({ selectBox: e.target.value });
+  //   } else {
+  //     console.log("select filter");
+  //     this.allQuestions();
+  //     this.setState({ selectBox: "allQuestion" });
+  //   }
+  // };
 
   render() {
     return (
@@ -81,10 +86,10 @@ class Questions extends Component {
             backgroundColor: "rgba(255, 255, 255, 0.829)",
           }}
         >
-          <span className="filterCandidateLabel">
+          {/* <span className="filterCandidateLabel">
             {language.filterCandidateLabel[this.context.language]}
-          </span>
-          <select className="questionsSelectBox" onChange={this.handleChange}>
+          </span> */}
+          {/* <select className="questionsSelectBox" onChange={this.handleChange}>
             <option value="Select filter">Select filter</option>
             {this.state.filtersData &&
               React.Children.toArray(
@@ -92,20 +97,21 @@ class Questions extends Component {
                   <option value={filter}>{filter}</option>
                 ))
               )}
-          </select>
+          </select> */}
         </div>
 
         <form>
           <div className="formQuestions">
             {this.state.questions &&
               React.Children.toArray(
-                this.state.questions.map((question) => (
+                this.state.filteredQuestions.map((question) => (
                   <QuestionsItem
                     question={question}
                     refreshQuestions={() => {
-                      this.state.selectBox === "allQuestion"
-                        ? this.allQuestions()
-                        : this.FilterQuestions(this.state.selectBox);
+                      //   this.state.selectBox === "allQuestion"
+                      //     ? this.allQuestions()
+                      //     : this.FilterQuestions(this.state.selectBox);
+                      this.FilterQuestions(this.context.school);
                     }}
                   />
                 ))

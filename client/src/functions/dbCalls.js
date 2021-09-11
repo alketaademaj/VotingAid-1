@@ -14,24 +14,24 @@ const FilterCandidateTable = (setStateArray, filter) => {
         })
 }
 
-const SetCandidateTable = (setStateArray) => {
-    Axios.get(endpoint.candidates)
-        .then(res => {
-            let q = [];
-            let s = [];
-            for (var i = 0; i < res.data.length; i++) {
-                setStateArray(['Candidate' + i], res.data[i])
-                q.push(res.data[i].name);
-                setStateArray('amount', q);
-                s.push(res.data[i].studentAssociation);
+// const SetCandidateTable = (setStateArray) => {
+//     Axios.get(endpoint)
+//         .then(res => {
+//             let q = [];
+//             let s = [];
+//             for (var i = 0; i < res.data.length; i++) {
+//                 setStateArray(['Candidate' + i], res.data[i])
+//                 q.push(res.data[i].name);
+//                 setStateArray('amount', q);
+//                 s.push(res.data[i].studentAssociation);
 
-            }
-            const uniqueAssociations = Array.from(new Set(s));
-            setStateArray('Association', uniqueAssociations);
-        });
-}
+//             }
+//             const uniqueAssociations = Array.from(new Set(s));
+//             setStateArray('Association', uniqueAssociations);
+//         });
+// }
 
 export {
-    SetCandidateTable,
+    // SetCandidateTable,
     FilterCandidateTable,
 };

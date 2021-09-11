@@ -19,28 +19,19 @@ class Candidates extends Component {
   }
 
   SetStateArray = (stateArray, value) => {
-    // console.log(value)
+    console.log(value)
+    console.log(stateArray)
     this.setState({ [stateArray]: value });
   }
 
   componentDidMount() {
-    this.state.filtered ? console.log('filtteröinnin ja poiston chekki') :
-      SetCandidateTable(this.SetStateArray)
-  }
-
-  handleChange(e) {
-    if (e.target.value != 'Select filter') {
-      this.setState({ filtered: true })
-      FilterCandidateTable(this.SetStateArray, e.target.value);
-    } else {
-      SetCandidateTable(this.SetStateArray); // IF undefined value is given, Return table state including every candidate
-    }
+    FilterCandidateTable(this.SetStateArray, this.context.school);
   }
 
   render() {
     return (
-      <div style={{ width: '50%', marginLeft: '25%' }}>
-        <label htmlFor="school" className="filterCandidateLabel"
+      <div style={{ width: '50%', marginLeft: '25%', marginTop: '5%' }}>
+        {/* <label htmlFor="school" className="filterCandidateLabel"
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0.829)', width: '50%', marginTop: '5%',
             marginLeft: '18%'
@@ -51,12 +42,12 @@ class Candidates extends Component {
           selectMenuList={QuestionAreaList}
           action={this.handleChange.bind(this)}
         />
-        {/* {console.log(this.state.amount)} */}
+        {console.log(this.state.amount)} */}
         <CandidateTable
           stateArray={this.state} counter={-1}
           candidateDeleted={() => {
             console.log('Got event')
-            SetCandidateTable(this.SetStateArray)
+            FilterCandidateTable(this.SetStateArray, this.context.school);
           }}
         />
       </div>

@@ -64,6 +64,7 @@ class Form extends Component {
       area: "",
       path: this.props.location.pathname.split("/")[2],
       loader: true,
+      required: true,
     };
   }
 
@@ -72,8 +73,9 @@ class Form extends Component {
     let email = this.props.location.email;
     if (this.context.loggedIn) {
       {
-        console.log(endpoint.questions)}
-      axios.post(endpoint.questions,{ data: this.state.path }).then((res) => {
+        console.log(endpoint.questions);
+      }
+      axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
         console.log(res);
         this.setState({ questions: res.data });
         axios.post(endpoint.fillForm, { data: email }).then((response) => {
@@ -111,8 +113,9 @@ class Form extends Component {
       });
     } else {
       {
-        console.log(endpoint.questions)}
-      axios.post(endpoint.questions,{ data: this.state.path }).then((res) => {
+        console.log(endpoint.questions);
+      }
+      axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
         this.setState({ loader: false });
         this.setState({ questions: res.data });
       });
@@ -128,7 +131,8 @@ class Form extends Component {
           placeholder="Explain your choice"
           style={{ marginBottom: "41px", width: "50%" }}
           onChange={this.handleChange}
-          disabled={this.state.disabled}
+          required={this.state.required}
+          // disabled={this.state.disabled}
         />
       );
     }
@@ -243,17 +247,17 @@ class Form extends Component {
                         />
                       )}
 
-                      {this.context.user !== "Quest" &&
-                        this.state.answersDesc && (
-                          <DefaultInput
-                            label="Explain your choice"
-                            type="text"
-                            name={idx}
-                            value={this.state.answersDesc[idx]}
-                            onChange={this.handleChange}
-                            disabled={this.state.disabled}
-                          />
-                        )}
+                      {this.context.user !== "Quest" && this.state.answersDesc && (
+                        <DefaultInput
+                          label="Explain your choice"
+                          type="text"
+                          name={idx}
+                          value={this.state.answersDesc[idx]}
+                          onChange={this.handleChange}
+                          // disabled={this.state.disabled}
+                          required={this.state.required}
+                        />
+                      )}
                     </div>
                   </>
                 ))

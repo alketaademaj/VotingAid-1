@@ -11,7 +11,7 @@ import { UserContext } from "../../context/userContext";
 import { ThemeContext } from "../../context/ThemeProvider";
 
 import classNames from 'classnames';
-
+import Sweden from '../../assets/icons/sweden.svg'
 import Finland from '../../assets/icons/finland.svg'
 import UK from '../../assets/icons/uk.svg'
 
@@ -85,6 +85,9 @@ class Navbar extends Component {
               <div>
                 <span onClick={() => changeLanguage('fin')} style={{ padding: '0 10px' }}>
                   <img style={{ width: 30 }} src={Finland} alt="Finland Flag" />
+                </span>
+                <span onClick={() => changeLanguage('swe')} style={{ padding: '0 10px' }}>
+                  <img style={{ width: 30 }} src={Sweden} alt="Sweden Flag" />
                 </span>
                 <span onClick={() => changeLanguage('eng')} style={{ padding: '0 10px' }}>
                   <img style={{ width: 30 }} src={UK} alt="United Kingdom of Great Britain Flag" />

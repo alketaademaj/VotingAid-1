@@ -6,6 +6,7 @@ import language from "../../properties/language";
 import React, { useContext } from 'react';
 
 const CandidateTable = ({ stateArray, counter, candidateDeleted }) => {
+    console.log(stateArray)
     const context = useContext(UserContext);
     return (
         <Table striped bordered hover variant="light">

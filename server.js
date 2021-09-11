@@ -163,8 +163,8 @@ app.get('/allQuestions', (req, res) => {
 //show only filtered questions
 app.post('/filteredQuestions', (req, res) => { //Shows filtered questions
   const filter = req.body.data;
-  //console.log('KYSYMYS FILTTERI')
-  //console.log(filter)
+  console.log('KYSYMYS FILTTERI')
+  console.log(filter)
   Question.find({ area: filter }, function (err, results) {
     res.send(results);
   });
@@ -173,8 +173,9 @@ app.post('/filteredQuestions', (req, res) => { //Shows filtered questions
 app.post('/submitQhuahoo', function (req, res) { //EDIT ONE EXISTING submitQhuahoo
   var question = req.body.data.question;
   var questionFin = req.body.data.questionFin;
+  var questionSwe = req.body.data.questionSwe;
   var id = req.body.data.id;
-  Question.findOneAndUpdate({ _id: id }, { $set: { question: question, questionFin: questionFin } }, { useFindAndModify: false }, function (err, doc) {
+  Question.findOneAndUpdate({ _id: id }, { $set: { question: question, questionFin: questionFin, questionSwe: questionSwe } }, { useFindAndModify: false }, function (err, doc) {
     res.send(doc)
   });
 });
@@ -269,9 +270,9 @@ app.post('/login', (req, res) => {
       bcrypt.compare(pass, user.password).then(function (result) {
         if (result) {
           req.session.user = user;
-          //console.log(req.session.user);
+          console.log(req.session.user);
 
-          const tokenUser = { email: user.email, status: user.status }
+          const tokenUser = { email: user.email, status: user.status, school: user.school }
           const token = jwt.sign(tokenUser, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 }) // CHANGE TO 60 FOR TESTING PURPOSES
 
 
@@ -301,6 +302,7 @@ app.get('/logout', function (req, res) {
 
 app.post('/send', function (req, res) {
   var email = req.body.email;
+  console.log(req.body)
   const token = getTokenFrom(req);
   try {
     jwt.verify(token, process.env.TOKEN_SECRET)
@@ -342,6 +344,7 @@ app.post('/addQuestion', (req, res) => {
   var question = new Question({
     question: req.body.question,
     questionFin: req.body.questionFin,
+    questionSwe: req.body.questionSwe,
     area: req.body.area,
   });
 
