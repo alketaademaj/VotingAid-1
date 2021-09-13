@@ -24,7 +24,7 @@ const language = {
     fillFormButton: { fin: 'Lähetä', eng: 'Submit' },
     continueHolder: { fin: 'Jatka', eng: 'Proceed' },
     browseButton: { fin: 'Selaa', eng: 'Browse file' },
-    filterCandidateLabel: { fin: 'Suodata koulun perusteella', eng: 'Filter by School' },
+    // filterCandidateLabel: { fin: 'Suodata koulun perusteella', eng: 'Filter by School' },
     uploadPicture: { fin: 'Lataa profiilikuva', eng: 'Upload a profile picture' },
     candidateHolder: { fin: 'Kandidaatti', eng: 'Candidate' },
     successQuestionAddedHolder: { fin: 'Olet onnistuneesti lisännyt uuden kysymyksen', eng: 'You have succesfully submitted a question"' },

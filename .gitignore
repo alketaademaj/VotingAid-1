@@ -14,4 +14,3 @@ node_modules
 public/exports/index.js
 /client/build/
 /build/
-.env

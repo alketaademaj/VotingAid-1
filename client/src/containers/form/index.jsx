@@ -217,9 +217,13 @@ class Form extends Component {
                         <strong>
                           {language.questionHolder[this.context.language]}
                         </strong>
-                        {this.context.language === "fin"
-                          ? question.questionFin
-                          : question.question}
+                        {
+                          {
+                            fin: question.questionFin,
+                            eng: question.question,
+                            swe: question.questionSwe,
+                          }[this.context.language]
+                        }
                       </label>
 
                       <div
