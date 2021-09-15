@@ -190,6 +190,7 @@ app.post('/editInformation', function (req, res) {
       studentAssociation: data.studentAssociation,
       campus: data.campus
   }*/
+  console.log(data);
   Candidate.findOneAndUpdate(
     { email: data.email },
     {

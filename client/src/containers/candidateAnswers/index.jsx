@@ -67,6 +67,7 @@ export class CandidateAnswers extends Component {
 
   componentDidMount() {
     var email = this.props.candidateInfo.email;
+      console.log(this.state.path)
     axios.post(endpoint.questions, { data: this.state.path }).then((res) => {
       this.setState({ questions: res.data });
       axios.post(endpoint.fillForm, { data: email }).then((response) => {

@@ -22,7 +22,7 @@ class Profile extends Component {
   }
 
   fetchData = async () => {
-    var email = this.context.email;
+    let email = this.context.email;
     if (this.props.location.data != null) {
       email = this.props.location.data;
     }
@@ -67,8 +67,8 @@ class Profile extends Component {
       });
   };
 
-  componentDidUpdate = () => {
-    this.onChange = (e) => {
+  //componentDidUpdate = () => {
+    onChange = (e) => {
       let target = e.target;
       this.setState((prevState) => {
         let profile = { ...prevState.profile };
@@ -76,11 +76,11 @@ class Profile extends Component {
         return { profile };
       });
     };
-  };
+ // };
 
   render() {
     const { profile } = this.state;
-    console.log(profile.email);
+    //console.log(profile);
     if (!profile) {
       return null;
     }

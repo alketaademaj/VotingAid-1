@@ -12,17 +12,16 @@ class Suggestions extends Component {
     super(props);
     this.state = {
       suggestions: [],
-      showCandidateAnswers: false,
+      showCandidateAnswers: -1,
     };
   }
 
-  hideComponent = (name) => {
+  hideComponent = (name, e) => {
     console.log(name);
+      console.log(this.state.showCandidateAnswers)
     switch (name) {
       case "showCandidateAnswers":
-        this.setState({
-          showCandidateAnswers: !this.state.showCandidateAnswers,
-        });
+        this.setState({showCandidateAnswers: e.target.id});
         break;
     }
   };
@@ -65,7 +64,7 @@ class Suggestions extends Component {
           </h1>
           {myData
             .sort((a, b) => (a.similarity < b.similarity ? 1 : -1))
-            .map((candidate) => {
+            .map((candidate, index) => {
               return (
                 /*console.log(this.state.suggestions),*/
                 <div>
@@ -89,7 +88,7 @@ class Suggestions extends Component {
                       {candidate.similarity.toFixed() + "%"}
                     </h2>{" "}
                   </div>
-                  {showCandidateAnswers && (
+                  {showCandidateAnswers == index && (
                     <CandidateAnswers candidateInfo={candidate} />
                   )}
                   <button
@@ -108,9 +107,10 @@ class Suggestions extends Component {
                       borderRight: "none",
                       fontSize: "20px",
                     }}
-                    onClick={() => this.hideComponent("showCandidateAnswers")}
+                    id={index}
+                    onClick={(e) => this.hideComponent("showCandidateAnswers", e)}
                   >
-                    {showCandidateAnswers ? <p>Show less</p> : <p>Show more</p>}
+                    {showCandidateAnswers === index ? 'Show less' : 'Show more'}
                   </button>
                 </div>
               );
