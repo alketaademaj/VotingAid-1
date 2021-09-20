@@ -84,6 +84,10 @@ class Form extends Component {
           let questionDesc = [];
           let questionNumber = [];
           oldQuestions.map((question, idx) => {
+            console.log("question");
+            console.log(question);
+            console.log("idx");
+            console.log(idx);
             Object.assign(oldQuestions[idx], {
               questionValue: Object.values(response.data.filledForm).filter(
                 (item) => isNaN(item)

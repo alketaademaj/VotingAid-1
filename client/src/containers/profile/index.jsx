@@ -3,7 +3,7 @@ import { UserContext } from "../../context/userContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Picture from "../../components/partials/picture";
-import FileUpload from "../../components/fileUpload";
+import Upload from "../../components/upload";
 import Swal from "sweetalert2";
 import language from "../../properties/language";
 import DefaultButton from "../../components/defaultButton";
@@ -68,15 +68,15 @@ class Profile extends Component {
   };
 
   //componentDidUpdate = () => {
-    onChange = (e) => {
-      let target = e.target;
-      this.setState((prevState) => {
-        let profile = { ...prevState.profile };
-        profile[target.id] = target.value;
-        return { profile };
-      });
-    };
- // };
+  onChange = (e) => {
+    let target = e.target;
+    this.setState((prevState) => {
+      let profile = { ...prevState.profile };
+      profile[target.id] = target.value;
+      return { profile };
+    });
+  };
+  // };
 
   render() {
     const { profile } = this.state;
@@ -148,10 +148,7 @@ class Profile extends Component {
                   borderRadius: "50%",
                 }}
               >
-                <Picture
-                  source={process.env.PUBLIC_URL + profile.image}
-                  style={{ width: "100%" }}
-                />
+                <Picture source={profile.image} style={{ width: "100%" }} />
               </div>
             )}
           </div>
@@ -172,10 +169,11 @@ class Profile extends Component {
                 </div>
               ))
             )}
-          <FileUpload
+          {/* <FileUpload
             email={profile.email}
             onUpload={this.updatePicture}
-          ></FileUpload>
+          ></FileUpload> */}
+          <Upload email={profile.email} onUpload={this.updatePicture}></Upload>
           <DefaultButton
             type="submit"
             borderColor={DARK_GREEN}

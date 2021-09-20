@@ -7,7 +7,6 @@ import { DARK_GREEN, GREEN, WHITE } from "../../helpers/constants";
 import DefaultButton from "../../components/defaultButton";
 import { endpoint } from "../../api";
 import DefaultInput from "../../components/defaultInput";
-
 class AddQuestion extends Component {
   static contextType = UserContext;
   constructor(props) {
@@ -20,15 +19,12 @@ class AddQuestion extends Component {
       selectValue: "",
     };
   }
-
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
   selectBoxChanged = (event) => {
     this.setState({ selectValue: event.target.value });
   };
-
   handleSubmit = (e) => {
     e.preventDefault();
     const question = {
@@ -75,12 +71,18 @@ class AddQuestion extends Component {
             }}
           >
             <DefaultInput
+              label="Kysymys suomeksi"
+              type="question"
+              name="questionFin"
+              value={this.state.questionFin}
+              onChange={this.handleChange}
+            />
+            <DefaultInput
               label="Question in english"
               type="question"
               name="question"
               value={this.state.question}
               onChange={this.handleChange}
-              // required={true}
             />
             <DefaultInput
               label="Frågan på svenska"
@@ -88,18 +90,7 @@ class AddQuestion extends Component {
               name="questionSwe"
               value={this.state.questionSwe}
               onChange={this.handleChange}
-              // required={true}
             />
-
-            <DefaultInput
-              label="Kysymys suomeksi"
-              type="question"
-              name="questionFin"
-              value={this.state.questionFin}
-              onChange={this.handleChange}
-              required={true}
-            />
-
             <label style={{ fontSize: 16, marginTop: 5 }}>
               {language.school[this.context.language]}
             </label>
@@ -112,6 +103,7 @@ class AddQuestion extends Component {
               value={this.state.selectValue}
               onChange={this.selectBoxChanged}
             >
+              <option value="Undefined">Undefined</option>
               <option value="ASK">ASK</option>
               <option value="Helga">Helga</option>
               <option value="HUMAKO">HUMAKO</option>
@@ -121,7 +113,6 @@ class AddQuestion extends Component {
               <option value="O'Diako">O'Diako</option>
               <option value="TUO">TUO</option>
             </select>
-
             <DefaultButton
               type="submit"
               borderColor={DARK_GREEN}
@@ -135,5 +126,4 @@ class AddQuestion extends Component {
     );
   }
 }
-
 export default AddQuestion;

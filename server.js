@@ -1,4 +1,5 @@
 const express = require('express');
+const { cloudinary } = require('./utils/cloudinary');
 const fs = require('fs')
 const fileUpload = require('express-fileupload');
 const path = require('path');
@@ -46,13 +47,12 @@ app.use(session({
 }));
 
 //module for handling form data
-const bp = require('body-parser');
 const { default: Axios } = require('axios');
 const user = require('./models/user');
-app.use(bp.json());       // to support JSON-encoded bodies
-app.use(bp.urlencoded({     // to support URL-encoded bodies
-  extended: false
-}));
+var bodyParser = require('body-parser');
+const { url } = require('inspector');
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 //Get the token from Request headers
 const getTokenFrom = request => {
@@ -105,12 +105,9 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
       let candSum = candidateArray.reduce((result, number) => result + number);
 
       if ((userSum >= (candSum * 0.50) || danger <= 0.25 * userAnswer.length) && similarity >= (0.30 * userAnswer.length)) {
-        //console.log((similarity / userAnswer.length) + '%')
         let copy = { ...results[i]._doc };
         copy["similarity"] = (similarity / userAnswer.length) * 100;
         finalResults.push(copy);
-        //console.log('TÄMÄ ON KOPIOOOOO')
-        //console.log(copy)
       }
     }
     let unique = [...new Set(finalResults)];
@@ -120,7 +117,6 @@ app.post('/suggested', (req, res) => { //Shows all the suggested candidates
 
 app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
   const filter = req.body.data;
-  //console.log(filter)
   Candidate.find({ studentAssociation: filter }, function (err, results) {
     res.send(results);
   });
@@ -129,7 +125,6 @@ app.post('/filteredCandidates', (req, res) => { //Shows filtered andidates
 app.post('/Profile', (req, res) => {
   const email = req.body.email;
   Candidate.findOne({ email: email }, function (err, results) {
-    //console.log(email)
     if (err) {
       return res.status(500).send();
     }
@@ -143,8 +138,6 @@ app.post('/Profile', (req, res) => {
 
 app.post('/questions', (req, res) => { //Form question and parse call
   const area = req.body.data;
-  // console.log('PALVELIMEN PUOLEN KOODI')
-  // console.log(area)
   Question.find({ area: { $in: [area, 'Undefined'] } }, function (err, results) {
     res.send(results);
   });
@@ -152,9 +145,6 @@ app.post('/questions', (req, res) => { //Form question and parse call
 
 //show all the questions
 app.get('/allQuestions', (req, res) => {
-  // //console.log('response')
-  // console.log('ALL QUESTIONS')
-  // console.log(res.body)
   Question.find({}, function (err, results) {
     res.send(results);
   });
@@ -182,14 +172,7 @@ app.post('/submitQhuahoo', function (req, res) { //EDIT ONE EXISTING submitQhuah
 
 app.post('/editInformation', function (req, res) {
   let data = req.body.data;
-  /*let update = {
-      name: data.name,
-      surname: data.surname,
-      school: data.school,
-      description: data.description,
-      studentAssociation: data.studentAssociation,
-      campus: data.campus
-  }*/
+
   console.log(data);
   Candidate.findOneAndUpdate(
     { email: data.email },
@@ -221,7 +204,8 @@ app.post('/deleteQhuahoo', function (req, res) { //DELETE ONE EXISTING Qhuahoo
 app.post('/fillForm', (req, res) => {
   var email = req.body.data;
   Candidate.findOne({ email: email }, function (err, results) {
-    //console.log(results.filledForm);
+    console.log('filled form');
+    console.log(results.filledForm);
     res.send(results);
   });
 });
@@ -310,13 +294,7 @@ app.post('/send', function (req, res) {
   } catch {
     res.send('Error!, TOKEN HAS EXPIRED OR IS INVALID')
   }
-  /* console.log('token')
-   console.log(token)
-   console.log('decoded')
-   console.log(decodedToken)*/
-  /*if (!token || !decodedToken) {
-    res.send('INVALID TOKEN')
-  }*/
+
   console.log(email);
   for (var i = 0; i < req.body.ans.length; i++) {
     var nestedOpt = 'filledForm.question' + i;
@@ -349,7 +327,7 @@ app.post('/addQuestion', (req, res) => {
     area: req.body.area,
   });
 
-  Question.countDocuments({ question: req.body.question }, function (err, count) {
+  Question.countDocuments({ question: req.body.question, questionFin: req.body.questionFin, questionSwe: req.body.questionSwe }, function (err, count) {
     if (count == 0) {
       question.save(function (err, user) {
         if (err) {
@@ -372,12 +350,6 @@ app.post('/addQuestion', (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/build/index.html'));
 });
-
-// app.get('/', function (req, res) {
-//   res.send("works");
-// })
-
-// app.use('/client', express.static(dirname + '/client'))
 
 const port = process.env.PORT || 5000;
 app.listen(port);
@@ -448,62 +420,6 @@ function addOneCandidate(data) {
     }
   });
 }
-// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-app.get('/randomFill', function (req, res) {
-  var taulukko = [-2, -1, 0, 1, 2];
-  Candidate.find({}, function (err, allCandidate) {
-    allCandidate.forEach((oneCandidate) => {
-      var id = oneCandidate._id;
-      var data = oneCandidate.studentAssociation;
-      Question.find({
-        $or: [
-          { 'area': data },
-          { 'area': "Undefined" }
-        ]
-      }, function (err, cookie) {
-        for (var i = 0; i < cookie.length; i++) {
-          var rndnumero = taulukko[Math.floor(Math.random() * taulukko.length)];
-          var nestedOpt = 'filledForm.question' + i;
-          var nestedDesc = 'filledForm.questiondesc' + i;
-          Candidate.findOneAndUpdate({ _id: id }, { $set: { [nestedOpt]: rndnumero, [nestedDesc]: "" } }, { useFindAndModify: false }, function (err, doc) {
-          });
-        }
-      });
-    })
-  });
-  res.send("The answers were updated!")
-  //console.log('ok');
-});
-//-----------------------------------------------------------------------
-//ADDING THE PICTURE 
-app.post('/upload', (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({ msg: 'No file uploaded' });
-    // file.mv(`${__dirname}/client/public/uploads/194938.png`
-  }
-  const file = req.files.file;
-  file.mv(`${__dirname}/build/uploads/${file.name}`, async err => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-    const email = req.body.email;
-
-    const candidate = await Candidate.findOne({ email: email });
-    if (candidate.image !== '/auto.png') {
-      fs.unlink(`${__dirname}/build/${candidate.image}`, (err) => {
-        if (err) {
-          console.error(err)
-        }
-      })
-    }
-
-    await editOneCandidate("/uploads/" + file.name, "image", email);
-    //res.send(image)
-    res.status(200).send();
-  });
-});
 
 async function editOneCandidate(data, variable, email) {
   //TODO: Remove Await because i think dont need to be async because this will return value when method return the value
@@ -544,14 +460,9 @@ app.post('/deleteCandidate', function (req, res) { //DELETE ONE EXISTING candida
   });
 });
 
-// app.get('*', function (req, res) {
-//   res.sendFile(__dirname + '/dist/index.html')
-// })
 //----------------------------------- add only one candidate
 app.post('/addOneCandidate', (req, res) => {
   let data = req.body;
-  //console.log(res.status)
-  //console.log(data)
   let email = req.body.email;
 
   Candidate.countDocuments({ email: req.body.email }, function (err, count) {
@@ -565,6 +476,22 @@ app.post('/addOneCandidate', (req, res) => {
   })
 });
 
-// Authentication token  ------------------------------------
-
+// Picture upload on cloudinary ------------------------------------
+app.post('/api/uploadImage', async (req, res) => {
+  const email = req.body.email;
+  const candidate = Candidate.findOne({ email: email });
+  try {
+    const fileStr = req.body.data;
+    const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: 'dev_setups',
+      public_id: req.body.fileName,
+    }).then(res => {
+      editOneCandidate(res.url, "image", email);
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: 'Something went wrong' })
+  }
+  res.status(200).send();
+});
 

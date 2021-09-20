@@ -17,11 +17,12 @@ class Suggestions extends Component {
   }
 
   hideComponent = (name, e) => {
-    console.log(name);
-      console.log(this.state.showCandidateAnswers)
+    console.log("count");
+    console.log(e.target.count);
+    console.log(this.state.showCandidateAnswers);
     switch (name) {
       case "showCandidateAnswers":
-        this.setState({showCandidateAnswers: e.target.id});
+        this.setState({ showCandidateAnswers: e.target.id });
         break;
     }
   };
@@ -33,7 +34,8 @@ class Suggestions extends Component {
     };
     axios.post(endpoint.suggested, { data: data }).then((res) => {
       this.setState({ suggestions: res.data });
-      /*console.log(this.state.suggestions);*/
+      console.log("suggested answers");
+      console.log(res.data);
     });
   }
 
@@ -108,9 +110,11 @@ class Suggestions extends Component {
                       fontSize: "20px",
                     }}
                     id={index}
-                    onClick={(e) => this.hideComponent("showCandidateAnswers", e)}
+                    onClick={(e) =>
+                      this.hideComponent("showCandidateAnswers", e)
+                    }
                   >
-                    {showCandidateAnswers === index ? 'Show less' : 'Show more'}
+                    {showCandidateAnswers === 0 ? "Show less" : "Show more"}
                   </button>
                 </div>
               );
