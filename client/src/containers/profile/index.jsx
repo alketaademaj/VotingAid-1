@@ -30,22 +30,22 @@ class Profile extends Component {
       .post(endpoint.profile, { email: email })
       .then((res) => {
         this.setState({ profile: res.data });
-        // console.log("is this the correct email");
-        // console.log(res.data.email);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  updatePicture = (data) => {
-    this.setState((state) => ({
-      ...state,
-      profile: {
-        ...state.profile,
-        image: data.filePath,
-      },
-    }));
+  updatePicture = () => {
+    // console.log(data);
+    // this.setState((state) => ({
+    //   ...state,
+    //   profile: {
+    //     ...state.profile,
+    //     image: data,
+    //   },
+    // }));
+    this.fetchData();
   };
 
   componentDidMount = () => {
@@ -53,6 +53,8 @@ class Profile extends Component {
   };
 
   submitData = async () => {
+    console.log("state");
+    console.log(this.state.profile);
     await axios
       .post(endpoint.editInformation, { data: this.state.profile })
       .then((res) => {
@@ -73,6 +75,7 @@ class Profile extends Component {
     this.setState((prevState) => {
       let profile = { ...prevState.profile };
       profile[target.id] = target.value;
+      console.log(profile);
       return { profile };
     });
   };
@@ -173,7 +176,11 @@ class Profile extends Component {
             email={profile.email}
             onUpload={this.updatePicture}
           ></FileUpload> */}
-          <Upload email={profile.email} onUpload={this.updatePicture}></Upload>
+          <Upload
+            email={profile.email}
+            onUpload={this.updatePicture}
+            profile={this.state.profile}
+          ></Upload>
           <DefaultButton
             type="submit"
             borderColor={DARK_GREEN}

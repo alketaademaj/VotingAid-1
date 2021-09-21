@@ -17,12 +17,16 @@ class Suggestions extends Component {
   }
 
   hideComponent = (name, e) => {
-    console.log("count");
-    console.log(e.target.count);
+    console.log(e.target.id);
     console.log(this.state.showCandidateAnswers);
     switch (name) {
       case "showCandidateAnswers":
-        this.setState({ showCandidateAnswers: e.target.id });
+        if(this.state.showCandidateAnswers !== -1) {
+          this.setState({showCandidateAnswers: -1});
+        }
+        else{
+          this.setState({showCandidateAnswers: e.target.id});
+        }
         break;
     }
   };
@@ -114,7 +118,7 @@ class Suggestions extends Component {
                       this.hideComponent("showCandidateAnswers", e)
                     }
                   >
-                    {showCandidateAnswers === 0 ? "Show less" : "Show more"}
+                    {showCandidateAnswers === -1 ? "Show more" : "Show less"}
                   </button>
                 </div>
               );

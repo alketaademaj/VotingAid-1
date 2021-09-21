@@ -479,19 +479,21 @@ app.post('/addOneCandidate', (req, res) => {
 // Picture upload on cloudinary ------------------------------------
 app.post('/api/uploadImage', async (req, res) => {
   const email = req.body.email;
+  let returnValue;
   const candidate = Candidate.findOne({ email: email });
   try {
     const fileStr = req.body.data;
     const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
       upload_preset: 'dev_setups',
       public_id: req.body.fileName,
-    }).then(res => {
-      editOneCandidate(res.url, "image", email);
+    }).then(function (data) {
+      editOneCandidate(data.url, "image", email)
+      returnValue = data.url;
     })
   } catch (error) {
     console.log(error)
     res.status(500).json({ err: 'Something went wrong' })
   }
-  res.status(200).send();
+  res.send(returnValue)
 });
-
+//----------------------------->
